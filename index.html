@@ -1,416 +1,319 @@
-export default function WorldGymEnterprisePage() {
-  const freeBenefits = [
-    '企業員工享有 21 天單館俱樂部體驗（限非 WG 現有會員）',
-    '企業員工 InBody 檢測 1 次',
-    '企業員工加入 World Gym 免收入會費',
-    '入會享有一對一體適能教練指導課程一堂',
-  ];
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>World Gym 企業專屬健康福利</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* 全域設定 */
+        :root { --primary-red: #E3000F; --dark-bg: #121212; --section-bg-alt: #1E1E1E; --text-light: #F3F4F6; --text-muted: #9CA3AF; --gold: #FFD700; }
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; scroll-padding-top: 70px; }
+        body { margin: 0; padding: 0; font-family: 'Noto Sans TC', sans-serif; background-color: var(--dark-bg); color: var(--text-light); line-height: 1.6; overflow-x: hidden; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; width: 100%; }
 
-  const paidBenefits = [
-    '企業員工享有 1 個月市區型俱樂部體驗（限非 WG 現有會員）',
-    '體驗期間入會享有免收入會費與手續費優惠',
-    '協助企業舉辦健康挑戰賽活動',
-    '依照員工規模保證回饋：會籍＋教練課組數',
-  ];
+        /* 導覽列 */
+        header { background-color: rgba(18, 18, 18, 0.98); position: fixed; width: 100%; top: 0; z-index: 1000; border-bottom: 2px solid var(--primary-red); box-shadow: 0 2px 10px rgba(0,0,0,0.5); }
+        .navbar { display: flex; justify-content: space-between; align-items: center; height: 70px; }
+        .logo { font-size: 22px; font-weight: 900; color: white; text-decoration: none; display: flex; align-items: center; gap: 10px; }
+        .logo span { color: var(--primary-red); }
+        .company-badge { background: rgba(255,255,255,0.1); padding: 4px 12px; border-radius: 20px; font-size: 14px; font-weight: normal; color: var(--gold); border: 1px solid var(--gold); }
+        
+        /* 按鈕設計 (主按鈕與次按鈕) */
+        .btn-primary { background-color: var(--primary-red); color: white; padding: 12px 28px; border-radius: 30px; text-decoration: none; font-weight: bold; transition: all 0.3s; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; border: 2px solid var(--primary-red); font-size: 16px; justify-content: center; text-align: center; }
+        .btn-primary:hover { background-color: #B3000C; border-color: #B3000C; transform: translateY(-2px); box-shadow: 0 4px 15px rgba(227,0,15,0.4); }
+        
+        .btn-secondary { background-color: transparent; color: white; padding: 12px 28px; border-radius: 30px; text-decoration: none; font-weight: bold; transition: all 0.3s; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; border: 2px solid white; font-size: 16px; justify-content: center; text-align: center; }
+        .btn-secondary:hover { background-color: white; color: var(--dark-bg); transform: translateY(-2px); box-shadow: 0 4px 15px rgba(255,255,255,0.2); }
 
-  const rewards = [
-    {
-      size: '1 - 50人',
-      amount: '$20,000 元',
-      reward: '半年單館會籍 + 1 堂教練課（共 1 組）',
-      detail: '($1,288*6+$2,088=$9,816元)',
-    },
-    {
-      size: '51 - 100人',
-      amount: '$50,000 元',
-      reward: '半年單館會籍 + 1 堂教練課（共 3 組）',
-      detail: '($9,816*3=$29,448元)',
-    },
-    {
-      size: '101 - 500人',
-      amount: '$80,000 元',
-      reward: '半年單館會籍 + 1 堂教練課（共 5 組）',
-      detail: '($9,816*5=$49,080元)',
-    },
-    {
-      size: '501人以上',
-      amount: '$120,000 元',
-      reward: '一年單館會籍 + 1 堂教練課（共 5 組）',
-      detail: '($17,544*5=$87,720元)',
-    },
-  ];
+        /* 區塊共用 */
+        section { padding: 90px 0; }
+        .section-title { text-align: center; font-size: 36px; font-weight: 900; margin-bottom: 20px; }
+        .section-title span { color: var(--primary-red); }
+        .section-subtitle { text-align: center; color: var(--text-muted); font-size: 18px; margin-bottom: 50px; }
 
-  return (
-    <div className="bg-black text-white min-h-screen font-sans">
-      {/* HERO */}
-      <section className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-red-700 via-black to-black opacity-90" />
+        /* 首圖區 */
+        .hero { height: 85vh; min-height: 600px; display: flex; align-items: center; text-align: center; background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8)), url('https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?q=80&w=2070&auto=format&fit=crop') center/cover; padding-top: 70px; position: relative; }
+        .hero-content { max-width: 800px; margin: 0 auto; }
+        .hero-tag { display: inline-block; background-color: var(--gold); color: #000; font-weight: 900; padding: 5px 15px; border-radius: 20px; margin-bottom: 20px; letter-spacing: 1px; font-size: 14px; }
+        .hero h1 { font-size: 48px; font-weight: 900; margin-bottom: 20px; line-height: 1.3; }
+        .hero p { font-size: 20px; color: #ddd; margin-bottom: 40px; }
+        .hero-buttons { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
 
-        <div className="relative max-w-7xl mx-auto px-6 lg:px-10 py-24 lg:py-36 grid lg:grid-cols-2 gap-14 items-center">
-          <div>
-            <div className="inline-block bg-red-600 text-sm px-4 py-2 rounded-full font-semibold tracking-wide mb-6">
-              World Gym 企業健康合作方案
+        /* 痛點與運動好處 (高質感圖文交錯版) */
+        .benefits-section { background-color: var(--section-bg-alt); }
+        .feature-row { display: flex; align-items: center; gap: 60px; margin-bottom: 100px; }
+        .feature-row:last-child { margin-bottom: 0; }
+        .feature-row:nth-child(even) { flex-direction: row-reverse; }
+        .feature-img { flex: 1; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); height: 350px; width: 100%; position: relative; }
+        .feature-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.5s; }
+        .feature-img:hover img { transform: scale(1.05); }
+        .feature-text { flex: 1; }
+        .feature-text h3 { font-size: 32px; margin-top: 0; margin-bottom: 20px; color: white; display: flex; align-items: center; gap: 15px; }
+        .feature-text h3 i { color: var(--primary-red); font-size: 36px; }
+        .feature-text p { font-size: 18px; color: var(--text-muted); line-height: 1.8; margin-bottom: 20px; }
+
+        /* VIP 專屬福利 */
+        .vip-perks-section { background: linear-gradient(135deg, #111, #1a0002); border-top: 1px solid #333; border-bottom: 1px solid #333; position: relative; overflow: hidden; }
+        .vip-perks-section::before { content: 'VIP'; position: absolute; font-size: 300px; font-weight: 900; color: rgba(227,0,15,0.03); top: -50px; right: -50px; z-index: 0; pointer-events: none; }
+        .perks-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; position: relative; z-index: 1; }
+        .perk-main-card { background: linear-gradient(145deg, #2a2a2a, #1a1a1a); border: 2px solid var(--primary-red); border-radius: 20px; padding: 50px; text-align: center; box-shadow: 0 20px 40px rgba(227,0,15,0.15); }
+        .perk-main-card h3 { font-size: 36px; color: white; margin-top: 0; margin-bottom: 10px; }
+        .perk-main-card .highlight-month { font-size: 60px; font-weight: 900; color: var(--primary-red); line-height: 1; margin: 20px 0; }
+        .perks-list-wrapper { display: flex; flex-direction: column; justify-content: center; }
+        .perk-item { display: flex; align-items: flex-start; gap: 20px; margin-bottom: 30px; background-color: rgba(255,255,255,0.03); padding: 20px; border-radius: 12px; border-left: 4px solid var(--gold); }
+        .perk-item i { font-size: 28px; color: var(--gold); margin-top: 5px; }
+        .perk-text h4 { margin: 0 0 5px 0; font-size: 20px; color: white; }
+        .perk-text p { margin: 0; color: var(--text-muted); font-size: 15px; }
+        .perk-text .note { font-size: 13px; color: #888; display: block; margin-top: 5px; }
+
+        /* 場館設施 (Gallery) */
+        .gallery-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+        .gallery-item { border-radius: 16px; overflow: hidden; position: relative; height: 300px; }
+        .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
+        .gallery-item:hover img { transform: scale(1.05); }
+        .gallery-overlay { position: absolute; inset: 0; background: linear-gradient(transparent 50%, rgba(0,0,0,0.9)); display: flex; align-items: flex-end; padding: 30px; }
+        .gallery-overlay h3 { margin: 0; font-size: 24px; color: white; }
+
+        /* 據點便利性 */
+        .locations-section { background-color: var(--section-bg-alt); }
+        .loc-content { display: flex; align-items: center; gap: 50px; background-color: var(--dark-bg); border-radius: 20px; padding: 40px; border: 1px solid #333; }
+        .loc-text { flex: 1; }
+        .loc-text h3 { font-size: 32px; margin-top: 0; margin-bottom: 20px; }
+        .loc-text p { font-size: 18px; color: var(--text-muted); margin-bottom: 30px; }
+        .loc-map { flex: 1; text-align: center; }
+        .loc-map img { max-width: 100%; border-radius: 12px; }
+
+        /* 雙管道開通區塊 (全新設計) */
+        .action-section { background: linear-gradient(rgba(18, 18, 18, 0.95), rgba(18, 18, 18, 0.95)), url('https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?q=80&w=2070&auto=format&fit=crop') center/cover; padding: 100px 0; border-top: 2px solid var(--primary-red); }
+        .action-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; max-width: 900px; margin: 0 auto; }
+        .action-card { background-color: rgba(30, 30, 30, 0.8); border: 1px solid #444; border-radius: 20px; padding: 50px 40px; text-align: center; backdrop-filter: blur(10px); transition: transform 0.3s, border-color 0.3s; display: flex; flex-direction: column; justify-content: space-between; }
+        .action-card:hover { transform: translateY(-10px); border-color: var(--primary-red); }
+        .action-card h3 { font-size: 28px; color: white; margin-bottom: 15px; margin-top: 0; }
+        .action-card p { color: var(--text-muted); font-size: 16px; margin-bottom: 30px; line-height: 1.8; flex-grow: 1; }
+        .action-icon { font-size: 50px; color: var(--primary-red); margin-bottom: 25px; }
+        .action-card.outline { border: 1px solid var(--text-muted); }
+        .action-card.outline:hover { border-color: white; }
+        .action-card.outline .action-icon { color: white; }
+
+        /* 頁尾 */
+        footer { background-color: #000; padding: 40px 0; text-align: center; color: #666; font-size: 14px; border-top: 1px solid #222; }
+
+        /* 響應式 */
+        @media (max-width: 900px) {
+            section { padding: 60px 0; }
+            .section-title { font-size: 28px; }
+            .hero h1 { font-size: 32px; }
+            .hero-buttons { flex-direction: column; width: 100%; padding: 0 20px; }
+            .hero-buttons .btn-primary, .hero-buttons .btn-secondary { width: 100%; }
+            .feature-row, .feature-row:nth-child(even) { flex-direction: column; gap: 30px; margin-bottom: 60px; }
+            .feature-img { height: 250px; }
+            .perks-grid, .gallery-grid, .action-grid { grid-template-columns: 1fr; gap: 30px; }
+            .loc-content { flex-direction: column; padding: 25px; }
+            .gallery-item { height: 220px; }
+            .logo span:last-child { display: none; }
+            .action-card { padding: 40px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container navbar">
+            <a href="#" class="logo">WORLD GYM <span class="company-badge">貴賓專屬</span></a>
+            <a href="#action-section" class="btn-primary" title="前往線上登記">
+                立即開通福利
+            </a>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container hero-content">
+            <div class="hero-tag"><i class="fa-solid fa-gift"></i> 您的公司為您準備了專屬健康大禮</div>
+            <h1>工作再忙，也要把健康找回來！<br>開啟你的高質感運動生活</h1>
+            <p>您的企業已為全體員工升級了最高規格的 World Gym 特約福利。<br>現在就開通您的專屬帳號，享受下班後的爆汗快感！</p>
+            
+            <div class="hero-buttons">
+                <a href="#action-section" class="btn-primary" style="font-size: 18px; padding: 16px 35px;">
+                    我要登記免費體驗 1 個月
+                </a>
+                <a href="#action-section" class="btn-secondary" style="font-size: 18px; padding: 16px 35px;">
+                    我準備好了，直接線上入會
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="benefits-section" id="benefits">
+        <div class="container">
+            <h2 class="section-title">告別疲勞，<span>運動帶來的職場超能力</span></h2>
+            <div class="section-subtitle">每天只要 30 分鐘，輕鬆擊退上班族的常見困擾</div>
+            
+            <div class="feature-row">
+                <div class="feature-img">
+                    <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?q=80&w=2069&auto=format&fit=crop" alt="舒緩肩頸痠痛">
+                </div>
+                <div class="feature-text">
+                    <h3><i class="fa-solid fa-laptop-medical"></i> 舒緩肩頸與腰背痠痛</h3>
+                    <p>久坐辦公室讓你全身僵硬、肩頸緊繃嗎？透過健身房專業的伸展區與重量訓練，能有效強化核心與背部肌群，從根本改善姿勢不良帶來的職業傷害，讓你挺直腰桿不痠痛。</p>
+                </div>
             </div>
 
-            <h1 className="text-5xl lg:text-7xl font-black leading-tight mb-8">
-              打造更健康的團隊
-              <br />
-              提升企業競爭力
-            </h1>
-
-            <p className="text-lg lg:text-xl text-gray-300 leading-relaxed mb-10 max-w-2xl">
-              透過 World Gym 企業特約合作，讓員工擁有更健康的生活習慣、
-              更穩定的工作狀態與更高的企業向心力。
-            </p>
-
-            <div className="flex flex-wrap gap-4">
-              <button className="bg-red-600 hover:bg-red-700 transition px-8 py-4 rounded-2xl text-lg font-bold shadow-2xl">
-                立即申請企業特約
-              </button>
-
-              <button className="border border-white/30 hover:bg-white hover:text-black transition px-8 py-4 rounded-2xl text-lg font-bold">
-                查看合作方案
-              </button>
+            <div class="feature-row">
+                <div class="feature-img">
+                    <img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?q=80&w=2070&auto=format&fit=crop" alt="提升專注力">
+                </div>
+                <div class="feature-text">
+                    <h3><i class="fa-solid fa-brain"></i> 提神醒腦，專注力大爆發</h3>
+                    <p>下午開會總是昏昏欲睡？規律運動能大幅促進全身血液循環，加速腦內啡分泌。運動後的清爽感不僅能讓大腦重新開機，還能激發創造力，大幅提升你的工作效率與思緒清晰度。</p>
+                </div>
             </div>
-          </div>
 
-          <div>
-            <div className="bg-white/5 border border-white/10 backdrop-blur-xl rounded-[32px] p-8 shadow-2xl">
-              <div className="grid grid-cols-2 gap-6">
-                <div className="bg-black/40 rounded-3xl p-6 border border-white/10">
-                  <div className="text-4xl font-black text-red-500 mb-2">100+</div>
-                  <div className="text-gray-300">全台據點</div>
+            <div class="feature-row">
+                <div class="feature-img">
+                    <img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?q=80&w=800&auto=format&fit=crop" alt="釋放壓力">
+                </div>
+                <div class="feature-text">
+                    <h3><i class="fa-solid fa-face-smile-beam"></i> 釋放專案壓力，睡得更香甜</h3>
+                    <p>滿檔的工作與死線讓你喘不過氣？下班後來健身房盡情揮灑汗水，或是參加一堂熱血的有氧飛輪課，能快速燃燒並代謝掉體內的壓力荷爾蒙，讓你晚上擁有高品質的深層睡眠，迎接更好的明天。</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="vip-perks-section">
+        <div class="container">
+            <h2 class="section-title" style="color: white;">公司買單！您的 <span>VIP 專屬福利</span></h2>
+            <div class="section-subtitle">因為您的公司選擇了頂級付費特約，您將享有以下絕佳優惠：</div>
+
+            <div class="perks-grid">
+                <div class="perk-main-card">
+                    <div style="color: var(--gold); font-weight: bold; letter-spacing: 2px; margin-bottom: 10px;">🌟 迎新超級大禮 🌟</div>
+                    <h3>市區型俱樂部</h3>
+                    <div class="highlight-month">1 個月</div>
+                    <h3>免費深度體驗</h3>
+                    <p style="color: var(--text-muted); font-size: 16px; margin-top: 20px;">跨館體驗更自由，頂級器材、游泳池、團體課程<br>在整整 30 天內讓您無限次使用！</p>
+                    <span style="font-size: 13px; color: #666; display: block; margin-top: 15px;">(註：此體驗限非 World Gym 現有會員之員工領取)</span>
                 </div>
 
-                <div className="bg-black/40 rounded-3xl p-6 border border-white/10">
-                  <div className="text-4xl font-black text-red-500 mb-2">21天</div>
-                  <div className="text-gray-300">免費體驗方案</div>
+                <div class="perks-list-wrapper">
+                    <div class="perk-item">
+                        <i class="fa-solid fa-hand-holding-dollar"></i>
+                        <div class="perk-text">
+                            <h4>雙免尊榮：0 元入會</h4>
+                            <p>若您於「體驗期間內」決定正式加入運動行列，我們直接為您省下所有的「入會費」與「手續費」！</p>
+                        </div>
+                    </div>
+                    
+                    <div class="perk-item">
+                        <i class="fa-solid fa-dumbbell"></i>
+                        <div class="perk-text">
+                            <h4>專屬教練課震撼價</h4>
+                            <p>想請專業教練指導？企業員工獨享單堂只要 <b>$1,488 元</b> 超值優惠。</p>
+                            <span class="note">(限 WG 具籍會員購買，每人限購一組，最高可買 12 堂)</span>
+                        </div>
+                    </div>
+
+                    <div class="perk-item">
+                        <i class="fa-solid fa-gift"></i>
+                        <div class="perk-text">
+                            <h4>現有會員同享好康</h4>
+                            <p>已經是會員了？別擔心！線上登記即可領取：<br><b>WG 零售商品 9 折券 + 100 元餐飲折抵券！</b></p>
+                            <span class="note">此外，您還能免費參加未來公司舉辦的「專屬健康挑戰賽」！</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="locations-section">
+        <div class="container">
+            <div class="loc-content">
+                <div class="loc-text">
+                    <h2 style="color: var(--primary-red); font-size: 18px; margin-bottom: 5px;">無與倫比的便利性</h2>
+                    <h3>全台超過 130 間俱樂部<br>公司旁、住家旁，隨時開練</h3>
+                    <p>不想帶充滿汗水的衣服擠捷運？World Gym 擁有全台最多的據點。您可以選擇離辦公室最近的館別，午休或下班直接去；也可以選擇離家最近的館別，週末隨時去！</p>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="margin-bottom: 10px;"><i class="fa-solid fa-circle-check" style="color: var(--primary-red); margin-right: 10px;"></i> 營業時間長，符合各班別需求</li>
+                        <li style="margin-bottom: 10px;"><i class="fa-solid fa-circle-check" style="color: var(--primary-red); margin-right: 10px;"></i> 齊全的盥洗設備，運動完清爽回家</li>
+                    </ul>
+                </div>
+                <div class="loc-map">
+                    <img src="https://images.unsplash.com/photo-1574680096145-d05b474e2155?q=80&w=800&auto=format&fit=crop" alt="全台據點地圖示意">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <h2 class="section-title">國際級運動設施 <span>由你盡情探索</span></h2>
+            <div class="section-subtitle">無論你是重訓愛好者，還是喜歡熱鬧的團體課，這裡都有你的舞台</div>
+            
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=800&auto=format&fit=crop" alt="重訓器材">
+                    <div class="gallery-overlay"><h3>頂尖重訓器材區</h3></div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?q=80&w=800&auto=format&fit=crop" alt="有氧課程">
+                    <div class="gallery-overlay"><h3>百堂團體有氧課程</h3></div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?q=80&w=800&auto=format&fit=crop" alt="心肺有氧區">
+                    <div class="gallery-overlay"><h3>心肺有氧訓練區</h3></div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1600965962361-9035dbfd1c50?q=80&w=800&auto=format&fit=crop" alt="室內溫水泳池">
+                    <div class="gallery-overlay"><h3>室內溫水泳池與 SPA</h3></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="action-section" id="action-section">
+        <div class="container">
+            <h2 class="section-title" style="color: white; margin-bottom: 20px;">選擇您的 <span>專屬開通管道</span></h2>
+            <p class="section-subtitle" style="color: #ddd;">無論您是想先體驗環境，還是已經準備好加入運動行列，請選擇適合您的方案：</p>
+            
+            <div class="action-grid">
+                
+                <div class="action-card">
+                    <div class="action-icon"><i class="fa-solid fa-ticket"></i></div>
+                    <h3>免費體驗 1 個月</h3>
+                    <p>「我想先看看環境再決定！」<br>線上登記後，專員將發送 30 天市區型俱樂部免費體驗憑證給您，憑企業識別證即可入場享受所有設施。</p>
+                    <a href="https://example.com/trial" target="_blank" class="btn-primary" style="width: 100%; padding: 15px;">
+                        👉 登記免費體驗 <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 14px; margin-left: 5px;"></i>
+                    </a>
                 </div>
 
-                <div className="bg-black/40 rounded-3xl p-6 border border-white/10">
-                  <div className="text-4xl font-black text-red-500 mb-2">1對1</div>
-                  <div className="text-gray-300">教練指導課程</div>
+                <div class="action-card outline">
+                    <div class="action-icon"><i class="fa-solid fa-bolt"></i></div>
+                    <h3>直接線上入會</h3>
+                    <p>「我準備好要運動了！」<br>無須等待體驗，直接辦理線上入會！我們將直接為您免除「入會費」與「手續費」，並享有教練課專屬購課優惠。</p>
+                    <a href="https://example.com/join" target="_blank" class="btn-secondary" style="width: 100%; padding: 15px;">
+                        ⚡ 立即線上入會 <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 14px; margin-left: 5px;"></i>
+                    </a>
                 </div>
 
-                <div className="bg-black/40 rounded-3xl p-6 border border-white/10">
-                  <div className="text-4xl font-black text-red-500 mb-2">企業</div>
-                  <div className="text-gray-300">專屬合作方案</div>
-                </div>
-              </div>
             </div>
-          </div>
+            
+            <p style="text-align: center; color: #888; font-size: 14px; margin-top: 40px;">*點擊上方按鈕將另開安全新視窗，請備妥您的公司識別證或相關證明文件以利後續審核作業。</p>
         </div>
-      </section>
+    </section>
 
-      {/* WHY FITNESS */}
-      <section className="max-w-7xl mx-auto px-6 lg:px-10 py-24">
-        <div className="text-center mb-16">
-          <div className="text-red-500 font-bold tracking-[0.3em] mb-4">
-            WHY WORLD GYM
-          </div>
-
-          <h2 className="text-4xl lg:text-5xl font-black mb-6">
-            員工健身，對企業有什麼好處？
-          </h2>
-
-          <p className="text-gray-400 max-w-3xl mx-auto text-lg leading-relaxed">
-            健康的員工，能有效提升企業整體戰力與工作效率。
-          </p>
+    <footer>
+        <div class="container">
+            <p>WORLD GYM 企業專屬特約福利網頁。本活動由您的企業與 World Gym 聯合提供。</p>
+            <p>&copy; 2026 World Gym Taiwan. All rights reserved.</p>
         </div>
+    </footer>
 
-        <div className="grid md:grid-cols-2 xl:grid-cols-4 gap-6">
-          {[
-            {
-              title: '提升工作效率',
-              desc: '規律運動有助於專注力提升與精神狀態穩定。',
-            },
-            {
-              title: '降低員工壓力',
-              desc: '透過健身舒緩工作壓力，改善身心狀況。',
-            },
-            {
-              title: '增加企業向心力',
-              desc: '共同健康文化能提升員工認同與團隊凝聚。',
-            },
-            {
-              title: '打造企業形象',
-              desc: '重視員工健康的企業，更容易吸引優秀人才。',
-            },
-          ].map((item, index) => (
-            <div
-              key={index}
-              className="bg-white/5 border border-white/10 rounded-[28px] p-8 hover:border-red-500/40 transition"
-            >
-              <div className="w-14 h-14 rounded-2xl bg-red-600 mb-6 flex items-center justify-center text-2xl font-black">
-                {index + 1}
-              </div>
-
-              <h3 className="text-2xl font-bold mb-4">{item.title}</h3>
-              <p className="text-gray-400 leading-relaxed">{item.desc}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* PLAN SECTION */}
-      <section className="bg-zinc-950 border-y border-white/10">
-        <div className="max-w-7xl mx-auto px-6 lg:px-10 py-24">
-          <div className="text-center mb-16">
-            <div className="text-red-500 font-bold tracking-[0.3em] mb-4">
-              PARTNERSHIP PLAN
-            </div>
-
-            <h2 className="text-4xl lg:text-5xl font-black mb-6">
-              企業特約方案
-            </h2>
-          </div>
-
-          <div className="grid lg:grid-cols-2 gap-8">
-            {/* FREE */}
-            <div className="bg-black rounded-[32px] border border-white/10 overflow-hidden">
-              <div className="bg-white text-black px-8 py-6">
-                <div className="text-sm font-bold mb-2">FREE PLAN</div>
-                <div className="text-4xl font-black">免費特約</div>
-              </div>
-
-              <div className="p-8">
-                <ul className="space-y-5 mb-10">
-                  {freeBenefits.map((item, index) => (
-                    <li key={index} className="flex gap-4 items-start">
-                      <div className="min-w-6 h-6 rounded-full bg-red-600 mt-1" />
-                      <span className="text-gray-200 leading-relaxed">{item}</span>
-                    </li>
-                  ))}
-                </ul>
-
-                <div className="bg-zinc-900 border border-white/10 rounded-3xl p-6">
-                  <div className="text-lg font-bold mb-2">合作流程</div>
-                  <p className="text-gray-400 leading-relaxed">
-                    線上填寫企業資料 → 系統審核 → 發送企業專屬員工登記頁面。
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* PAID */}
-            <div className="bg-black rounded-[32px] border border-red-600 overflow-hidden shadow-[0_0_60px_rgba(220,38,38,0.15)]">
-              <div className="bg-red-600 text-white px-8 py-6">
-                <div className="text-sm font-bold mb-2">PREMIUM PLAN</div>
-                <div className="text-4xl font-black">付費特約</div>
-              </div>
-
-              <div className="p-8">
-                <ul className="space-y-5 mb-10">
-                  {paidBenefits.map((item, index) => (
-                    <li key={index} className="flex gap-4 items-start">
-                      <div className="min-w-6 h-6 rounded-full bg-red-600 mt-1" />
-                      <span className="text-gray-200 leading-relaxed">{item}</span>
-                    </li>
-                  ))}
-                </ul>
-
-                <div className="bg-zinc-900 border border-white/10 rounded-3xl p-6">
-                  <div className="text-lg font-bold mb-2">合作流程</div>
-                  <p className="text-gray-400 leading-relaxed">
-                    企業填寫需求 → 專人致電聯繫 → 客製化合作與企業健康方案。
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* REWARD TABLE */}
-      <section className="max-w-7xl mx-auto px-6 lg:px-10 py-24">
-        <div className="text-center mb-16">
-          <div className="text-red-500 font-bold tracking-[0.3em] mb-4">
-            GUARANTEE REWARD
-          </div>
-
-          <h2 className="text-4xl lg:text-5xl font-black mb-6">
-            付費特約保證回饋
-          </h2>
-        </div>
-
-        <div className="overflow-hidden rounded-[32px] border border-white/10 bg-zinc-900">
-          <div className="hidden lg:grid grid-cols-3 bg-red-600 text-white font-bold text-xl">
-            <div className="p-6">員工規模</div>
-            <div className="p-6">投資金額</div>
-            <div className="p-6">保證回饋</div>
-          </div>
-
-          {rewards.map((item, index) => (
-            <div
-              key={index}
-              className="grid lg:grid-cols-3 border-t border-white/10"
-            >
-              <div className="p-6 lg:p-8 text-2xl font-bold flex items-center">
-                {item.size}
-              </div>
-
-              <div className="p-6 lg:p-8 text-2xl font-black text-red-500 flex items-center">
-                {item.amount}
-              </div>
-
-              <div className="p-6 lg:p-8">
-                <div className="text-xl font-bold mb-2">{item.reward}</div>
-                <div className="text-yellow-400 text-lg font-semibold">
-                  {item.detail}
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* LOCATIONS */}
-      <section className="bg-zinc-950 border-y border-white/10">
-        <div className="max-w-7xl mx-auto px-6 lg:px-10 py-24">
-          <div className="text-center mb-16">
-            <div className="text-red-500 font-bold tracking-[0.3em] mb-4">
-              WORLD GYM LOCATIONS
-            </div>
-
-            <h2 className="text-4xl lg:text-5xl font-black mb-6">
-              全台 World Gym 據點
-            </h2>
-
-            <p className="text-gray-400 text-lg max-w-3xl mx-auto">
-              後續可串接 Google Maps 或 World Gym 各分店資訊。
-            </p>
-          </div>
-
-          <div className="bg-black rounded-[36px] border border-white/10 h-[500px] flex items-center justify-center text-center p-10">
-            <div>
-              <div className="text-3xl lg:text-5xl font-black mb-6 text-red-500">
-                MAP AREA
-              </div>
-
-              <p className="text-gray-400 text-lg leading-relaxed max-w-2xl">
-                這裡可以放置台灣地圖、World Gym 據點資訊、
-                分店搜尋功能或地區篩選功能。
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* CONTACT */}
-      <section className="max-w-7xl mx-auto px-6 lg:px-10 py-24">
-        <div className="grid lg:grid-cols-2 gap-12 items-start">
-          <div>
-            <div className="text-red-500 font-bold tracking-[0.3em] mb-4">
-              CONTACT US
-            </div>
-
-            <h2 className="text-4xl lg:text-5xl font-black mb-8 leading-tight">
-              想與 World Gym
-              <br />
-              進一步合作？
-            </h2>
-
-            <p className="text-gray-400 text-lg leading-relaxed mb-10">
-              若企業有講座、員工健康日、品牌合作、健身活動等需求，
-              歡迎留下資訊，我們將由專人與您聯繫。
-            </p>
-
-            <div className="space-y-6">
-              <div className="bg-white/5 border border-white/10 rounded-3xl p-6">
-                <div className="text-lg font-bold mb-2">企業特約合作</div>
-                <div className="text-gray-400">免費／付費企業合作方案</div>
-              </div>
-
-              <div className="bg-white/5 border border-white/10 rounded-3xl p-6">
-                <div className="text-lg font-bold mb-2">企業健康活動</div>
-                <div className="text-gray-400">健康講座、挑戰賽、企業運動日</div>
-              </div>
-
-              <div className="bg-white/5 border border-white/10 rounded-3xl p-6">
-                <div className="text-lg font-bold mb-2">品牌異業合作</div>
-                <div className="text-gray-400">跨品牌行銷與企業聯名合作</div>
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-zinc-950 border border-white/10 rounded-[36px] p-8 lg:p-10">
-            <div className="grid gap-6">
-              <div>
-                <label className="block text-sm font-semibold mb-3 text-gray-300">
-                  公司名稱
-                </label>
-                <input
-                  className="w-full bg-black border border-white/10 rounded-2xl px-5 py-4 outline-none focus:border-red-500"
-                  placeholder="請輸入公司名稱"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-semibold mb-3 text-gray-300">
-                  聯絡人姓名
-                </label>
-                <input
-                  className="w-full bg-black border border-white/10 rounded-2xl px-5 py-4 outline-none focus:border-red-500"
-                  placeholder="請輸入聯絡人姓名"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-semibold mb-3 text-gray-300">
-                  聯絡電話
-                </label>
-                <input
-                  className="w-full bg-black border border-white/10 rounded-2xl px-5 py-4 outline-none focus:border-red-500"
-                  placeholder="請輸入聯絡電話"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-semibold mb-3 text-gray-300">
-                  E-mail
-                </label>
-                <input
-                  className="w-full bg-black border border-white/10 rounded-2xl px-5 py-4 outline-none focus:border-red-500"
-                  placeholder="請輸入電子信箱"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-semibold mb-3 text-gray-300">
-                  合作需求
-                </label>
-                <textarea
-                  rows={5}
-                  className="w-full bg-black border border-white/10 rounded-2xl px-5 py-4 outline-none focus:border-red-500"
-                  placeholder="請輸入企業合作需求"
-                />
-              </div>
-
-              <button className="bg-red-600 hover:bg-red-700 transition rounded-2xl py-5 text-lg font-black mt-2">
-                送出合作需求
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* FOOTER */}
-      <footer className="border-t border-white/10 bg-black">
-        <div className="max-w-7xl mx-auto px-6 lg:px-10 py-10 flex flex-col lg:flex-row justify-between gap-6 items-center">
-          <div>
-            <div className="text-2xl font-black text-red-500 mb-2">
-              WORLD GYM
-            </div>
-            <div className="text-gray-500">
-              Corporate Partnership Landing Page Template
-            </div>
-          </div>
-
-          <div className="text-gray-500 text-sm text-center lg:text-right leading-relaxed">
-            後續可串接：線上合約簽署／CRM／Google Maps／Email 通知／員工專屬頁面
-          </div>
-        </div>
-      </footer>
-    </div>
-  );
-}
+</body>
+</html>
