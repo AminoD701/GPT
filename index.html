@@ -1,0 +1,416 @@
+export default function WorldGymEnterprisePage() {
+  const freeBenefits = [
+    '企業員工享有 21 天單館俱樂部體驗（限非 WG 現有會員）',
+    '企業員工 InBody 檢測 1 次',
+    '企業員工加入 World Gym 免收入會費',
+    '入會享有一對一體適能教練指導課程一堂',
+  ];
+
+  const paidBenefits = [
+    '企業員工享有 1 個月市區型俱樂部體驗（限非 WG 現有會員）',
+    '體驗期間入會享有免收入會費與手續費優惠',
+    '協助企業舉辦健康挑戰賽活動',
+    '依照員工規模保證回饋：會籍＋教練課組數',
+  ];
+
+  const rewards = [
+    {
+      size: '1 - 50人',
+      amount: '$20,000 元',
+      reward: '半年單館會籍 + 1 堂教練課（共 1 組）',
+      detail: '($1,288*6+$2,088=$9,816元)',
+    },
+    {
+      size: '51 - 100人',
+      amount: '$50,000 元',
+      reward: '半年單館會籍 + 1 堂教練課（共 3 組）',
+      detail: '($9,816*3=$29,448元)',
+    },
+    {
+      size: '101 - 500人',
+      amount: '$80,000 元',
+      reward: '半年單館會籍 + 1 堂教練課（共 5 組）',
+      detail: '($9,816*5=$49,080元)',
+    },
+    {
+      size: '501人以上',
+      amount: '$120,000 元',
+      reward: '一年單館會籍 + 1 堂教練課（共 5 組）',
+      detail: '($17,544*5=$87,720元)',
+    },
+  ];
+
+  return (
+    <div className="bg-black text-white min-h-screen font-sans">
+      {/* HERO */}
+      <section className="relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-red-700 via-black to-black opacity-90" />
+
+        <div className="relative max-w-7xl mx-auto px-6 lg:px-10 py-24 lg:py-36 grid lg:grid-cols-2 gap-14 items-center">
+          <div>
+            <div className="inline-block bg-red-600 text-sm px-4 py-2 rounded-full font-semibold tracking-wide mb-6">
+              World Gym 企業健康合作方案
+            </div>
+
+            <h1 className="text-5xl lg:text-7xl font-black leading-tight mb-8">
+              打造更健康的團隊
+              <br />
+              提升企業競爭力
+            </h1>
+
+            <p className="text-lg lg:text-xl text-gray-300 leading-relaxed mb-10 max-w-2xl">
+              透過 World Gym 企業特約合作，讓員工擁有更健康的生活習慣、
+              更穩定的工作狀態與更高的企業向心力。
+            </p>
+
+            <div className="flex flex-wrap gap-4">
+              <button className="bg-red-600 hover:bg-red-700 transition px-8 py-4 rounded-2xl text-lg font-bold shadow-2xl">
+                立即申請企業特約
+              </button>
+
+              <button className="border border-white/30 hover:bg-white hover:text-black transition px-8 py-4 rounded-2xl text-lg font-bold">
+                查看合作方案
+              </button>
+            </div>
+          </div>
+
+          <div>
+            <div className="bg-white/5 border border-white/10 backdrop-blur-xl rounded-[32px] p-8 shadow-2xl">
+              <div className="grid grid-cols-2 gap-6">
+                <div className="bg-black/40 rounded-3xl p-6 border border-white/10">
+                  <div className="text-4xl font-black text-red-500 mb-2">100+</div>
+                  <div className="text-gray-300">全台據點</div>
+                </div>
+
+                <div className="bg-black/40 rounded-3xl p-6 border border-white/10">
+                  <div className="text-4xl font-black text-red-500 mb-2">21天</div>
+                  <div className="text-gray-300">免費體驗方案</div>
+                </div>
+
+                <div className="bg-black/40 rounded-3xl p-6 border border-white/10">
+                  <div className="text-4xl font-black text-red-500 mb-2">1對1</div>
+                  <div className="text-gray-300">教練指導課程</div>
+                </div>
+
+                <div className="bg-black/40 rounded-3xl p-6 border border-white/10">
+                  <div className="text-4xl font-black text-red-500 mb-2">企業</div>
+                  <div className="text-gray-300">專屬合作方案</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* WHY FITNESS */}
+      <section className="max-w-7xl mx-auto px-6 lg:px-10 py-24">
+        <div className="text-center mb-16">
+          <div className="text-red-500 font-bold tracking-[0.3em] mb-4">
+            WHY WORLD GYM
+          </div>
+
+          <h2 className="text-4xl lg:text-5xl font-black mb-6">
+            員工健身，對企業有什麼好處？
+          </h2>
+
+          <p className="text-gray-400 max-w-3xl mx-auto text-lg leading-relaxed">
+            健康的員工，能有效提升企業整體戰力與工作效率。
+          </p>
+        </div>
+
+        <div className="grid md:grid-cols-2 xl:grid-cols-4 gap-6">
+          {[
+            {
+              title: '提升工作效率',
+              desc: '規律運動有助於專注力提升與精神狀態穩定。',
+            },
+            {
+              title: '降低員工壓力',
+              desc: '透過健身舒緩工作壓力，改善身心狀況。',
+            },
+            {
+              title: '增加企業向心力',
+              desc: '共同健康文化能提升員工認同與團隊凝聚。',
+            },
+            {
+              title: '打造企業形象',
+              desc: '重視員工健康的企業，更容易吸引優秀人才。',
+            },
+          ].map((item, index) => (
+            <div
+              key={index}
+              className="bg-white/5 border border-white/10 rounded-[28px] p-8 hover:border-red-500/40 transition"
+            >
+              <div className="w-14 h-14 rounded-2xl bg-red-600 mb-6 flex items-center justify-center text-2xl font-black">
+                {index + 1}
+              </div>
+
+              <h3 className="text-2xl font-bold mb-4">{item.title}</h3>
+              <p className="text-gray-400 leading-relaxed">{item.desc}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* PLAN SECTION */}
+      <section className="bg-zinc-950 border-y border-white/10">
+        <div className="max-w-7xl mx-auto px-6 lg:px-10 py-24">
+          <div className="text-center mb-16">
+            <div className="text-red-500 font-bold tracking-[0.3em] mb-4">
+              PARTNERSHIP PLAN
+            </div>
+
+            <h2 className="text-4xl lg:text-5xl font-black mb-6">
+              企業特約方案
+            </h2>
+          </div>
+
+          <div className="grid lg:grid-cols-2 gap-8">
+            {/* FREE */}
+            <div className="bg-black rounded-[32px] border border-white/10 overflow-hidden">
+              <div className="bg-white text-black px-8 py-6">
+                <div className="text-sm font-bold mb-2">FREE PLAN</div>
+                <div className="text-4xl font-black">免費特約</div>
+              </div>
+
+              <div className="p-8">
+                <ul className="space-y-5 mb-10">
+                  {freeBenefits.map((item, index) => (
+                    <li key={index} className="flex gap-4 items-start">
+                      <div className="min-w-6 h-6 rounded-full bg-red-600 mt-1" />
+                      <span className="text-gray-200 leading-relaxed">{item}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                <div className="bg-zinc-900 border border-white/10 rounded-3xl p-6">
+                  <div className="text-lg font-bold mb-2">合作流程</div>
+                  <p className="text-gray-400 leading-relaxed">
+                    線上填寫企業資料 → 系統審核 → 發送企業專屬員工登記頁面。
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* PAID */}
+            <div className="bg-black rounded-[32px] border border-red-600 overflow-hidden shadow-[0_0_60px_rgba(220,38,38,0.15)]">
+              <div className="bg-red-600 text-white px-8 py-6">
+                <div className="text-sm font-bold mb-2">PREMIUM PLAN</div>
+                <div className="text-4xl font-black">付費特約</div>
+              </div>
+
+              <div className="p-8">
+                <ul className="space-y-5 mb-10">
+                  {paidBenefits.map((item, index) => (
+                    <li key={index} className="flex gap-4 items-start">
+                      <div className="min-w-6 h-6 rounded-full bg-red-600 mt-1" />
+                      <span className="text-gray-200 leading-relaxed">{item}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                <div className="bg-zinc-900 border border-white/10 rounded-3xl p-6">
+                  <div className="text-lg font-bold mb-2">合作流程</div>
+                  <p className="text-gray-400 leading-relaxed">
+                    企業填寫需求 → 專人致電聯繫 → 客製化合作與企業健康方案。
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* REWARD TABLE */}
+      <section className="max-w-7xl mx-auto px-6 lg:px-10 py-24">
+        <div className="text-center mb-16">
+          <div className="text-red-500 font-bold tracking-[0.3em] mb-4">
+            GUARANTEE REWARD
+          </div>
+
+          <h2 className="text-4xl lg:text-5xl font-black mb-6">
+            付費特約保證回饋
+          </h2>
+        </div>
+
+        <div className="overflow-hidden rounded-[32px] border border-white/10 bg-zinc-900">
+          <div className="hidden lg:grid grid-cols-3 bg-red-600 text-white font-bold text-xl">
+            <div className="p-6">員工規模</div>
+            <div className="p-6">投資金額</div>
+            <div className="p-6">保證回饋</div>
+          </div>
+
+          {rewards.map((item, index) => (
+            <div
+              key={index}
+              className="grid lg:grid-cols-3 border-t border-white/10"
+            >
+              <div className="p-6 lg:p-8 text-2xl font-bold flex items-center">
+                {item.size}
+              </div>
+
+              <div className="p-6 lg:p-8 text-2xl font-black text-red-500 flex items-center">
+                {item.amount}
+              </div>
+
+              <div className="p-6 lg:p-8">
+                <div className="text-xl font-bold mb-2">{item.reward}</div>
+                <div className="text-yellow-400 text-lg font-semibold">
+                  {item.detail}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* LOCATIONS */}
+      <section className="bg-zinc-950 border-y border-white/10">
+        <div className="max-w-7xl mx-auto px-6 lg:px-10 py-24">
+          <div className="text-center mb-16">
+            <div className="text-red-500 font-bold tracking-[0.3em] mb-4">
+              WORLD GYM LOCATIONS
+            </div>
+
+            <h2 className="text-4xl lg:text-5xl font-black mb-6">
+              全台 World Gym 據點
+            </h2>
+
+            <p className="text-gray-400 text-lg max-w-3xl mx-auto">
+              後續可串接 Google Maps 或 World Gym 各分店資訊。
+            </p>
+          </div>
+
+          <div className="bg-black rounded-[36px] border border-white/10 h-[500px] flex items-center justify-center text-center p-10">
+            <div>
+              <div className="text-3xl lg:text-5xl font-black mb-6 text-red-500">
+                MAP AREA
+              </div>
+
+              <p className="text-gray-400 text-lg leading-relaxed max-w-2xl">
+                這裡可以放置台灣地圖、World Gym 據點資訊、
+                分店搜尋功能或地區篩選功能。
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CONTACT */}
+      <section className="max-w-7xl mx-auto px-6 lg:px-10 py-24">
+        <div className="grid lg:grid-cols-2 gap-12 items-start">
+          <div>
+            <div className="text-red-500 font-bold tracking-[0.3em] mb-4">
+              CONTACT US
+            </div>
+
+            <h2 className="text-4xl lg:text-5xl font-black mb-8 leading-tight">
+              想與 World Gym
+              <br />
+              進一步合作？
+            </h2>
+
+            <p className="text-gray-400 text-lg leading-relaxed mb-10">
+              若企業有講座、員工健康日、品牌合作、健身活動等需求，
+              歡迎留下資訊，我們將由專人與您聯繫。
+            </p>
+
+            <div className="space-y-6">
+              <div className="bg-white/5 border border-white/10 rounded-3xl p-6">
+                <div className="text-lg font-bold mb-2">企業特約合作</div>
+                <div className="text-gray-400">免費／付費企業合作方案</div>
+              </div>
+
+              <div className="bg-white/5 border border-white/10 rounded-3xl p-6">
+                <div className="text-lg font-bold mb-2">企業健康活動</div>
+                <div className="text-gray-400">健康講座、挑戰賽、企業運動日</div>
+              </div>
+
+              <div className="bg-white/5 border border-white/10 rounded-3xl p-6">
+                <div className="text-lg font-bold mb-2">品牌異業合作</div>
+                <div className="text-gray-400">跨品牌行銷與企業聯名合作</div>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-zinc-950 border border-white/10 rounded-[36px] p-8 lg:p-10">
+            <div className="grid gap-6">
+              <div>
+                <label className="block text-sm font-semibold mb-3 text-gray-300">
+                  公司名稱
+                </label>
+                <input
+                  className="w-full bg-black border border-white/10 rounded-2xl px-5 py-4 outline-none focus:border-red-500"
+                  placeholder="請輸入公司名稱"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-semibold mb-3 text-gray-300">
+                  聯絡人姓名
+                </label>
+                <input
+                  className="w-full bg-black border border-white/10 rounded-2xl px-5 py-4 outline-none focus:border-red-500"
+                  placeholder="請輸入聯絡人姓名"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-semibold mb-3 text-gray-300">
+                  聯絡電話
+                </label>
+                <input
+                  className="w-full bg-black border border-white/10 rounded-2xl px-5 py-4 outline-none focus:border-red-500"
+                  placeholder="請輸入聯絡電話"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-semibold mb-3 text-gray-300">
+                  E-mail
+                </label>
+                <input
+                  className="w-full bg-black border border-white/10 rounded-2xl px-5 py-4 outline-none focus:border-red-500"
+                  placeholder="請輸入電子信箱"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-semibold mb-3 text-gray-300">
+                  合作需求
+                </label>
+                <textarea
+                  rows={5}
+                  className="w-full bg-black border border-white/10 rounded-2xl px-5 py-4 outline-none focus:border-red-500"
+                  placeholder="請輸入企業合作需求"
+                />
+              </div>
+
+              <button className="bg-red-600 hover:bg-red-700 transition rounded-2xl py-5 text-lg font-black mt-2">
+                送出合作需求
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* FOOTER */}
+      <footer className="border-t border-white/10 bg-black">
+        <div className="max-w-7xl mx-auto px-6 lg:px-10 py-10 flex flex-col lg:flex-row justify-between gap-6 items-center">
+          <div>
+            <div className="text-2xl font-black text-red-500 mb-2">
+              WORLD GYM
+            </div>
+            <div className="text-gray-500">
+              Corporate Partnership Landing Page Template
+            </div>
+          </div>
+
+          <div className="text-gray-500 text-sm text-center lg:text-right leading-relaxed">
+            後續可串接：線上合約簽署／CRM／Google Maps／Email 通知／員工專屬頁面
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
+}
