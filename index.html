@@ -198,6 +198,23 @@
     .rune-card.t1 { background:linear-gradient(145deg,rgba(42,34,69,.25),rgba(11,13,22,.75)); }
     .rune-badge.s0 { letter-spacing:.06em; }
     .rune-card .rune-priority { color:#f0c979; }
+    .rune-landing-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; }
+    .rune-landing-card { min-height:170px; display:flex; flex-direction:column; justify-content:space-between; padding:22px; text-align:left; color:var(--text); border:1px solid color-mix(in srgb,var(--category-accent) 42%,transparent); border-left:4px solid var(--category-accent); border-radius:17px; background:radial-gradient(circle at 85% 10%,color-mix(in srgb,var(--category-accent) 16%,transparent),transparent 45%),linear-gradient(145deg,rgba(31,34,49,.92),rgba(13,15,25,.96)); box-shadow:0 16px 32px rgba(0,0,0,.16); transition:transform .22s,border-color .22s,box-shadow .22s; }
+    .rune-landing-card:hover,.rune-landing-card:focus-visible { transform:translateY(-4px); border-color:var(--category-accent); box-shadow:0 20px 40px rgba(0,0,0,.28),0 0 20px color-mix(in srgb,var(--category-accent) 18%,transparent); outline:0; }
+    .rune-landing-icon { color:var(--category-accent); font-size:30px; }
+    .rune-landing-card h3 { margin:12px 0 5px; font-size:24px; }
+    .rune-landing-card p { margin:0; color:var(--muted); line-height:1.65; font-size:13px; }
+    .rune-landing-foot { display:flex; justify-content:space-between; gap:10px; margin-top:18px; color:var(--category-accent); font-size:12px; }
+    .rune-category-back { margin-bottom:2px; }
+    .rune-anchor-nav { display:flex; gap:8px; overflow-x:auto; padding:4px; position:sticky; top:8px; z-index:5; border:1px solid rgba(255,255,255,.08); border-radius:13px; background:rgba(9,10,16,.9); backdrop-filter:blur(12px); scrollbar-width:thin; }
+    .rune-anchor-nav a { flex:none; padding:8px 11px; border-radius:9px; color:var(--muted); text-decoration:none; font-size:12px; white-space:nowrap; }
+    .rune-anchor-nav a:hover,.rune-anchor-nav a:focus-visible { color:#fff1cf; background:rgba(215,181,109,.13); outline:0; }
+    .rune-weapon-note { margin:0 0 14px; color:var(--muted); line-height:1.7; font-size:12px; }
+    .rune-role-badge { display:inline-flex; margin:10px 0 0; padding:4px 8px; border-radius:999px; color:#f1ddae; border:1px solid rgba(215,181,109,.34); background:rgba(215,181,109,.1); font-size:11px; }
+    .rune-card.weapon-main { border-color:rgba(215,181,109,.7); box-shadow:0 0 16px rgba(215,181,109,.12); }
+    .rune-card.weapon-alt { border-color:rgba(154,130,216,.55); }
+    @media (max-width:900px) { .rune-landing-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+    @media (max-width:700px) { .rune-landing-grid { grid-template-columns:1fr; } .rune-landing-card { min-height:145px; } .rune-anchor-nav { top:4px; } }
     @media (max-width:700px) { .rune-quota-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
     .rune-condition { display:inline-flex; margin-top:12px; padding:5px 8px; color:var(--muted); border:1px solid rgba(255,255,255,.1); border-radius:999px; font-size:11px; }
     .rune-note { margin-top:12px!important; color:rgba(168,170,181,.78)!important; font-size:11px!important; }
@@ -332,7 +349,7 @@
     const RUNE_PART_TARGETS = { '飾品':3, '防具':5, '武器':2, '徽章':1 };
     function runeGroupRows(rows) { const groups=new Map(); rows.forEach(row=>{ const part=firstValue(row,['裝備部位','部位','part'])||'其他'; if(!groups.has(part))groups.set(part,[]); groups.get(part).push(row); }); return [...groups.entries()].sort((a,b)=>Math.min(...a[1].map(runePriority))-Math.min(...b[1].map(runePriority))||a[0].localeCompare(b[0])); }
     function runePartCounts(rows) { return rows.reduce((counts,row)=>{ const part=firstValue(row,['裝備部位','部位','part'])||'其他'; counts[part]=(counts[part]||0)+1; return counts; },{}); }
-    function runeQuotaMarkup(rows) { const counts=runePartCounts(rows); const items=Object.entries(RUNE_PART_TARGETS).map(([part,target])=>{ const actual=counts[part]||0; const missing=Math.max(0,target-actual); return `<div class="rune-quota-item ${missing?'missing':''}"><strong>${part}</strong><span>${actual} / ${target}${missing?` · 尚缺 ${missing}`:' · 已達標'}</span></div>`; }).join(''); const missingParts=Object.entries(RUNE_PART_TARGETS).filter(([part,target])=>(counts[part]||0)<target).map(([part,target])=>`${part} 尚缺 ${target-(counts[part]||0)} 筆`); return `<section class="rune-quota"><h3>建議配裝數量</h3><div class="rune-quota-grid">${items}</div><p class="rune-quota-note">每職業目標：飾品 3、防具 5、武器 2、徽章 1。實際資料與入手順序完全以 Google Sheet 為準；武器會依優先度與職業需求排列，不會固定放在最後。${missingParts.length?`目前來源資料尚未補足：${missingParts.join('、')}。`:''}</p></section>`; }
+    function runeQuotaMarkup(rows) { const counts=runePartCounts(rows); const items=Object.entries(RUNE_PART_TARGETS).map(([part,target])=>{ const actual=counts[part]||0; const missing=Math.max(0,target-actual); return `<div class="rune-quota-item ${missing?'missing':''}"><strong>${part}</strong><span>${actual} / ${target}${missing?` · 尚缺 ${missing}`:' · 已達標'}</span></div>`; }).join(''); const missingParts=Object.entries(RUNE_PART_TARGETS).filter(([part,target])=>(counts[part]||0)<target).map(([part,target])=>`${part} 尚缺 ${target-(counts[part]||0)} 筆`); return `<section class="rune-quota"><h3>建議配裝數量</h3><div class="rune-quota-grid">${items}</div><p class="rune-quota-note">每職業目標：飾品 3、防具 5、武器 2、徽章 1。實際資料與入手順序完全以 Google Sheet 為準；武器區固定放在頁面最後，但區內主推與替代仍以試算表順位呈現。${missingParts.length?`目前來源資料尚未補足：${missingParts.join('、')}。`:''}</p></section>`; }
     function runeBadgeMarkup(row) { const tier=runeTier(row); const s0=isChecked(firstValue(row,['S0限定','S0限定?','s0'])); const name=firstValue(row,['符文名稱','名稱','rune','name']); const condition=firstValue(row,['使用條件','條件','condition']); const late=name==='千把劍的刻印'||condition.includes('多個劍類職業'); return `<div class="rune-badges"><span class="rune-badge ${tier.toLowerCase()}">${tier} ${tier==='T0'?'核心':'次選'}</span>${s0?'<span class="rune-badge s0">◆ S0限定</span>':''}${late?'<span class="rune-badge late">後期養成</span>':''}</div>`; }
     function legendaryRuneInfo(row) { const name=firstValue(row,['符文名稱','名稱','rune','name']); return LEGENDARY_RUNE_DATABASE.find(item=>cleanValue(item['符文名稱'])===name) || null; }
     function runeCardMarkup(row) { const name=firstValue(row,['符文名稱','名稱','rune','name'])||STATUS_INCOMPLETE; const reason=firstValue(row,['推薦理由','理由','reason'])||STATUS_INCOMPLETE; const condition=firstValue(row,['使用條件','條件','condition']); const note=firstValue(row,['備註','note']); const tier=runeTier(row); const info=legendaryRuneInfo(row); return `<article class="rune-card ${tier.toLowerCase()}"><div class="rune-card-top">${runeBadgeMarkup(row)}<span class="rune-priority">入手優先度 #${runePriority(row)===999999?'—':runePriority(row)}</span></div><h4>${escapeHtml(name)}</h4><p>${escapeHtml(reason)}</p>${info?.['技能效果']?`<details class="rune-effect"><summary>查看遊戲效果</summary><p>${escapeHtml(info['技能效果'])}</p></details>`:''}${condition?`<span class="rune-condition">${escapeHtml(condition)}</span>`:''}${note?`<details class="rune-note"><summary>更多資訊</summary><p class="rune-note">${escapeHtml(note)}</p></details>`:''}</article>`; }
@@ -344,7 +361,7 @@
       '弓手':'弓箭系','弩手':'弓箭系','長弓手':'弓箭系',
       '治癒師':'治癒系','祭司':'治癒系','修道士':'治癒系',
       '吟遊詩人':'音樂系','樂師':'音樂系','舞者':'音樂系',
-      '盜賊':'近戰敏捷系','雙刀客':'近戰敏捷系','格鬥家':'近戰敏捷系'
+      '盜賊':'敏捷近戰系','雙刀客':'敏捷近戰系','格鬥家':'敏捷近戰系'
     };
     const CATEGORY_META = {
       '戰士系':{icon:'⚔',description:'近距離物理輸出・強擊・連段',accent:'#c87958'},
@@ -352,7 +369,7 @@
       '弓箭系':{icon:'🏹',description:'遠距離輸出・射擊・單體爆發',accent:'#67a990'},
       '治癒系':{icon:'✦',description:'治療・輔助・神聖系技能',accent:'#d8c789'},
       '音樂系':{icon:'♫',description:'Buff・團隊增益・節奏技能',accent:'#c27ba7'},
-      '近戰敏捷系':{icon:'◆',description:'高速連擊・位移・近距離爆發',accent:'#688dcc'},
+      '敏捷近戰系':{icon:'◆',description:'高速連擊・位移・近距離爆發',accent:'#688dcc'},
       '其他':{icon:'✧',description:'尚未分類的職業資料',accent:'#a8aab5'}
     };
     const CLASS_DESCRIPTION = {
@@ -363,7 +380,7 @@
       '吟遊詩人':'節奏 Buff 與團隊增益','樂師':'演奏循環與範圍支援','舞者':'舞步增益與機動輸出',
       '盜賊':'毒傷與高速爆發','雙刀客':'雙持連擊與位移','格鬥家':'近身連段與爆發'
     };
-    const CATEGORY_ORDER = ['戰士系','魔法系','弓箭系','治癒系','音樂系','近戰敏捷系','其他'];
+    const CATEGORY_ORDER = ['戰士系','魔法系','弓箭系','治癒系','音樂系','敏捷近戰系','其他'];
     const PART_META = { '飾品':{icon:'◇',target:3},'防具':{icon:'▣',target:5},'徽章':{icon:'✦',target:1},'武器':{icon:'⚔',target:2} };
     let activeRuneCategory='全部';
     let selectedRuneBuild='';
@@ -382,7 +399,62 @@
     function showGuideArticle() { $('guideHome').hidden=true; $('guideArticle').hidden=false; $('runeHome').hidden=true; $('runeDetail').hidden=true; if(!guideLoaded)loadDiceGuide(); }
     function showRuneHome() { $('guideHome').hidden=true; $('guideArticle').hidden=true; $('runeHome').hidden=false; $('runeDetail').hidden=true; if(!runeGuideLoaded){ renderRuneHome(); loadRuneGuide(); } else renderRuneHome(); }
     function showRuneDetail(className) { selectedRuneClass=className; $('guideHome').hidden=true; $('guideArticle').hidden=true; $('runeHome').hidden=true; $('runeDetail').hidden=false; renderRuneDetail(); }
-    async function loadRuneGuide() { try { const response=await fetch(`${CONFIG.runeGuideSheetUrl}&_=${Date.now()}`,{cache:'no-store'}); if(!response.ok)throw new Error(`Rune guide CSV HTTP ${response.status}`); const csv=await response.text(); const rows=parseCsv(csv); const headers=rows.length?Object.keys(rows[0]):[]; console.log('裝備符文 Headers:',headers); const required=['排序','職業','入手優先度','裝備部位','推薦階級','符文名稱','S0限定','推薦理由','使用條件','備註','是否顯示']; if(!required.every(header=>headers.includes(header)))throw new Error(`裝備符文 CSV 缺少欄位，期待：${required.join(', ')}`); runeGuideRows=rows.filter(runeVisible); const classes=runeClassList(runeGuideRows).map(item=>item.name); console.log('裝備符文資料:',runeGuideRows); console.log('裝備符文職業:',classes); runeGuideLoaded=true; renderRuneHome(); } catch(error) { console.error('[Guild Roster] 裝備符文讀取失敗：',error); runeGuideLoaded=true; runeGuideRows=[]; renderRuneHome(); } }
+    async function loadRuneGuide() { try { const response=await fetch(`${CONFIG.runeGuideSheetUrl}&_=${Date.now()}`,{cache:'no-store'}); if(!response.ok)throw new Error(`Rune guide CSV HTTP ${response.status}`); const csv=await response.text(); const rows=parseCsv(csv); const headers=rows.length?Object.keys(rows[0]):[]; console.log('裝備符文 Headers:',headers); const required=['排序','職業','流派','入手優先度','裝備部位','推薦階級','符文名稱','S0限定','推薦理由','使用條件','備註','是否顯示']; if(!required.every(header=>headers.includes(header)))throw new Error(`裝備符文 CSV 缺少欄位，期待：${required.join(', ')}`); runeGuideRows=rows.filter(runeVisible); const classes=runeClassList(runeGuideRows).map(item=>item.name); console.log('裝備符文資料:',runeGuideRows); console.log('裝備符文職業:',classes); runeGuideLoaded=true; renderRuneHome(); } catch(error) { console.error('[Guild Roster] 裝備符文讀取失敗：',error); runeGuideLoaded=true; runeGuideRows=[]; renderRuneHome(); } }
+    function showRuneDetail(className) { selectedRuneClass=className; selectedRuneBuild=''; $('guideHome').hidden=true; $('guideArticle').hidden=true; $('runeHome').hidden=true; $('runeDetail').hidden=false; renderRuneDetail(); }
+    /* 符文推薦頁：Google Sheet 是唯一資料來源；以下只負責分類、排序與呈現。 */
+    function runeCardMarkup(row) {
+      const part=firstValue(row,['裝備部位','部位','part'])||'其他';
+      const name=firstValue(row,['符文名稱','名稱','rune','name'])||STATUS_INCOMPLETE;
+      const reason=firstValue(row,['推薦理由','理由','reason'])||STATUS_INCOMPLETE;
+      const condition=firstValue(row,['使用條件','條件','condition']);
+      const note=firstValue(row,['備註','note']);
+      const priority=runePriority(row), tier=runeTier(row), s0=isChecked(firstValue(row,['S0限定','S0限定?','s0']));
+      const late=[condition,note,name].join(' ').match(/多職業養成|培養多個職業|多個劍類職業|後期養成/);
+      const weaponRole=part==='武器'?(priority===10?'weapon-main':'weapon-alt'):'';
+      const detail=[condition?`<p><strong>使用條件：</strong>${escapeHtml(condition)}</p>`:'',note?`<p><strong>備註：</strong>${escapeHtml(note)}</p>`:''].join('');
+      return `<article class="rune-card ${tier.toLowerCase()} ${weaponRole}"><div class="rune-card-top">${runeBadgeMarkup(row)}<span class="rune-priority">入手優先度 #${priority===999999?'—':priority}</span></div><h4>${escapeHtml(name)}</h4>${part==='武器'?`<span class="rune-role-badge">${priority===10?'後期主推':'替代方案'}</span>`:''}<p>${escapeHtml(reason)}</p>${condition?`<span class="rune-condition">${escapeHtml(condition)}</span>`:''}${detail?`<details class="rune-card-details"><summary>查看詳細</summary>${detail}</details>`:''}</article>`;
+    }
+    function runeCategoryLandingMarkup(category, classes) {
+      const meta=runeCategoryMeta(category), count=classes.filter(item=>item.category===category).length;
+      return `<button class="rune-landing-card" style="--category-accent:${meta.accent}" type="button" data-rune-category-card="${escapeHtml(category)}"><div><div class="rune-landing-icon">${meta.icon}</div><h3>${escapeHtml(category)}</h3><p>${escapeHtml(meta.description)}</p></div><div class="rune-landing-foot"><span>${count} 個職業</span><span>查看職業 →</span></div></button>`;
+    }
+    function renderRuneHome() {
+      const home=$('runeHome');
+      if(!runeGuideLoaded){ home.innerHTML='<div class="guide-error">正在取得裝備符文推薦資料……</div>'; return; }
+      if(!runeGuideRows.length){ home.innerHTML='<div class="guide-error">目前無法取得裝備符文推薦資料，請稍後再試。</div>'; return; }
+      const classes=runeClassList(runeGuideRows).map(item=>({...item,category:runeCategoryFor(item.name)}));
+      const available=CATEGORY_ORDER.filter(category=>classes.some(item=>item.category===category));
+      const landing=!activeRuneCategory||activeRuneCategory==='全部';
+      if(landing){
+        home.innerHTML=`<div class="guide-home-head"><div><p class="guide-kicker">RUNE GUIDE / S0 SEASON</p><h2>各職業裝備符文推薦</h2><p class="guide-intro">S0 賽季 · ${classes.length} 個職業 · 先選職系，再查看職業配置</p></div><button class="rune-back" id="runeBackToGuide" type="button">← 返回新手教學</button></div><div class="rune-info"><strong>新手入手順序 ≠ 畢業強度</strong><p>本頁「入手優先度」完全讀取 Google Sheet。先讓職業核心玩法成形，再補齊配裝，最後處理後期武器；T0 不代表一定要第一顆取得。</p><p style="margin-top:8px">T0 / T1 = 符文強度與核心程度 · 入手優先度 = 新手現在先換哪一顆</p></div><div class="rune-toolbar"><div><h3 style="margin:0 0 5px">選擇職系</h3><span class="result-count">資料會隨 Google Sheet 更新</span></div><label class="field"><span style="padding-left:14px;color:var(--muted);font-size:12px">搜尋職系或職業</span><input id="runeClassSearch" type="search" placeholder="輸入名稱"></label></div><div class="rune-landing-grid" id="runeLandingGrid">${available.map(category=>runeCategoryLandingMarkup(category,classes)).join('')}</div>`;
+        $('runeBackToGuide').addEventListener('click',showGuideHome);
+        $('runeClassSearch').addEventListener('input',e=>{const q=e.target.value.trim().toLowerCase();$('runeLandingGrid').querySelectorAll('[data-rune-category-card]').forEach(card=>{card.hidden=q&&!card.textContent.toLowerCase().includes(q);});});
+        $('runeLandingGrid').addEventListener('click',e=>{const card=e.target.closest('[data-rune-category-card]');if(card){activeRuneCategory=card.dataset.runeCategoryCard;renderRuneHome();}});
+        return;
+      }
+      const meta=runeCategoryMeta(activeRuneCategory), categoryClasses=classes.filter(item=>item.category===activeRuneCategory);
+      home.innerHTML=`<div class="guide-home-head"><div><p class="guide-kicker">RUNE GUIDE / ${escapeHtml(activeRuneCategory)}</p><h2>${escapeHtml(activeRuneCategory)}</h2><p class="guide-intro">選擇職業查看流派、入手順序與完整配裝</p></div><button class="rune-back" id="runeBackToCategories" type="button">← 返回職系</button></div><section class="rune-detail-hero" style="--category-accent:${meta.accent}"><div><div class="rune-hero-label">${meta.icon} ${escapeHtml(activeRuneCategory)}</div><h2>${escapeHtml(meta.description)}</h2><p>${categoryClasses.length} 個職業 · 流派與推薦數量皆從 Google Sheet 動態統計</p></div></section><div class="rune-class-grid category-grid">${categoryClasses.map(runeClassCardMarkup).join('')}</div>`;
+      $('runeBackToCategories').addEventListener('click',()=>{activeRuneCategory='全部';renderRuneHome();});
+      home.querySelector('.rune-class-grid').addEventListener('click',e=>{const card=e.target.closest('[data-rune-class]');if(card)showRuneDetail(card.dataset.runeClass);});
+    }
+    function renderRuneDetail() {
+      const detail=$('runeDetail'), allRows=runeByClass(selectedRuneClass);
+      if(!allRows.length){detail.innerHTML='<div class="guide-error">目前找不到這個職業的可顯示推薦資料。</div>';return;}
+      const category=runeCategoryFor(selectedRuneClass), meta=runeCategoryMeta(category), builds=runeBuildNames(allRows);
+      if(!selectedRuneBuild||!builds.includes(selectedRuneBuild))selectedRuneBuild=builds.length===1?builds[0]:'';
+      const rows=runeRowsForBuild(allRows,selectedRuneBuild), buildTabs=builds.length>1?`<div class="rune-build-tabs">${builds.map(build=>`<button class="rune-build-tab ${selectedRuneBuild===build?'active':''}" type="button" data-rune-build="${escapeHtml(build)}">${escapeHtml(build)}</button>`).join('')}</div>`:'';
+      detail.innerHTML=`<div class="rune-detail-crumb">新手教學　&gt;　裝備符文推薦　&gt;　${escapeHtml(category)}　&gt;　<strong>${escapeHtml(selectedRuneClass)}</strong></div><section class="rune-detail-hero" style="--category-accent:${meta.accent}"><div><div class="rune-hero-label">${meta.icon} ${escapeHtml(category)}</div><h2>${escapeHtml(selectedRuneClass)}</h2><p>${escapeHtml(CLASS_DESCRIPTION[selectedRuneClass]||'S0 賽季職業符文配置')}</p>${buildTabs}</div><button class="rune-back" id="runeBackToClasses" type="button">← 返回職系</button></section><div class="rune-toolbar"><div><h3 style="margin:0 0 5px">${escapeHtml(selectedRuneClass)} 的推薦配置</h3><span class="result-count">${rows.length} 筆 · ${selectedRuneBuild||'全部流派'}</span></div><label class="field"><span style="padding-left:14px;color:var(--muted);font-size:12px">搜尋符文</span><input id="runeSearchInput" type="search" placeholder="輸入符文名稱或部位"></label></div>${runeQuotaMarkup(rows)}<nav class="rune-anchor-nav" aria-label="符文區塊導覽"><a href="#rune-stage-order">養成順序</a><a href="#rune-part-accessory">飾品</a><a href="#rune-part-armor">防具</a><a href="#rune-part-badge">徽章</a><a href="#rune-part-weapon">武器</a></nav><div id="runeDetailContent"></div>`;
+      $('runeBackToClasses').addEventListener('click',showRuneHome);
+      detail.querySelectorAll('[data-rune-build]').forEach(button=>button.addEventListener('click',()=>{selectedRuneBuild=button.dataset.runeBuild;renderRuneDetail();}));
+      const renderDetailContent=()=>{
+        const query=$('runeSearchInput').value.trim().toLowerCase(), filtered=rows.filter(row=>!query||[firstValue(row,['符文名稱','名稱','rune','name']),firstValue(row,['推薦理由','理由','reason']),firstValue(row,['裝備部位','部位','part']),firstValue(row,['使用條件','條件','condition'])].join(' ').toLowerCase().includes(query));
+        const stageMarkup=[1,2,3].map(stage=>{const stageRows=filtered.filter(row=>runeStageFor(row)===stage).sort((a,b)=>runePriority(a)-runePriority(b));if(!stageRows.length)return '';const m=runeStageMeta(stage);return `<section class="rune-stage" id="${stage===1?'rune-stage-order':'rune-stage-'+stage}"><div class="rune-stage-head"><span class="rune-stage-number">${stage}</span><div><h3>${m.title}</h3><span>${m.subtitle}</span></div></div><div class="rune-stage-list">${stageRows.map(row=>`<div class="rune-stage-item"><b>#${runePriority(row)===999999?'—':runePriority(row)}</b><span>${escapeHtml(firstValue(row,['符文名稱','名稱','rune','name'])||STATUS_INCOMPLETE)}<small>${escapeHtml(firstValue(row,['裝備部位','部位','part'])||'其他')} · ${runeTier(row)}</small></span></div>`).join('')}</div></section>`;}).join('');
+        const partOrder=[['飾品','rune-part-accessory'],['防具','rune-part-armor'],['徽章','rune-part-badge'],['武器','rune-part-weapon']];
+        const sections=partOrder.map(([part,id])=>{const partRows=filtered.filter(row=>(firstValue(row,['裝備部位','部位','part'])||'其他')===part).sort((a,b)=>runePriority(a)-runePriority(b));if(!partRows.length)return '';const m=PART_META[part];return `<section class="rune-section part-section" id="${id}"><div class="rune-section-head"><span class="rune-part-icon">${m.icon}</span><div><h3>${part==='武器'?'後期武器推薦':`${part}推薦`}</h3><small>${partRows.length} 筆 · 依 Google Sheet 顯示</small></div></div>${part==='武器'?'<p class="rune-weapon-note">建議先完成核心飾品、防具與徽章，再投入資源處理武器。主推與替代方案仍完全依試算表的入手優先度呈現。</p>':''}<div class="rune-section-grid">${partRows.map(runeCardMarkup).join('')}</div></section>`;}).join('');
+        $('runeDetailContent').innerHTML=`<section class="rune-order" id="rune-stage-order"><h3>新手養成順序</h3>${stageMarkup||'<div class="guide-error">找不到符合搜尋條件的符文。</div>'}</section><div class="rune-sections">${sections}</div>`;
+      };
+      $('runeSearchInput').addEventListener('input',renderDetailContent);renderDetailContent();
+    }
     function showRuneDetail(className) { selectedRuneClass=className; selectedRuneBuild=''; $('guideHome').hidden=true; $('guideArticle').hidden=true; $('runeHome').hidden=true; $('runeDetail').hidden=false; renderRuneDetail(); }
     function switchView(view) { const showMembers=view==='members'; $('membersView').hidden=!showMembers; $('guideView').hidden=showMembers; $('membersTab').setAttribute('aria-selected',String(showMembers)); $('guidesTab').setAttribute('aria-selected',String(!showMembers)); if(showMembers)showGuideHome(); else showGuideHome(); }
     // 目前試算表欄位：公會名稱、 本尊職業、 本尊遊戲ID、 Line名稱、圖片網址、傳說套裝、
