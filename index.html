@@ -1,319 +1,141 @@
-<!DOCTYPE html>
-<html lang="zh-TW">
+<!doctype html>
+<html lang="zh-Hant">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>World Gym 企業專屬健康福利</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <style>
-        /* 全域設定 */
-        :root { --primary-red: #E3000F; --dark-bg: #121212; --section-bg-alt: #1E1E1E; --text-light: #F3F4F6; --text-muted: #9CA3AF; --gold: #FFD700; }
-        * { box-sizing: border-box; }
-        html { scroll-behavior: smooth; scroll-padding-top: 70px; }
-        body { margin: 0; padding: 0; font-family: 'Noto Sans TC', sans-serif; background-color: var(--dark-bg); color: var(--text-light); line-height: 1.6; overflow-x: hidden; }
-        .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; width: 100%; }
-
-        /* 導覽列 */
-        header { background-color: rgba(18, 18, 18, 0.98); position: fixed; width: 100%; top: 0; z-index: 1000; border-bottom: 2px solid var(--primary-red); box-shadow: 0 2px 10px rgba(0,0,0,0.5); }
-        .navbar { display: flex; justify-content: space-between; align-items: center; height: 70px; }
-        .logo { font-size: 22px; font-weight: 900; color: white; text-decoration: none; display: flex; align-items: center; gap: 10px; }
-        .logo span { color: var(--primary-red); }
-        .company-badge { background: rgba(255,255,255,0.1); padding: 4px 12px; border-radius: 20px; font-size: 14px; font-weight: normal; color: var(--gold); border: 1px solid var(--gold); }
-        
-        /* 按鈕設計 (主按鈕與次按鈕) */
-        .btn-primary { background-color: var(--primary-red); color: white; padding: 12px 28px; border-radius: 30px; text-decoration: none; font-weight: bold; transition: all 0.3s; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; border: 2px solid var(--primary-red); font-size: 16px; justify-content: center; text-align: center; }
-        .btn-primary:hover { background-color: #B3000C; border-color: #B3000C; transform: translateY(-2px); box-shadow: 0 4px 15px rgba(227,0,15,0.4); }
-        
-        .btn-secondary { background-color: transparent; color: white; padding: 12px 28px; border-radius: 30px; text-decoration: none; font-weight: bold; transition: all 0.3s; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; border: 2px solid white; font-size: 16px; justify-content: center; text-align: center; }
-        .btn-secondary:hover { background-color: white; color: var(--dark-bg); transform: translateY(-2px); box-shadow: 0 4px 15px rgba(255,255,255,0.2); }
-
-        /* 區塊共用 */
-        section { padding: 90px 0; }
-        .section-title { text-align: center; font-size: 36px; font-weight: 900; margin-bottom: 20px; }
-        .section-title span { color: var(--primary-red); }
-        .section-subtitle { text-align: center; color: var(--text-muted); font-size: 18px; margin-bottom: 50px; }
-
-        /* 首圖區 */
-        .hero { height: 85vh; min-height: 600px; display: flex; align-items: center; text-align: center; background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8)), url('https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?q=80&w=2070&auto=format&fit=crop') center/cover; padding-top: 70px; position: relative; }
-        .hero-content { max-width: 800px; margin: 0 auto; }
-        .hero-tag { display: inline-block; background-color: var(--gold); color: #000; font-weight: 900; padding: 5px 15px; border-radius: 20px; margin-bottom: 20px; letter-spacing: 1px; font-size: 14px; }
-        .hero h1 { font-size: 48px; font-weight: 900; margin-bottom: 20px; line-height: 1.3; }
-        .hero p { font-size: 20px; color: #ddd; margin-bottom: 40px; }
-        .hero-buttons { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
-
-        /* 痛點與運動好處 (高質感圖文交錯版) */
-        .benefits-section { background-color: var(--section-bg-alt); }
-        .feature-row { display: flex; align-items: center; gap: 60px; margin-bottom: 100px; }
-        .feature-row:last-child { margin-bottom: 0; }
-        .feature-row:nth-child(even) { flex-direction: row-reverse; }
-        .feature-img { flex: 1; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); height: 350px; width: 100%; position: relative; }
-        .feature-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.5s; }
-        .feature-img:hover img { transform: scale(1.05); }
-        .feature-text { flex: 1; }
-        .feature-text h3 { font-size: 32px; margin-top: 0; margin-bottom: 20px; color: white; display: flex; align-items: center; gap: 15px; }
-        .feature-text h3 i { color: var(--primary-red); font-size: 36px; }
-        .feature-text p { font-size: 18px; color: var(--text-muted); line-height: 1.8; margin-bottom: 20px; }
-
-        /* VIP 專屬福利 */
-        .vip-perks-section { background: linear-gradient(135deg, #111, #1a0002); border-top: 1px solid #333; border-bottom: 1px solid #333; position: relative; overflow: hidden; }
-        .vip-perks-section::before { content: 'VIP'; position: absolute; font-size: 300px; font-weight: 900; color: rgba(227,0,15,0.03); top: -50px; right: -50px; z-index: 0; pointer-events: none; }
-        .perks-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; position: relative; z-index: 1; }
-        .perk-main-card { background: linear-gradient(145deg, #2a2a2a, #1a1a1a); border: 2px solid var(--primary-red); border-radius: 20px; padding: 50px; text-align: center; box-shadow: 0 20px 40px rgba(227,0,15,0.15); }
-        .perk-main-card h3 { font-size: 36px; color: white; margin-top: 0; margin-bottom: 10px; }
-        .perk-main-card .highlight-month { font-size: 60px; font-weight: 900; color: var(--primary-red); line-height: 1; margin: 20px 0; }
-        .perks-list-wrapper { display: flex; flex-direction: column; justify-content: center; }
-        .perk-item { display: flex; align-items: flex-start; gap: 20px; margin-bottom: 30px; background-color: rgba(255,255,255,0.03); padding: 20px; border-radius: 12px; border-left: 4px solid var(--gold); }
-        .perk-item i { font-size: 28px; color: var(--gold); margin-top: 5px; }
-        .perk-text h4 { margin: 0 0 5px 0; font-size: 20px; color: white; }
-        .perk-text p { margin: 0; color: var(--text-muted); font-size: 15px; }
-        .perk-text .note { font-size: 13px; color: #888; display: block; margin-top: 5px; }
-
-        /* 場館設施 (Gallery) */
-        .gallery-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
-        .gallery-item { border-radius: 16px; overflow: hidden; position: relative; height: 300px; }
-        .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
-        .gallery-item:hover img { transform: scale(1.05); }
-        .gallery-overlay { position: absolute; inset: 0; background: linear-gradient(transparent 50%, rgba(0,0,0,0.9)); display: flex; align-items: flex-end; padding: 30px; }
-        .gallery-overlay h3 { margin: 0; font-size: 24px; color: white; }
-
-        /* 據點便利性 */
-        .locations-section { background-color: var(--section-bg-alt); }
-        .loc-content { display: flex; align-items: center; gap: 50px; background-color: var(--dark-bg); border-radius: 20px; padding: 40px; border: 1px solid #333; }
-        .loc-text { flex: 1; }
-        .loc-text h3 { font-size: 32px; margin-top: 0; margin-bottom: 20px; }
-        .loc-text p { font-size: 18px; color: var(--text-muted); margin-bottom: 30px; }
-        .loc-map { flex: 1; text-align: center; }
-        .loc-map img { max-width: 100%; border-radius: 12px; }
-
-        /* 雙管道開通區塊 (全新設計) */
-        .action-section { background: linear-gradient(rgba(18, 18, 18, 0.95), rgba(18, 18, 18, 0.95)), url('https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?q=80&w=2070&auto=format&fit=crop') center/cover; padding: 100px 0; border-top: 2px solid var(--primary-red); }
-        .action-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; max-width: 900px; margin: 0 auto; }
-        .action-card { background-color: rgba(30, 30, 30, 0.8); border: 1px solid #444; border-radius: 20px; padding: 50px 40px; text-align: center; backdrop-filter: blur(10px); transition: transform 0.3s, border-color 0.3s; display: flex; flex-direction: column; justify-content: space-between; }
-        .action-card:hover { transform: translateY(-10px); border-color: var(--primary-red); }
-        .action-card h3 { font-size: 28px; color: white; margin-bottom: 15px; margin-top: 0; }
-        .action-card p { color: var(--text-muted); font-size: 16px; margin-bottom: 30px; line-height: 1.8; flex-grow: 1; }
-        .action-icon { font-size: 50px; color: var(--primary-red); margin-bottom: 25px; }
-        .action-card.outline { border: 1px solid var(--text-muted); }
-        .action-card.outline:hover { border-color: white; }
-        .action-card.outline .action-icon { color: white; }
-
-        /* 頁尾 */
-        footer { background-color: #000; padding: 40px 0; text-align: center; color: #666; font-size: 14px; border-top: 1px solid #222; }
-
-        /* 響應式 */
-        @media (max-width: 900px) {
-            section { padding: 60px 0; }
-            .section-title { font-size: 28px; }
-            .hero h1 { font-size: 32px; }
-            .hero-buttons { flex-direction: column; width: 100%; padding: 0 20px; }
-            .hero-buttons .btn-primary, .hero-buttons .btn-secondary { width: 100%; }
-            .feature-row, .feature-row:nth-child(even) { flex-direction: column; gap: 30px; margin-bottom: 60px; }
-            .feature-img { height: 250px; }
-            .perks-grid, .gallery-grid, .action-grid { grid-template-columns: 1fr; gap: 30px; }
-            .loc-content { flex-direction: column; padding: 25px; }
-            .gallery-item { height: 220px; }
-            .logo span:last-child { display: none; }
-            .action-card { padding: 40px 20px; }
-        }
-    </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0b0d14">
+  <title>瑪奇 MOBILE｜工會成員名冊</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Rajdhani:wght@500;600;700&display=swap');
+    :root { --bg:#0b0d14; --panel:rgba(19,22,34,.82); --line:rgba(255,255,255,.1); --text:#f4f0e8; --muted:#a9a8b4; --gold:#e9bb68; --purple:#a98af6; --cyan:#7de0d0; --danger:#ef9a9a; }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body { margin:0; min-width:320px; color:var(--text); background:radial-gradient(circle at 12% 0%,#2c214b 0,transparent 33%),radial-gradient(circle at 88% 12%,#163a43 0,transparent 30%),var(--bg); font-family:'Noto Sans TC',system-ui,sans-serif; }
+    body:before { content:""; position:fixed; inset:0; pointer-events:none; opacity:.16; background-image:linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px); background-size:52px 52px; mask-image:linear-gradient(to bottom,#000,transparent 80%); }
+    button,input,select { font:inherit; }
+    button { cursor:pointer; }
+    .shell { width:min(1240px,calc(100% - 32px)); margin:auto; position:relative; }
+    header { padding:42px 0 24px; }
+    .eyebrow { color:var(--gold); letter-spacing:.18em; text-transform:uppercase; font:700 13px Rajdhani,sans-serif; display:flex; align-items:center; gap:9px; }
+    .eyebrow:before { content:""; width:30px; height:1px; background:var(--gold); }
+    h1 { margin:8px 0 4px; font-size:clamp(30px,5vw,58px); line-height:1; letter-spacing:.04em; }
+    .subtitle { color:var(--muted); margin:0; font-size:14px; }
+    .hero { display:flex; justify-content:space-between; align-items:end; gap:24px; }
+    .stats { display:flex; gap:12px; flex-wrap:wrap; }
+    .stat { min-width:124px; padding:15px 18px; border:1px solid var(--line); border-radius:14px; background:rgba(12,14,24,.62); box-shadow:0 16px 40px rgba(0,0,0,.16); }
+    .stat strong { display:block; font:700 28px Rajdhani,sans-serif; color:var(--gold); }
+    .stat span { color:var(--muted); font-size:12px; }
+    .toolbar { margin:18px 0 28px; display:grid; grid-template-columns:minmax(0,1fr) 190px 220px; gap:12px; }
+    .field { border:1px solid var(--line); background:rgba(18,20,31,.86); border-radius:12px; display:flex; align-items:center; min-height:52px; }
+    .field:focus-within { border-color:var(--gold); box-shadow:0 0 0 3px rgba(233,187,104,.1); }
+    .field svg { width:20px; margin:0 12px 0 16px; color:var(--muted); flex:none; }
+    input,select { border:0; outline:0; color:var(--text); background:transparent; width:100%; min-width:0; padding:14px 14px 14px 0; }
+    select { padding-left:16px; appearance:none; background-image:linear-gradient(45deg,transparent 50%,var(--gold) 50%),linear-gradient(135deg,var(--gold) 50%,transparent 50%); background-position:calc(100% - 19px) 22px,calc(100% - 14px) 22px; background-size:5px 5px; background-repeat:no-repeat; }
+    option { background:#171927; }
+    .section-head { display:flex; justify-content:space-between; align-items:center; margin-bottom:13px; }
+    .section-head h2 { margin:0; font-size:18px; letter-spacing:.06em; }
+    .result-count { color:var(--muted); font-size:13px; }
+    .grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:16px; padding-bottom:64px; }
+    .member-card { overflow:hidden; min-width:0; padding:0; text-align:left; color:var(--text); border:1px solid rgba(255,255,255,.11); border-radius:18px; background:linear-gradient(145deg,rgba(31,34,49,.9),rgba(13,15,25,.95)); box-shadow:0 18px 35px rgba(0,0,0,.2); transition:transform .2s,border-color .2s,box-shadow .2s; }
+    .member-card:hover,.member-card:focus-visible { transform:translateY(-5px); border-color:rgba(233,187,104,.65); box-shadow:0 20px 42px rgba(0,0,0,.34),0 0 0 1px rgba(233,187,104,.14); outline:0; }
+    .portrait { height:220px; position:relative; overflow:hidden; background:linear-gradient(145deg,#302855,#142c33); }
+    .portrait img { width:100%; height:100%; display:block; object-fit:cover; transition:transform .35s; }
+    .member-card:hover .portrait img { transform:scale(1.045); }
+    .portrait:after { content:""; position:absolute; inset:45% 0 0; background:linear-gradient(transparent,rgba(7,8,13,.88)); pointer-events:none; }
+    .class-pill { position:absolute; z-index:1; top:12px; left:12px; padding:5px 9px; border:1px solid rgba(255,255,255,.18); border-radius:999px; color:#fff; background:rgba(9,10,17,.64); backdrop-filter:blur(8px); font-size:11px; }
+    .card-body { padding:14px 15px 16px; }
+    .main-id { font-weight:800; font-size:18px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    .line-name { color:var(--muted); font-size:13px; margin-top:3px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    .card-foot { display:flex; justify-content:space-between; align-items:center; margin-top:17px; color:var(--gold); font-size:12px; }
+    .card-foot span:last-child { color:var(--muted); font-size:20px; line-height:10px; }
+    .empty,.error { padding:52px 20px; text-align:center; border:1px dashed var(--line); border-radius:16px; color:var(--muted); grid-column:1/-1; }
+    .error strong { display:block; color:var(--danger); margin-bottom:8px; }
+    dialog { width:min(680px,calc(100% - 24px)); max-height:min(850px,calc(100dvh - 24px)); margin:auto; padding:0; color:var(--text); border:1px solid rgba(233,187,104,.35); border-radius:20px; background:#111420; box-shadow:0 30px 100px rgba(0,0,0,.6); overflow:hidden; }
+    dialog::backdrop { background:rgba(2,3,8,.76); backdrop-filter:blur(5px); }
+    .modal-top { display:flex; justify-content:space-between; gap:15px; padding:19px 20px; border-bottom:1px solid var(--line); }
+    .modal-kicker { color:var(--gold); font:700 12px Rajdhani,sans-serif; letter-spacing:.12em; }
+    .modal-top h2 { margin:3px 0 0; font-size:24px; }
+    .close { width:38px; height:38px; border:1px solid var(--line); border-radius:50%; color:var(--text); background:transparent; font-size:23px; line-height:1; }
+    .close:hover { border-color:var(--gold); color:var(--gold); }
+    .modal-content { padding:20px; overflow:auto; max-height:calc(100dvh - 130px); }
+    .player-overview { display:grid; grid-template-columns:128px 1fr; gap:18px; align-items:center; padding-bottom:20px; border-bottom:1px solid var(--line); }
+    .modal-image { width:128px; height:145px; object-fit:cover; border-radius:13px; border:1px solid rgba(233,187,104,.48); background:#252039; }
+    .meta-label { color:var(--muted); font-size:12px; }
+    .meta-value { font-size:18px; font-weight:700; margin:3px 0 11px; overflow-wrap:anywhere; }
+    .roles-title { margin:21px 0 12px; font-size:14px; color:var(--gold); letter-spacing:.08em; }
+    .roles { display:grid; gap:8px; }
+    .role-row { display:grid; grid-template-columns:108px 1fr 1fr; gap:9px; align-items:center; padding:12px 13px; border:1px solid var(--line); border-radius:11px; background:rgba(255,255,255,.035); min-width:0; }
+    .role-row.main { border-color:rgba(233,187,104,.55); background:linear-gradient(90deg,rgba(233,187,104,.15),rgba(169,138,246,.06)); }
+    .role-tag { color:var(--gold); font-size:12px; font-weight:700; }
+    .role-cell { min-width:0; overflow-wrap:anywhere; }
+    .role-cell small { display:block; color:var(--muted); font-size:10px; margin-bottom:2px; }
+    .role-cell span { font-size:14px; }
+    footer { padding:0 0 26px; color:#71717f; font-size:11px; text-align:center; }
+    @media (max-width:1050px) { .grid { grid-template-columns:repeat(3,minmax(0,1fr)); } }
+    @media (max-width:760px) { .shell { width:min(100% - 24px,620px); } header { padding-top:28px; } .hero { display:block; } .stats { margin-top:20px; } .toolbar { grid-template-columns:1fr; } .grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; } .portrait { height:190px; } }
+    @media (max-width:440px) { .grid { grid-template-columns:1fr; } .portrait { height:240px; } .stat { flex:1; min-width:0; } .player-overview { grid-template-columns:94px 1fr; gap:13px; } .modal-image { width:94px; height:112px; } .role-row { grid-template-columns:78px 1fr 1fr; padding:10px 9px; } .role-row .role-cell span { font-size:13px; } }
+  </style>
 </head>
 <body>
-
+  <main class="shell">
     <header>
-        <div class="container navbar">
-            <a href="#" class="logo">WORLD GYM <span class="company-badge">貴賓專屬</span></a>
-            <a href="#action-section" class="btn-primary" title="前往線上登記">
-                立即開通福利
-            </a>
-        </div>
+      <div class="hero">
+        <div><div class="eyebrow">MABINOGI MOBILE / GUILD ROSTER</div><h1 id="guildName">瑪奇 MOBILE 工會名冊</h1><p class="subtitle">記錄每一位冒險者的主職與角色配置</p></div>
+        <div class="stats"><div class="stat"><strong id="memberTotal">—</strong><span>目前成員</span></div><div class="stat"><strong id="roleTotal">—</strong><span>已登錄角色</span></div></div>
+      </div>
     </header>
-
-    <section class="hero">
-        <div class="container hero-content">
-            <div class="hero-tag"><i class="fa-solid fa-gift"></i> 您的公司為您準備了專屬健康大禮</div>
-            <h1>工作再忙，也要把健康找回來！<br>開啟你的高質感運動生活</h1>
-            <p>您的企業已為全體員工升級了最高規格的 World Gym 特約福利。<br>現在就開通您的專屬帳號，享受下班後的爆汗快感！</p>
-            
-            <div class="hero-buttons">
-                <a href="#action-section" class="btn-primary" style="font-size: 18px; padding: 16px 35px;">
-                    我要登記免費體驗 1 個月
-                </a>
-                <a href="#action-section" class="btn-secondary" style="font-size: 18px; padding: 16px 35px;">
-                    我準備好了，直接線上入會
-                </a>
-            </div>
-        </div>
+    <section class="toolbar" aria-label="名單搜尋與篩選">
+      <label class="field"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><input id="searchInput" type="search" placeholder="搜尋 LINE 名稱、本尊 ID 或分身 ID…" autocomplete="off"></label>
+      <label class="field"><select id="guildFilter" aria-label="依工會篩選"><option value="">全部工會</option></select></label>
+      <label class="field"><select id="classFilter" aria-label="依本尊職業篩選"><option value="">全部本尊職業</option></select></label>
     </section>
+    <div class="section-head"><h2>冒險者名冊</h2><span class="result-count" id="resultCount"></span></div>
+    <section class="grid" id="memberGrid" aria-live="polite"></section>
+    <footer>資料由 Google Sheet 提供 · 點擊卡片查看完整角色配置</footer>
+  </main>
 
-    <section class="benefits-section" id="benefits">
-        <div class="container">
-            <h2 class="section-title">告別疲勞，<span>運動帶來的職場超能力</span></h2>
-            <div class="section-subtitle">每天只要 30 分鐘，輕鬆擊退上班族的常見困擾</div>
-            
-            <div class="feature-row">
-                <div class="feature-img">
-                    <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?q=80&w=2069&auto=format&fit=crop" alt="舒緩肩頸痠痛">
-                </div>
-                <div class="feature-text">
-                    <h3><i class="fa-solid fa-laptop-medical"></i> 舒緩肩頸與腰背痠痛</h3>
-                    <p>久坐辦公室讓你全身僵硬、肩頸緊繃嗎？透過健身房專業的伸展區與重量訓練，能有效強化核心與背部肌群，從根本改善姿勢不良帶來的職業傷害，讓你挺直腰桿不痠痛。</p>
-                </div>
-            </div>
+  <dialog id="memberDialog" aria-labelledby="modalTitle">
+    <div class="modal-top"><div><div class="modal-kicker">PLAYER PROFILE / CHARACTER SET</div><h2 id="modalTitle">會員資料</h2></div><button class="close" id="closeModal" type="button" aria-label="關閉">×</button></div>
+    <div class="modal-content"><div class="player-overview"><img class="modal-image" id="modalImage" alt="角色圖片"><div><div class="meta-label">LINE 名稱</div><div class="meta-value" id="modalLine">—</div><div class="meta-label">本尊 ID</div><div class="meta-value" id="modalMainId">—</div><div class="meta-label">本尊職業</div><div class="meta-value" id="modalMainClass">—</div></div></div><div class="roles-title">角色配置 · <span id="modalRoleCount">0</span> / 6</div><div class="roles" id="modalRoles"></div></div>
+  </dialog>
 
-            <div class="feature-row">
-                <div class="feature-img">
-                    <img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?q=80&w=2070&auto=format&fit=crop" alt="提升專注力">
-                </div>
-                <div class="feature-text">
-                    <h3><i class="fa-solid fa-brain"></i> 提神醒腦，專注力大爆發</h3>
-                    <p>下午開會總是昏昏欲睡？規律運動能大幅促進全身血液循環，加速腦內啡分泌。運動後的清爽感不僅能讓大腦重新開機，還能激發創造力，大幅提升你的工作效率與思緒清晰度。</p>
-                </div>
-            </div>
+  <script>
+    /* Google Sheet 欄位設定：若你的欄名不同，優先修改這裡即可。程式也會自動嘗試常見中文/英文欄名。 */
+    const CONFIG = {
+      spreadsheetId: '1USPYBfsaIlIDvefmlIBEe4_cx_B4KoOhlHiMjymcfTs',
+      gid: '2083968754',
+      guildName: '工會成員名單',
+      // Google Sheet「發布到網路」後的 CSV 連結：網站會直接讀取這個公開網址。
+      sheetUrl: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSE-IKb2H8AZNOkljE2_5z-ekVn8h49WTtheoGOFAz1iARthjZGLWR4d2ro_FU-3B5rNrPZrPAsmEbg/pub?gid=2083968754&single=true&output=csv',
+      // false：讀取失敗時不顯示任何虛構會員，避免把 Demo ID 誤當成正式資料。
+      useDemoOnError: false
+    };
 
-            <div class="feature-row">
-                <div class="feature-img">
-                    <img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?q=80&w=800&auto=format&fit=crop" alt="釋放壓力">
-                </div>
-                <div class="feature-text">
-                    <h3><i class="fa-solid fa-face-smile-beam"></i> 釋放專案壓力，睡得更香甜</h3>
-                    <p>滿檔的工作與死線讓你喘不過氣？下班後來健身房盡情揮灑汗水，或是參加一堂熱血的有氧飛輪課，能快速燃燒並代謝掉體內的壓力荷爾蒙，讓你晚上擁有高品質的深層睡眠，迎接更好的明天。</p>
-                </div>
-            </div>
+    const FALLBACK_IMAGE = 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 720"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#372b5d"/><stop offset="1" stop-color="#163d43"/></linearGradient></defs><rect width="600" height="720" fill="url(#g)"/><circle cx="300" cy="240" r="108" fill="#d5b18f" opacity=".9"/><path d="M155 660c12-150 55-232 145-232s133 82 145 232" fill="#171526"/><path d="M166 225c18-128 229-174 276 18-74-39-156-33-276-18z" fill="#171526"/><path d="M160 650c75-78 203-78 280 0" fill="none" stroke="#e9bb68" stroke-width="5" opacity=".8"/></svg>`);
+    const DEMO_DATA = [
+      { lineName:'Lumen', mainId:'曙光・伊芙', mainClass:'神聖騎士', image:'', roles:[['本尊','神聖騎士','曙光・伊芙'],['分身 1','元素法師','星塵藍'],['分身 2','森林遊俠','Lumen-II']] },
+      { lineName:'Mochi', mainId:'月下糰子', mainClass:'影刃', image:'', roles:[['本尊','影刃','月下糰子'],['分身 1','吟遊詩人','夜曲'],['分身 2','鍊金術士','小藥罐'],['分身 3','影刃','月下糰子_3']] },
+      { lineName:'Riven', mainId:'赤焰 Riven', mainClass:'龍騎士', image:'', roles:[['本尊','龍騎士','赤焰 Riven'],['分身 1','戰鬥牧師','Riven Light']] },
+      { lineName:'NOVA', mainId:'NOVA-7', mainClass:'星界術師', image:'', roles:[['本尊','星界術師','NOVA-7'],['分身 1','機械師','NOVA Gear'],['分身 2','冰霜巫師','Polar Nova']] }
+    ];
+    let members = [];
+    const $ = id => document.getElementById(id);
 
-        </div>
-    </section>
-
-    <section class="vip-perks-section">
-        <div class="container">
-            <h2 class="section-title" style="color: white;">公司買單！您的 <span>VIP 專屬福利</span></h2>
-            <div class="section-subtitle">因為您的公司選擇了頂級付費特約，您將享有以下絕佳優惠：</div>
-
-            <div class="perks-grid">
-                <div class="perk-main-card">
-                    <div style="color: var(--gold); font-weight: bold; letter-spacing: 2px; margin-bottom: 10px;">🌟 迎新超級大禮 🌟</div>
-                    <h3>市區型俱樂部</h3>
-                    <div class="highlight-month">1 個月</div>
-                    <h3>免費深度體驗</h3>
-                    <p style="color: var(--text-muted); font-size: 16px; margin-top: 20px;">跨館體驗更自由，頂級器材、游泳池、團體課程<br>在整整 30 天內讓您無限次使用！</p>
-                    <span style="font-size: 13px; color: #666; display: block; margin-top: 15px;">(註：此體驗限非 World Gym 現有會員之員工領取)</span>
-                </div>
-
-                <div class="perks-list-wrapper">
-                    <div class="perk-item">
-                        <i class="fa-solid fa-hand-holding-dollar"></i>
-                        <div class="perk-text">
-                            <h4>雙免尊榮：0 元入會</h4>
-                            <p>若您於「體驗期間內」決定正式加入運動行列，我們直接為您省下所有的「入會費」與「手續費」！</p>
-                        </div>
-                    </div>
-                    
-                    <div class="perk-item">
-                        <i class="fa-solid fa-dumbbell"></i>
-                        <div class="perk-text">
-                            <h4>專屬教練課震撼價</h4>
-                            <p>想請專業教練指導？企業員工獨享單堂只要 <b>$1,488 元</b> 超值優惠。</p>
-                            <span class="note">(限 WG 具籍會員購買，每人限購一組，最高可買 12 堂)</span>
-                        </div>
-                    </div>
-
-                    <div class="perk-item">
-                        <i class="fa-solid fa-gift"></i>
-                        <div class="perk-text">
-                            <h4>現有會員同享好康</h4>
-                            <p>已經是會員了？別擔心！線上登記即可領取：<br><b>WG 零售商品 9 折券 + 100 元餐飲折抵券！</b></p>
-                            <span class="note">此外，您還能免費參加未來公司舉辦的「專屬健康挑戰賽」！</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="locations-section">
-        <div class="container">
-            <div class="loc-content">
-                <div class="loc-text">
-                    <h2 style="color: var(--primary-red); font-size: 18px; margin-bottom: 5px;">無與倫比的便利性</h2>
-                    <h3>全台超過 130 間俱樂部<br>公司旁、住家旁，隨時開練</h3>
-                    <p>不想帶充滿汗水的衣服擠捷運？World Gym 擁有全台最多的據點。您可以選擇離辦公室最近的館別，午休或下班直接去；也可以選擇離家最近的館別，週末隨時去！</p>
-                    <ul style="list-style: none; padding: 0;">
-                        <li style="margin-bottom: 10px;"><i class="fa-solid fa-circle-check" style="color: var(--primary-red); margin-right: 10px;"></i> 營業時間長，符合各班別需求</li>
-                        <li style="margin-bottom: 10px;"><i class="fa-solid fa-circle-check" style="color: var(--primary-red); margin-right: 10px;"></i> 齊全的盥洗設備，運動完清爽回家</li>
-                    </ul>
-                </div>
-                <div class="loc-map">
-                    <img src="https://images.unsplash.com/photo-1574680096145-d05b474e2155?q=80&w=800&auto=format&fit=crop" alt="全台據點地圖示意">
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section>
-        <div class="container">
-            <h2 class="section-title">國際級運動設施 <span>由你盡情探索</span></h2>
-            <div class="section-subtitle">無論你是重訓愛好者，還是喜歡熱鬧的團體課，這裡都有你的舞台</div>
-            
-            <div class="gallery-grid">
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=800&auto=format&fit=crop" alt="重訓器材">
-                    <div class="gallery-overlay"><h3>頂尖重訓器材區</h3></div>
-                </div>
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?q=80&w=800&auto=format&fit=crop" alt="有氧課程">
-                    <div class="gallery-overlay"><h3>百堂團體有氧課程</h3></div>
-                </div>
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?q=80&w=800&auto=format&fit=crop" alt="心肺有氧區">
-                    <div class="gallery-overlay"><h3>心肺有氧訓練區</h3></div>
-                </div>
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1600965962361-9035dbfd1c50?q=80&w=800&auto=format&fit=crop" alt="室內溫水泳池">
-                    <div class="gallery-overlay"><h3>室內溫水泳池與 SPA</h3></div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="action-section" id="action-section">
-        <div class="container">
-            <h2 class="section-title" style="color: white; margin-bottom: 20px;">選擇您的 <span>專屬開通管道</span></h2>
-            <p class="section-subtitle" style="color: #ddd;">無論您是想先體驗環境，還是已經準備好加入運動行列，請選擇適合您的方案：</p>
-            
-            <div class="action-grid">
-                
-                <div class="action-card">
-                    <div class="action-icon"><i class="fa-solid fa-ticket"></i></div>
-                    <h3>免費體驗 1 個月</h3>
-                    <p>「我想先看看環境再決定！」<br>線上登記後，專員將發送 30 天市區型俱樂部免費體驗憑證給您，憑企業識別證即可入場享受所有設施。</p>
-                    <a href="https://example.com/trial" target="_blank" class="btn-primary" style="width: 100%; padding: 15px;">
-                        👉 登記免費體驗 <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 14px; margin-left: 5px;"></i>
-                    </a>
-                </div>
-
-                <div class="action-card outline">
-                    <div class="action-icon"><i class="fa-solid fa-bolt"></i></div>
-                    <h3>直接線上入會</h3>
-                    <p>「我準備好要運動了！」<br>無須等待體驗，直接辦理線上入會！我們將直接為您免除「入會費」與「手續費」，並享有教練課專屬購課優惠。</p>
-                    <a href="https://example.com/join" target="_blank" class="btn-secondary" style="width: 100%; padding: 15px;">
-                        ⚡ 立即線上入會 <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 14px; margin-left: 5px;"></i>
-                    </a>
-                </div>
-
-            </div>
-            
-            <p style="text-align: center; color: #888; font-size: 14px; margin-top: 40px;">*點擊上方按鈕將另開安全新視窗，請備妥您的公司識別證或相關證明文件以利後續審核作業。</p>
-        </div>
-    </section>
-
-    <footer>
-        <div class="container">
-            <p>WORLD GYM 企業專屬特約福利網頁。本活動由您的企業與 World Gym 聯合提供。</p>
-            <p>&copy; 2026 World Gym Taiwan. All rights reserved.</p>
-        </div>
-    </footer>
-
+    function normalizeKey(value) { return String(value ?? '').toLowerCase().replace(/[\s_\-（）()：:]/g,''); }
+    function firstValue(row, aliases) { const keys = Object.keys(row); const wanted = aliases.map(normalizeKey); const key = keys.find(k => wanted.includes(normalizeKey(k)) || wanted.some(a => normalizeKey(k).includes(a))); return key ? String(row[key] ?? '').trim() : ''; }
+    function truthy(value) { return !['false','0','no','否','隱藏','不顯示'].includes(String(value).trim().toLowerCase()); }
+    function convertGoogleDriveUrl(url) { const raw = String(url || '').trim(); if (!raw) return ''; const file = raw.match(/(?:\/d\/|id=)([a-zA-Z0-9_-]{10,})/); if (file) return `https://drive.google.com/thumbnail?id=${file[1]}&sz=w1200`; return raw; }
+    function avatarUrl(url) { return convertGoogleDriveUrl(url) || FALLBACK_IMAGE; }
+    function parseCsv(text) { const rows=[]; let row=[], cell='', quoted=false; for(let i=0;i<text.length;i++){ const c=text[i], n=text[i+1]; if(c==='"'&&quoted&&n==='"'){cell+='"';i++;} else if(c==='"'){quoted=!quoted;} else if(c===','&&!quoted){row.push(cell.trim());cell='';} else if((c==='\n'||c==='\r')&&!quoted){if(c==='\r'&&n==='\n')i++; row.push(cell.trim()); if(row.some(Boolean))rows.push(row); row=[];cell='';} else cell+=c;} if(cell||row.length){row.push(cell.trim());if(row.some(Boolean))rows.push(row);} if(!rows.length)return []; const used={}; const headers=rows.shift().map(h=>{ const base=h.replace(/^\uFEFF/,''); used[base]=(used[base]||0)+1; return used[base]===1?base:`${base}__${used[base]}`; }); return rows.map(r=>Object.fromEntries(headers.map((h,i)=>[h,r[i]||'']))); }
+    // 目前試算表欄位：工會名稱、 本尊職業、 本尊遊戲ID、 Line名稱、
+    // 分身職業、分身ID（重複 5 組）。重複欄名會在 parseCsv 中自動編成 __2、__3…，再依欄位順序配對。
+    function parseMembers(rows) { return rows.filter(row=>truthy(firstValue(row,['是否顯示','顯示','visible','show']))).map((row,index)=>{ const roles=[]; const guild=firstValue(row,['工會名稱','公會名稱','guild','guildname'])||'未分類工會'; const mainId=firstValue(row,['本尊遊戲ID','本尊ID','mainid']); const mainClass=firstValue(row,['本尊職業','主職業','mainclass']); const image=firstValue(row,['本尊圖片','角色圖片','圖片','image','avatar']); if(mainId||mainClass) roles.push(['本尊',mainClass||'未設定',mainId||'未設定']); const keys=Object.keys(row); const repeatedClasses=keys.filter(k=>normalizeKey(k).startsWith(normalizeKey('分身職業'))); const repeatedIds=keys.filter(k=>normalizeKey(k).startsWith(normalizeKey('分身ID'))); for(let i=0;i<5;i++){ const id=row[repeatedIds[i]]||''; const cls=row[repeatedClasses[i]]||''; if(id||cls) roles.push([`分身 ${i+1}`,cls||'未設定',id||'未設定']); } return { guild, lineName:firstValue(row,['LINE名稱','LINE 名稱','Line名稱','line','linename','暱稱'])||'未命名冒險者', mainId:mainId||'未設定', mainClass:mainClass||'未設定', image, roles, sort:Number(firstValue(row,['排序','sort','order']))||9999, note:firstValue(row,['備註','note']) , index }; }).sort((a,b)=>a.sort-b.sort||a.index-b.index); }
+    function fillFilters() { const classes=[...new Set(members.map(m=>m.mainClass).filter(Boolean))].sort(); const guilds=[...new Set(members.map(m=>m.guild).filter(Boolean))].sort(); $('classFilter').innerHTML='<option value="">全部本尊職業</option>'+classes.map(c=>`<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`).join(''); $('guildFilter').innerHTML='<option value="">全部工會</option>'+guilds.map(g=>`<option value="${escapeHtml(g)}">${escapeHtml(g)}</option>`).join(''); }
+    function escapeHtml(value) { return String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c])); }
+    function render() { const q=$('searchInput').value.trim().toLowerCase(), guild=$('guildFilter').value, cls=$('classFilter').value; const visible=members.filter(m=>{ const text=[m.guild,m.lineName,m.mainId,m.mainClass,...m.roles.flat()].join(' ').toLowerCase(); return (!q||text.includes(q))&&(!guild||m.guild===guild)&&(!cls||m.mainClass===cls); }); $('resultCount').textContent=`顯示 ${visible.length} 位冒險者`; $('memberTotal').textContent=visible.length; $('roleTotal').textContent=visible.reduce((n,m)=>n+m.roles.length,0); $('memberGrid').innerHTML=visible.length?visible.map((m,i)=>`<button class="member-card" type="button" data-index="${members.indexOf(m)}"><div class="portrait"><img src="${escapeHtml(avatarUrl(m.image))}" alt="${escapeHtml(m.mainId)} 的角色圖片" data-fallback="1"><span class="class-pill">${escapeHtml(m.mainClass)}</span></div><div class="card-body"><div class="main-id">${escapeHtml(m.mainId)}</div><div class="line-name">${escapeHtml(m.guild)} · LINE ${escapeHtml(m.lineName)}</div><div class="card-foot"><span>查看 ${m.roles.length} 個角色</span><span>↗</span></div></div></button>`).join(''):'<div class="empty">找不到符合條件的冒險者<br><small>試試其他關鍵字或清除篩選</small></div>'; $('memberGrid').querySelectorAll('img[data-fallback]').forEach(img=>img.addEventListener('error',()=>{img.src=FALLBACK_IMAGE;img.removeAttribute('data-fallback');},{once:true})); }
+    function openMember(member) { $('modalTitle').textContent=member.lineName; $('modalLine').textContent=member.lineName; $('modalMainId').textContent=member.mainId; $('modalMainClass').textContent=member.mainClass; $('modalRoleCount').textContent=member.roles.length; const image=$('modalImage'); image.src=avatarUrl(member.image); image.alt=member.mainId+' 的角色圖片'; image.onerror=()=>{image.src=FALLBACK_IMAGE;image.onerror=null;}; $('modalRoles').innerHTML=member.roles.map((r,i)=>`<div class="role-row ${i===0?'main':''}"><div class="role-tag">${i===0?'✦ ':''}${escapeHtml(r[0])}</div><div class="role-cell"><small>職業</small><span>${escapeHtml(r[1])}</span></div><div class="role-cell"><small>遊戲 ID</small><span>${escapeHtml(r[2])}</span></div></div>`).join(''); $('memberDialog').showModal(); }
+    async function loadMembers() { $('guildName').textContent=CONFIG.guildName; try { const response=await fetch(`${CONFIG.sheetUrl}&_=${Date.now()}`,{cache:'no-store'}); if(!response.ok)throw new Error(`Published CSV HTTP ${response.status}`); const csv=await response.text(); if(!csv.includes('工會名稱')&&!csv.includes('本尊遊戲ID'))throw new Error('公開 CSV 內容不像工會名單，請確認發布的工作表與 GID'); const parsed=parseMembers(parseCsv(csv)); if(!parsed.length)throw new Error('Google Sheet 沒有可用的成員資料'); members=parsed; console.info('[Guild Roster] 已透過發布到網路的 CSV 取得資料。'); fillFilters(); render(); } catch(error) { console.error('[Guild Roster] Google Sheet CSV 讀取失敗：',error); members=[]; $('memberTotal').textContent='—'; $('roleTotal').textContent='—'; $('resultCount').textContent='資料讀取失敗'; $('memberGrid').innerHTML='<div class="error"><strong>目前無法取得 Google Sheet 的工會成員資料。</strong>請確認「發布到網路」連結仍有效，且網址中的 gid=2083968754 指向「工會成員名單」工作表。<br><small>此頁面不會使用虛構會員資料；詳細錯誤已記錄在瀏覽器 Console。</small></div>'; } }
+    $('searchInput').addEventListener('input',render); $('guildFilter').addEventListener('change',render); $('classFilter').addEventListener('change',render); $('memberGrid').addEventListener('click',e=>{const card=e.target.closest('.member-card');if(card)openMember(members[Number(card.dataset.index)]);}); $('closeModal').addEventListener('click',()=>$('memberDialog').close()); $('memberDialog').addEventListener('click',e=>{if(e.target===$('memberDialog'))$('memberDialog').close();}); document.addEventListener('keydown',e=>{if(e.key==='Escape'&&$('memberDialog').open)$('memberDialog').close();}); loadMembers();
+  </script>
 </body>
 </html>
