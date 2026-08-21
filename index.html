@@ -4,21 +4,21 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#0b0d14">
-  <title>瑪奇 MOBILE｜工會成員名冊</title>
+  <title>瑪奇 MOBILE｜公會成員名冊</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Rajdhani:wght@500;600;700&display=swap');
-    :root { --bg:#0b0d14; --panel:rgba(19,22,34,.82); --line:rgba(255,255,255,.1); --text:#f4f0e8; --muted:#a9a8b4; --gold:#e9bb68; --purple:#a98af6; --cyan:#7de0d0; --danger:#ef9a9a; }
+    :root { --bg:#090a0f; --panel:rgba(20,22,30,.78); --line:rgba(255,255,255,.1); --text:#f5f5f7; --muted:#a8aab5; --gold:#d7b56d; --purple:#9a82d8; --cyan:#7de0d0; --danger:#ef9a9a; }
     * { box-sizing:border-box; }
     html { scroll-behavior:smooth; }
     body { margin:0; min-width:320px; color:var(--text); background:radial-gradient(circle at 12% 0%,#2c214b 0,transparent 33%),radial-gradient(circle at 88% 12%,#163a43 0,transparent 30%),var(--bg); font-family:'Noto Sans TC',system-ui,sans-serif; }
     body:before { content:""; position:fixed; inset:0; pointer-events:none; opacity:.16; background-image:linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px); background-size:52px 52px; mask-image:linear-gradient(to bottom,#000,transparent 80%); }
     button,input,select { font:inherit; }
     button { cursor:pointer; }
-    .shell { width:min(1240px,calc(100% - 32px)); margin:auto; position:relative; }
-    header { padding:42px 0 24px; }
+    .shell { width:min(1320px,calc(100% - 32px)); margin:auto; position:relative; }
+    header { padding:34px 0 22px; }
     .eyebrow { color:var(--gold); letter-spacing:.18em; text-transform:uppercase; font:700 13px Rajdhani,sans-serif; display:flex; align-items:center; gap:9px; }
     .eyebrow:before { content:""; width:30px; height:1px; background:var(--gold); }
-    h1 { margin:8px 0 4px; font-size:clamp(30px,5vw,58px); line-height:1; letter-spacing:.04em; }
+    h1 { margin:8px 0 4px; font-size:clamp(30px,5vw,52px); line-height:1; letter-spacing:.04em; }
     .subtitle { color:var(--muted); margin:0; font-size:14px; }
     .hero { display:flex; justify-content:space-between; align-items:end; gap:24px; }
     .stats { display:flex; gap:12px; flex-wrap:wrap; }
@@ -35,18 +35,19 @@
     .section-head { display:flex; justify-content:space-between; align-items:center; margin-bottom:13px; }
     .section-head h2 { margin:0; font-size:18px; letter-spacing:.06em; }
     .result-count { color:var(--muted); font-size:13px; }
-    .grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:16px; padding-bottom:64px; }
-    .member-card { overflow:hidden; min-width:0; padding:0; text-align:left; color:var(--text); border:1px solid rgba(255,255,255,.11); border-radius:18px; background:linear-gradient(145deg,rgba(31,34,49,.9),rgba(13,15,25,.95)); box-shadow:0 18px 35px rgba(0,0,0,.2); transition:transform .2s,border-color .2s,box-shadow .2s; }
-    .member-card:hover,.member-card:focus-visible { transform:translateY(-5px); border-color:rgba(233,187,104,.65); box-shadow:0 20px 42px rgba(0,0,0,.34),0 0 0 1px rgba(233,187,104,.14); outline:0; }
-    .portrait { height:220px; position:relative; overflow:hidden; background:linear-gradient(145deg,#302855,#142c33); }
+    .grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:18px; padding-bottom:64px; }
+    .member-card { overflow:hidden; min-width:0; padding:0; text-align:left; color:var(--text); border:1px solid rgba(255,255,255,.11); border-radius:17px; background:linear-gradient(145deg,rgba(35,35,49,.92),rgba(13,15,25,.97)); box-shadow:0 18px 35px rgba(0,0,0,.2); transition:transform .25s,border-color .25s,box-shadow .25s; }
+    .member-card:hover,.member-card:focus-visible { transform:translateY(-4px); border-color:rgba(215,181,109,.7); box-shadow:0 22px 44px rgba(0,0,0,.38),0 0 0 1px rgba(154,130,216,.16); outline:0; }
+    .portrait { height:clamp(300px,26vw,390px); position:relative; overflow:hidden; background:linear-gradient(145deg,#302855,#142c33); }
     .portrait img { width:100%; height:100%; display:block; object-fit:cover; transition:transform .35s; }
     .member-card:hover .portrait img { transform:scale(1.045); }
     .portrait:after { content:""; position:absolute; inset:45% 0 0; background:linear-gradient(transparent,rgba(7,8,13,.88)); pointer-events:none; }
     .class-pill { position:absolute; z-index:1; top:12px; left:12px; padding:5px 9px; border:1px solid rgba(255,255,255,.18); border-radius:999px; color:#fff; background:rgba(9,10,17,.64); backdrop-filter:blur(8px); font-size:11px; }
-    .card-body { padding:14px 15px 16px; }
-    .main-id { font-weight:800; font-size:18px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-    .line-name { color:var(--muted); font-size:13px; margin-top:3px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-    .card-foot { display:flex; justify-content:space-between; align-items:center; margin-top:17px; color:var(--gold); font-size:12px; }
+    .card-body { padding:13px 15px 15px; min-height:112px; }
+    .main-id { font-weight:800; font-size:20px; line-height:1.2; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; color:var(--text); }
+    .line-name { color:var(--gold); font-size:12px; margin:0 0 6px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; letter-spacing:.03em; }
+    .line-name:before { content:'公會｜'; color:var(--purple); }
+    .card-foot { display:flex; justify-content:space-between; align-items:center; margin-top:16px; color:var(--gold); font-size:12px; }
     .card-foot span:last-child { color:var(--muted); font-size:20px; line-height:10px; }
     .empty,.error { padding:52px 20px; text-align:center; border:1px dashed var(--line); border-radius:16px; color:var(--muted); grid-column:1/-1; }
     .error strong { display:block; color:var(--danger); margin-bottom:8px; }
@@ -58,45 +59,46 @@
     .close { width:38px; height:38px; border:1px solid var(--line); border-radius:50%; color:var(--text); background:transparent; font-size:23px; line-height:1; }
     .close:hover { border-color:var(--gold); color:var(--gold); }
     .modal-content { padding:20px; overflow:auto; max-height:calc(100dvh - 130px); }
-    .player-overview { display:grid; grid-template-columns:128px 1fr; gap:18px; align-items:center; padding-bottom:20px; border-bottom:1px solid var(--line); }
-    .modal-image { width:128px; height:145px; object-fit:cover; border-radius:13px; border:1px solid rgba(233,187,104,.48); background:#252039; }
+    .player-overview { display:grid; grid-template-columns:230px 1fr; gap:24px; align-items:center; padding-bottom:22px; border-bottom:1px solid var(--line); }
+    .modal-image { width:230px; height:275px; object-fit:cover; object-position:center; border-radius:15px; border:1px solid rgba(215,181,109,.55); background:#252039; box-shadow:0 16px 30px rgba(0,0,0,.28); }
     .meta-label { color:var(--muted); font-size:12px; }
-    .meta-value { font-size:18px; font-weight:700; margin:3px 0 11px; overflow-wrap:anywhere; }
+    .meta-value { font-size:18px; font-weight:700; margin:3px 0 11px; overflow-wrap:anywhere; color:var(--text); }
+    .meta-value.guild { color:var(--gold); }
     .roles-title { margin:21px 0 12px; font-size:14px; color:var(--gold); letter-spacing:.08em; }
-    .roles { display:grid; gap:8px; }
-    .role-row { display:grid; grid-template-columns:108px 1fr 1fr; gap:9px; align-items:center; padding:12px 13px; border:1px solid var(--line); border-radius:11px; background:rgba(255,255,255,.035); min-width:0; }
-    .role-row.main { border-color:rgba(233,187,104,.55); background:linear-gradient(90deg,rgba(233,187,104,.15),rgba(169,138,246,.06)); }
-    .role-tag { color:var(--gold); font-size:12px; font-weight:700; }
+    .roles { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+    .role-row { display:flex; flex-direction:column; gap:10px; padding:14px; border:1px solid var(--line); border-radius:12px; background:linear-gradient(145deg,rgba(255,255,255,.06),rgba(255,255,255,.02)); min-width:0; }
+    .role-row.main { border-color:rgba(215,181,109,.65); background:linear-gradient(145deg,rgba(215,181,109,.16),rgba(154,130,216,.08)); box-shadow:inset 0 1px rgba(255,255,255,.08); }
+    .role-tag { color:var(--gold); font-size:13px; font-weight:700; }
     .role-cell { min-width:0; overflow-wrap:anywhere; }
     .role-cell small { display:block; color:var(--muted); font-size:10px; margin-bottom:2px; }
     .role-cell span { font-size:14px; }
     footer { padding:0 0 26px; color:#71717f; font-size:11px; text-align:center; }
-    @media (max-width:1050px) { .grid { grid-template-columns:repeat(3,minmax(0,1fr)); } }
-    @media (max-width:760px) { .shell { width:min(100% - 24px,620px); } header { padding-top:28px; } .hero { display:block; } .stats { margin-top:20px; } .toolbar { grid-template-columns:1fr; } .grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; } .portrait { height:190px; } }
-    @media (max-width:440px) { .grid { grid-template-columns:1fr; } .portrait { height:240px; } .stat { flex:1; min-width:0; } .player-overview { grid-template-columns:94px 1fr; gap:13px; } .modal-image { width:94px; height:112px; } .role-row { grid-template-columns:78px 1fr 1fr; padding:10px 9px; } .role-row .role-cell span { font-size:13px; } }
+    @media (max-width:1050px) { .grid { grid-template-columns:repeat(3,minmax(0,1fr)); } .portrait { height:330px; } }
+    @media (max-width:760px) { .shell { width:min(100% - 24px,620px); } header { padding-top:28px; } .hero { display:block; } .stats { margin-top:20px; } .toolbar { grid-template-columns:1fr; } .grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; } .portrait { height:285px; } .player-overview { grid-template-columns:1fr; gap:16px; } .modal-image { width:100%; height:min(62vw,320px); } .roles { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+    @media (max-width:440px) { .grid { grid-template-columns:1fr; } .portrait { height:330px; } .stat { flex:1; min-width:0; } .roles { grid-template-columns:1fr; } .role-row .role-cell span { font-size:13px; } }
   </style>
 </head>
 <body>
   <main class="shell">
     <header>
       <div class="hero">
-        <div><div class="eyebrow">MABINOGI MOBILE / GUILD ROSTER</div><h1 id="guildName">瑪奇 MOBILE 工會名冊</h1><p class="subtitle">記錄每一位冒險者的主職與角色配置</p></div>
-        <div class="stats"><div class="stat"><strong id="memberTotal">—</strong><span>目前成員</span></div><div class="stat"><strong id="roleTotal">—</strong><span>已登錄角色</span></div></div>
+        <div><div class="eyebrow">MABINOGI MOBILE / GUILD ROSTER</div><h1 id="guildName">瑪奇 MOBILE 公會名冊</h1><p class="subtitle">記錄每一位冒險者的主職與角色配置</p></div>
+        <div class="stats"><div class="stat"><strong id="memberTotal">—</strong><span>公會成員</span></div><div class="stat"><strong id="roleTotal">—</strong><span>已登錄角色</span></div></div>
       </div>
     </header>
     <section class="toolbar" aria-label="名單搜尋與篩選">
       <label class="field"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><input id="searchInput" type="search" placeholder="搜尋 LINE 名稱、本尊 ID 或分身 ID…" autocomplete="off"></label>
-      <label class="field"><select id="guildFilter" aria-label="依工會篩選"><option value="">全部工會</option></select></label>
+      <label class="field"><select id="guildFilter" aria-label="依公會篩選"><option value="">全部公會</option></select></label>
       <label class="field"><select id="classFilter" aria-label="依本尊職業篩選"><option value="">全部本尊職業</option></select></label>
     </section>
     <div class="section-head"><h2>冒險者名冊</h2><span class="result-count" id="resultCount"></span></div>
     <section class="grid" id="memberGrid" aria-live="polite"></section>
-    <footer>資料由 Google Sheet 提供 · 點擊卡片查看完整角色配置</footer>
+  <footer>資料由 Google Sheet 提供 · 點擊卡片查看完整公會角色配置</footer>
   </main>
 
   <dialog id="memberDialog" aria-labelledby="modalTitle">
     <div class="modal-top"><div><div class="modal-kicker">PLAYER PROFILE / CHARACTER SET</div><h2 id="modalTitle">會員資料</h2></div><button class="close" id="closeModal" type="button" aria-label="關閉">×</button></div>
-    <div class="modal-content"><div class="player-overview"><img class="modal-image" id="modalImage" alt="角色圖片"><div><div class="meta-label">LINE 名稱</div><div class="meta-value" id="modalLine">—</div><div class="meta-label">本尊 ID</div><div class="meta-value" id="modalMainId">—</div><div class="meta-label">本尊職業</div><div class="meta-value" id="modalMainClass">—</div></div></div><div class="roles-title">角色配置 · <span id="modalRoleCount">0</span> / 6</div><div class="roles" id="modalRoles"></div></div>
+    <div class="modal-content"><div class="player-overview"><img class="modal-image" id="modalImage" alt="角色圖片"><div><div class="meta-label">公會名稱</div><div class="meta-value guild" id="modalGuild">—</div><div class="meta-label">遊戲名稱 / ID</div><div class="meta-value" id="modalMainId">—</div><div class="meta-label">LINE 名稱</div><div class="meta-value" id="modalLine">—</div><div class="meta-label">本尊職業</div><div class="meta-value" id="modalMainClass">—</div></div></div><div class="roles-title">六個角色配置 · <span id="modalRoleCount">0</span> / 6</div><div class="roles" id="modalRoles"></div></div>
   </dialog>
 
   <script>
@@ -104,7 +106,7 @@
     const CONFIG = {
       spreadsheetId: '1USPYBfsaIlIDvefmlIBEe4_cx_B4KoOhlHiMjymcfTs',
       gid: '2083968754',
-      guildName: '工會成員名單',
+      guildName: '瑪奇 MOBILE 公會名單',
       // Google Sheet「發布到網路」後的 CSV 連結：網站會直接讀取這個公開網址。
       sheetUrl: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSE-IKb2H8AZNOkljE2_5z-ekVn8h49WTtheoGOFAz1iARthjZGLWR4d2ro_FU-3B5rNrPZrPAsmEbg/pub?gid=2083968754&single=true&output=csv',
       // false：讀取失敗時不顯示任何虛構會員，避免把 Demo ID 誤當成正式資料。
@@ -128,14 +130,14 @@
     function convertGoogleDriveUrl(url) { const raw = String(url || '').trim(); if (!raw) return ''; const file = raw.match(/drive\.google\.com\/(?:file\/d\/|open\?id=|uc\?id=)([a-zA-Z0-9_-]+)/i) || raw.match(/[?&]id=([a-zA-Z0-9_-]+)/i); if (file) return `https://drive.google.com/thumbnail?id=${file[1]}&sz=w1200`; if (/^https?:\/\/[^\s"'<>]+$/i.test(raw)) return raw; return ''; }
     function avatarUrl(url) { return convertGoogleDriveUrl(url) || FALLBACK_IMAGE; }
     function parseCsv(text) { const rows=[]; let row=[], cell='', quoted=false; for(let i=0;i<text.length;i++){ const c=text[i], n=text[i+1]; if(c==='"'&&quoted&&n==='"'){cell+='"';i++;} else if(c==='"'){quoted=!quoted;} else if(c===','&&!quoted){row.push(cell.trim());cell='';} else if((c==='\n'||c==='\r')&&!quoted){if(c==='\r'&&n==='\n')i++; row.push(cell.trim()); if(row.some(Boolean))rows.push(row); row=[];cell='';} else cell+=c;} if(cell||row.length){row.push(cell.trim());if(row.some(Boolean))rows.push(row);} if(!rows.length)return []; const used={}; const headers=rows.shift().map(h=>{ const base=h.replace(/^\uFEFF/,''); used[base]=(used[base]||0)+1; return used[base]===1?base:`${base}__${used[base]}`; }); return rows.map(r=>Object.fromEntries(headers.map((h,i)=>[h,r[i]||'']))); }
-    // 目前試算表欄位：工會名稱、 本尊職業、 本尊遊戲ID、 Line名稱、圖片網址、
+    // 目前試算表欄位：公會名稱、 本尊職業、 本尊遊戲ID、 Line名稱、圖片網址、
     // 分身職業、分身ID（重複 5 組）。重複欄名會在 parseCsv 中自動編成 __2、__3…，再依欄位順序配對。
-    function parseMembers(rows) { return rows.filter(row=>truthy(firstValue(row,['是否顯示','顯示','visible','show']))).map((row,index)=>{ const roles=[]; const guild=firstValue(row,['工會名稱','公會名稱','guild','guildname'])||'未分類工會'; const mainId=firstValue(row,['本尊遊戲ID','本尊ID','mainid']); const mainClass=firstValue(row,['本尊職業','主職業','mainclass']); const image=firstValue(row,['圖片網址','圖片 URL','圖片URL','角色圖片網址','本尊圖片','角色圖片','圖片','image','avatar']); if(mainId||mainClass) roles.push(['本尊',mainClass||'未設定',mainId||'未設定']); const keys=Object.keys(row); const repeatedClasses=keys.filter(k=>normalizeKey(k).startsWith(normalizeKey('分身職業'))); const repeatedIds=keys.filter(k=>normalizeKey(k).startsWith(normalizeKey('分身ID'))); for(let i=0;i<5;i++){ const id=row[repeatedIds[i]]||''; const cls=row[repeatedClasses[i]]||''; if(id||cls) roles.push([`分身 ${i+1}`,cls||'未設定',id||'未設定']); } return { guild, lineName:firstValue(row,['LINE名稱','LINE 名稱','Line名稱','line','linename','暱稱'])||'未命名冒險者', mainId:mainId||'未設定', mainClass:mainClass||'未設定', image, roles, sort:Number(firstValue(row,['排序','sort','order']))||9999, note:firstValue(row,['備註','note']) , index }; }).sort((a,b)=>a.sort-b.sort||a.index-b.index); }
-    function fillFilters() { const classes=[...new Set(members.map(m=>m.mainClass).filter(Boolean))].sort(); const guilds=[...new Set(members.map(m=>m.guild).filter(Boolean))].sort(); $('classFilter').innerHTML='<option value="">全部本尊職業</option>'+classes.map(c=>`<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`).join(''); $('guildFilter').innerHTML='<option value="">全部工會</option>'+guilds.map(g=>`<option value="${escapeHtml(g)}">${escapeHtml(g)}</option>`).join(''); }
+    function parseMembers(rows) { return rows.filter(row=>truthy(firstValue(row,['是否顯示','顯示','visible','show']))).map((row,index)=>{ const roles=[]; const guild=firstValue(row,['公會名稱','\u5de5\u6703\u540d\u7a31','guild','guildname'])||'未分類公會'; const mainId=firstValue(row,['本尊遊戲ID','本尊ID','mainid']); const mainClass=firstValue(row,['本尊職業','主職業','mainclass']); const image=firstValue(row,['圖片網址','圖片 URL','圖片URL','角色圖片網址','本尊圖片','角色圖片','圖片','image','avatar']); if(mainId||mainClass) roles.push(['本尊',mainClass||'未設定',mainId||'未設定']); const keys=Object.keys(row); const repeatedClasses=keys.filter(k=>normalizeKey(k).startsWith(normalizeKey('分身職業'))); const repeatedIds=keys.filter(k=>normalizeKey(k).startsWith(normalizeKey('分身ID'))); for(let i=0;i<5;i++){ const id=row[repeatedIds[i]]||''; const cls=row[repeatedClasses[i]]||''; if(id||cls) roles.push([`分身 ${i+1}`,cls||'未設定',id||'未設定']); } return { guild, lineName:firstValue(row,['LINE名稱','LINE 名稱','Line名稱','line','linename','暱稱'])||'未命名冒險者', mainId:mainId||'未設定', mainClass:mainClass||'未設定', image, roles, sort:Number(firstValue(row,['排序','sort','order']))||9999, note:firstValue(row,['備註','note']) , index }; }).sort((a,b)=>a.sort-b.sort||a.index-b.index); }
+    function fillFilters() { const classes=[...new Set(members.map(m=>m.mainClass).filter(Boolean))].sort(); const guilds=[...new Set(members.map(m=>m.guild).filter(Boolean))].sort(); $('classFilter').innerHTML='<option value="">全部本尊職業</option>'+classes.map(c=>`<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`).join(''); $('guildFilter').innerHTML='<option value="">全部公會</option>'+guilds.map(g=>`<option value="${escapeHtml(g)}">${escapeHtml(g)}</option>`).join(''); }
     function escapeHtml(value) { return String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c])); }
-    function render() { const q=$('searchInput').value.trim().toLowerCase(), guild=$('guildFilter').value, cls=$('classFilter').value; const visible=members.filter(m=>{ const text=[m.guild,m.lineName,m.mainId,m.mainClass,...m.roles.flat()].join(' ').toLowerCase(); return (!q||text.includes(q))&&(!guild||m.guild===guild)&&(!cls||m.mainClass===cls); }); $('resultCount').textContent=`顯示 ${visible.length} 位冒險者`; $('memberTotal').textContent=visible.length; $('roleTotal').textContent=visible.reduce((n,m)=>n+m.roles.length,0); $('memberGrid').innerHTML=visible.length?visible.map((m,i)=>`<button class="member-card" type="button" data-index="${members.indexOf(m)}"><div class="portrait"><img src="${escapeHtml(avatarUrl(m.image))}" alt="${escapeHtml(m.mainId)} 的角色圖片" data-fallback="1"><span class="class-pill">${escapeHtml(m.mainClass)}</span></div><div class="card-body"><div class="main-id">${escapeHtml(m.mainId)}</div><div class="line-name">${escapeHtml(m.guild)} · LINE ${escapeHtml(m.lineName)}</div><div class="card-foot"><span>查看 ${m.roles.length} 個角色</span><span>↗</span></div></div></button>`).join(''):'<div class="empty">找不到符合條件的冒險者<br><small>試試其他關鍵字或清除篩選</small></div>'; $('memberGrid').querySelectorAll('img[data-fallback]').forEach(img=>img.addEventListener('error',()=>{img.src=FALLBACK_IMAGE;img.removeAttribute('data-fallback');},{once:true})); }
-    function openMember(member) { $('modalTitle').textContent=member.lineName; $('modalLine').textContent=member.lineName; $('modalMainId').textContent=member.mainId; $('modalMainClass').textContent=member.mainClass; $('modalRoleCount').textContent=member.roles.length; const image=$('modalImage'); image.src=avatarUrl(member.image); image.alt=member.mainId+' 的角色圖片'; image.onerror=()=>{image.src=FALLBACK_IMAGE;image.onerror=null;}; $('modalRoles').innerHTML=member.roles.map((r,i)=>`<div class="role-row ${i===0?'main':''}"><div class="role-tag">${i===0?'✦ ':''}${escapeHtml(r[0])}</div><div class="role-cell"><small>職業</small><span>${escapeHtml(r[1])}</span></div><div class="role-cell"><small>遊戲 ID</small><span>${escapeHtml(r[2])}</span></div></div>`).join(''); $('memberDialog').showModal(); }
-    async function loadMembers() { $('guildName').textContent=CONFIG.guildName; try { const response=await fetch(`${CONFIG.sheetUrl}&_=${Date.now()}`,{cache:'no-store'}); if(!response.ok)throw new Error(`Published CSV HTTP ${response.status}`); const csv=await response.text(); if(!csv.includes('工會名稱')&&!csv.includes('本尊遊戲ID'))throw new Error('公開 CSV 內容不像工會名單，請確認發布的工作表與 GID'); const parsed=parseMembers(parseCsv(csv)); if(!parsed.length)throw new Error('Google Sheet 沒有可用的成員資料'); members=parsed; console.info('[Guild Roster] 已透過發布到網路的 CSV 取得資料。'); fillFilters(); render(); } catch(error) { console.error('[Guild Roster] Google Sheet CSV 讀取失敗：',error); members=[]; $('memberTotal').textContent='—'; $('roleTotal').textContent='—'; $('resultCount').textContent='資料讀取失敗'; $('memberGrid').innerHTML='<div class="error"><strong>目前無法取得 Google Sheet 的工會成員資料。</strong>請確認「發布到網路」連結仍有效，且網址中的 gid=2083968754 指向「工會成員名單」工作表。<br><small>此頁面不會使用虛構會員資料；詳細錯誤已記錄在瀏覽器 Console。</small></div>'; } }
+    function render() { const q=$('searchInput').value.trim().toLowerCase(), guild=$('guildFilter').value, cls=$('classFilter').value; const visible=members.filter(m=>{ const text=[m.guild,m.lineName,m.mainId,m.mainClass,...m.roles.flat()].join(' ').toLowerCase(); return (!q||text.includes(q))&&(!guild||m.guild===guild)&&(!cls||m.mainClass===cls); }); $('resultCount').textContent=`顯示 ${visible.length} 位冒險者`; $('memberTotal').textContent=visible.length; $('roleTotal').textContent=visible.reduce((n,m)=>n+m.roles.length,0); $('memberGrid').innerHTML=visible.length?visible.map((m,i)=>`<button class="member-card" type="button" data-index="${members.indexOf(m)}"><div class="portrait"><img src="${escapeHtml(avatarUrl(m.image))}" alt="${escapeHtml(m.mainId)} 的角色圖片" data-fallback="1"><span class="class-pill">角色展示</span></div><div class="card-body"><div class="line-name">${escapeHtml(m.guild)}</div><div class="main-id">${escapeHtml(m.mainId)}</div><div class="card-foot"><span>查看六個角色</span><span>→</span></div></div></button>`).join(''):'<div class="empty">找不到符合條件的冒險者<br><small>試試其他關鍵字或清除篩選</small></div>'; $('memberGrid').querySelectorAll('img[data-fallback]').forEach(img=>img.addEventListener('error',()=>{img.src=FALLBACK_IMAGE;img.removeAttribute('data-fallback');},{once:true})); }
+    function openMember(member) { $('modalTitle').textContent=member.mainId; $('modalGuild').textContent=member.guild; $('modalLine').textContent=member.lineName; $('modalMainId').textContent=member.mainId; $('modalMainClass').textContent=member.mainClass; $('modalRoleCount').textContent=member.roles.length; const image=$('modalImage'); image.src=avatarUrl(member.image); image.alt=member.mainId+' 的角色圖片'; image.onerror=()=>{image.src=FALLBACK_IMAGE;image.onerror=null;}; $('modalRoles').innerHTML=member.roles.map((r,i)=>`<div class="role-row ${i===0?'main':''}"><div class="role-tag">${i===0?'✦ ':''}${escapeHtml(r[0])}</div><div class="role-cell"><small>職業</small><span>${escapeHtml(r[1])}</span></div><div class="role-cell"><small>遊戲 ID</small><span>${escapeHtml(r[2])}</span></div></div>`).join(''); $('memberDialog').showModal(); }
+    async function loadMembers() { $('guildName').textContent=CONFIG.guildName; try { const response=await fetch(`${CONFIG.sheetUrl}&_=${Date.now()}`,{cache:'no-store'}); if(!response.ok)throw new Error(`Published CSV HTTP ${response.status}`); const csv=await response.text(); if(!csv.includes('公會名稱')&&!csv.includes('\u5de5\u6703\u540d\u7a31')&&!csv.includes('本尊遊戲ID'))throw new Error('公開 CSV 內容不像公會名單，請確認發布的工作表與 GID'); const parsed=parseMembers(parseCsv(csv)); if(!parsed.length)throw new Error('Google Sheet 沒有可用的成員資料'); members=parsed; console.info('[Guild Roster] 已透過發布到網路的 CSV 取得資料。'); fillFilters(); render(); } catch(error) { console.error('[Guild Roster] Google Sheet CSV 讀取失敗：',error); members=[]; $('memberTotal').textContent='—'; $('roleTotal').textContent='—'; $('resultCount').textContent='資料讀取失敗'; $('memberGrid').innerHTML='<div class="error"><strong>目前無法取得 Google Sheet 的公會成員資料。</strong>請確認「發布到網路」連結仍有效，且網址中的 gid=2083968754 指向「公會成員名單」工作表。<br><small>此頁面不會使用虛構會員資料；詳細錯誤已記錄在瀏覽器 Console。</small></div>'; } }
     $('searchInput').addEventListener('input',render); $('guildFilter').addEventListener('change',render); $('classFilter').addEventListener('change',render); $('memberGrid').addEventListener('click',e=>{const card=e.target.closest('.member-card');if(card)openMember(members[Number(card.dataset.index)]);}); $('closeModal').addEventListener('click',()=>$('memberDialog').close()); $('memberDialog').addEventListener('click',e=>{if(e.target===$('memberDialog'))$('memberDialog').close();}); document.addEventListener('keydown',e=>{if(e.key==='Escape'&&$('memberDialog').open)$('memberDialog').close();}); loadMembers();
   </script>
 </body>
