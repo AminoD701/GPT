@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#0b0d14">
-  <title>瑪奇 MOBILE｜公會成員名冊</title>
+  <title>瑪奇Mobile│迪恩│公會成員名單</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Rajdhani:wght@500;600;700&display=swap');
     :root { --bg:#090a0f; --panel:rgba(20,22,30,.78); --line:rgba(255,255,255,.1); --text:#f5f5f7; --muted:#a8aab5; --gold:#d7b56d; --purple:#9a82d8; --cyan:#7de0d0; --danger:#ef9a9a; }
@@ -15,13 +15,17 @@
     button,input,select { font:inherit; }
     button { cursor:pointer; }
     .shell { width:min(1320px,calc(100% - 32px)); margin:auto; position:relative; }
-    header { padding:34px 0 22px; }
+    header { padding:24px 0 14px; }
     .eyebrow { color:var(--gold); letter-spacing:.18em; text-transform:uppercase; font:700 13px Rajdhani,sans-serif; display:flex; align-items:center; gap:9px; }
     .eyebrow:before { content:""; width:30px; height:1px; background:var(--gold); }
-    h1 { margin:8px 0 4px; font-size:clamp(30px,5vw,52px); line-height:1; letter-spacing:.04em; }
+    h1 { margin:8px 0 4px; font-size:clamp(27px,4.6vw,52px); line-height:1.08; letter-spacing:.035em; text-wrap:balance; }
     .subtitle { color:var(--muted); margin:0; font-size:14px; }
-    .hero { display:flex; justify-content:space-between; align-items:end; gap:24px; }
-    .stats { display:flex; gap:12px; flex-wrap:wrap; }
+    .hero-banner { min-height:320px; position:relative; display:flex; align-items:flex-end; overflow:hidden; border:1px solid rgba(215,181,109,.24); border-radius:22px; background-image:linear-gradient(to bottom,rgba(5,7,12,.08) 0%,rgba(5,7,12,.2) 42%,rgba(9,10,15,.96) 100%),url('https://nxtw.dn.nexoncdn.co.kr/mbm/home/573x300.jpg'); background-size:cover; background-position:center 34%; box-shadow:0 24px 60px rgba(0,0,0,.3),inset 0 1px rgba(255,255,255,.12); }
+    .hero-banner:after { content:""; position:absolute; inset:auto 0 0; height:48%; pointer-events:none; background:linear-gradient(to bottom,transparent,rgba(9,10,15,.88)); }
+    .hero-copy { position:relative; z-index:1; width:100%; padding:42px clamp(22px,5vw,64px) 34px; }
+    .hero-copy .eyebrow { text-shadow:0 2px 12px rgba(0,0,0,.45); }
+    .hero-copy .subtitle { color:rgba(245,245,247,.72); letter-spacing:.08em; }
+    .stats { display:flex; gap:12px; flex-wrap:wrap; margin:0 0 18px; }
     .stat { min-width:124px; padding:15px 18px; border:1px solid var(--line); border-radius:14px; background:rgba(12,14,24,.62); box-shadow:0 16px 40px rgba(0,0,0,.16); }
     .stat strong { display:block; font:700 28px Rajdhani,sans-serif; color:var(--gold); }
     .stat span { color:var(--muted); font-size:12px; }
@@ -76,18 +80,18 @@
     .role-cell span { font-size:14px; }
     footer { padding:0 0 26px; color:#71717f; font-size:11px; text-align:center; }
     @media (max-width:1050px) { .grid { grid-template-columns:repeat(3,minmax(0,1fr)); } .portrait { height:330px; } }
-    @media (max-width:760px) { .shell { width:min(100% - 24px,620px); } header { padding-top:28px; } .hero { display:block; } .stats { margin-top:20px; } .toolbar { grid-template-columns:1fr; } .grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; } .portrait { height:285px; } .player-overview { grid-template-columns:1fr; gap:16px; } .modal-image { width:100%; height:min(62vw,320px); } .roles { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+    @media (max-width:760px) { .shell { width:min(100% - 24px,620px); } header { padding-top:14px; } .hero-banner { min-height:220px; border-radius:17px; background-position:center center; } .hero-copy { padding:32px 20px 25px; } .hero-copy .eyebrow { font-size:11px; } .stats { margin-bottom:16px; } .toolbar { grid-template-columns:1fr; } .grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; } .portrait { height:285px; } .player-overview { grid-template-columns:1fr; gap:16px; } .modal-image { width:100%; height:min(62vw,320px); } .roles { grid-template-columns:repeat(2,minmax(0,1fr)); } }
     @media (max-width:440px) { .grid { grid-template-columns:1fr; } .portrait { height:330px; } .stat { flex:1; min-width:0; } .roles { grid-template-columns:1fr; } .role-row .role-cell span { font-size:13px; } }
   </style>
 </head>
 <body>
   <main class="shell">
     <header>
-      <div class="hero">
-        <div><div class="eyebrow">MABINOGI MOBILE / GUILD ROSTER</div><h1 id="guildName">瑪奇 MOBILE 公會名冊</h1><p class="subtitle">記錄每一位冒險者的主職與角色配置</p></div>
-        <div class="stats"><div class="stat"><strong id="memberTotal">—</strong><span>公會成員</span></div><div class="stat"><strong id="roleTotal">—</strong><span>已登錄角色</span></div></div>
+      <div class="hero-banner">
+        <div class="hero-copy"><div class="eyebrow">MABINOGI MOBILE · DEIAN</div><h1 id="guildName">瑪奇Mobile│迪恩│公會成員名單</h1><p class="subtitle">Mabinogi Mobile · Deian / Guild Roster</p></div>
       </div>
     </header>
+    <div class="stats"><div class="stat"><strong id="memberTotal">—</strong><span>公會成員</span></div><div class="stat"><strong id="roleTotal">—</strong><span>已登錄角色</span></div></div>
     <section class="toolbar" aria-label="名單搜尋與篩選">
       <label class="field"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><input id="searchInput" type="search" placeholder="搜尋 LINE 名稱、本尊 ID 或分身 ID…" autocomplete="off"></label>
       <label class="field"><select id="guildFilter" aria-label="依公會篩選"><option value="">全部公會</option></select></label>
@@ -108,7 +112,7 @@
     const CONFIG = {
       spreadsheetId: '1USPYBfsaIlIDvefmlIBEe4_cx_B4KoOhlHiMjymcfTs',
       gid: '2083968754',
-      guildName: '瑪奇 MOBILE 公會名單',
+      guildName: '瑪奇Mobile│迪恩│公會成員名單',
       // Google Sheet「發布到網路」後的 CSV 連結：網站會直接讀取這個公開網址。
       sheetUrl: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSE-IKb2H8AZNOkljE2_5z-ekVn8h49WTtheoGOFAz1iARthjZGLWR4d2ro_FU-3B5rNrPZrPAsmEbg/pub?gid=2083968754&single=true&output=csv',
       // false：讀取失敗時不顯示任何虛構會員，避免把 Demo ID 誤當成正式資料。
