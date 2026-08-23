@@ -249,6 +249,56 @@
     @media (max-width:980px) { .rune-class-grid { grid-template-columns:repeat(4,minmax(0,1fr)); } .rune-class-grid.category-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
     @media (max-width:760px) { .guide-home-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } .guide-block.article-block { grid-template-columns:1fr; } .guide-image { max-height:260px; } .rune-class-grid { grid-template-columns:repeat(3,minmax(0,1fr)); } .rune-class-grid.category-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } .rune-order-list { grid-template-columns:repeat(2,minmax(0,1fr)); } .rune-stage-list { grid-template-columns:repeat(2,minmax(0,1fr)); } .rune-section-grid { grid-template-columns:1fr; } .rune-detail-hero { display:block; } .rune-category-group { padding:16px; } }
     @media (max-width:440px) { .grid { grid-template-columns:1fr; } .portrait { height:330px; } .stat { flex:1; min-width:0; } .roles { grid-template-columns:1fr; } .role-row .role-cell span { font-size:13px; } .site-tabs { width:100%; } .site-tab { flex:1; } .guide-home-grid { grid-template-columns:1fr; } .guide-home-head,.guide-article-head,.rune-detail-head { display:block; } .guide-back,.rune-back { margin-top:16px; } .guide-block,.rune-order,.rune-section { padding:18px; } .rune-class-grid,.rune-class-grid.category-grid { grid-template-columns:1fr; } .rune-order-list,.rune-stage-list { grid-template-columns:1fr; } .rune-card h4 { font-size:17px; } .rune-category-count { display:none; } .rune-category-head h3 { font-size:17px; } }
+    .dice-calculator { display:grid; gap:16px; }
+    .dice-section-title { display:flex; align-items:end; justify-content:space-between; gap:16px; margin:24px 0 12px; }
+    .dice-section-title h3 { margin:0; font-size:22px; }
+    .dice-section-title p { margin:4px 0 0; color:var(--muted); font-size:13px; line-height:1.6; }
+    .dice-section-number { color:var(--gold); font:700 12px Rajdhani,sans-serif; letter-spacing:.12em; }
+    .dice-concept { padding:20px 22px; border:1px solid rgba(215,181,109,.3); border-radius:16px; background:radial-gradient(circle at 90% 0%,rgba(154,130,216,.13),transparent 45%),linear-gradient(145deg,rgba(31,34,49,.85),rgba(13,15,25,.9)); }
+    .dice-concept h3 { margin:0 0 9px; color:#f6d38a; font-size:20px; }
+    .dice-concept p { margin:7px 0; color:#d8d7df; line-height:1.8; font-size:14px; }
+    .dice-example { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px; margin-top:14px; }
+    .dice-example span { padding:9px 10px; border:1px solid rgba(255,255,255,.08); border-radius:10px; color:#eee8dc; background:rgba(255,255,255,.035); text-align:center; font-size:12px; }
+    .dice-example b { display:block; margin-top:3px; color:var(--gold); font-size:16px; }
+    .dice-input-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:13px; }
+    .dice-gear-card { min-width:0; padding:16px; border:1px solid rgba(255,255,255,.1); border-radius:14px; background:linear-gradient(145deg,rgba(27,29,42,.85),rgba(13,15,25,.9)); }
+    .dice-gear-head { display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:12px; }
+    .dice-gear-head h4 { margin:0; font-size:17px; }
+    .dice-gear-head span { color:var(--purple); font-size:11px; }
+    .dice-field { display:grid; gap:6px; margin-top:9px; }
+    .dice-field label { color:var(--muted); font-size:11px; }
+    .dice-field input { width:100%; min-height:42px; padding:10px 12px; border:1px solid rgba(255,255,255,.12); border-radius:9px; color:var(--text); background:rgba(5,7,13,.64); outline:0; }
+    .dice-field input:focus { border-color:rgba(215,181,109,.7); box-shadow:0 0 0 3px rgba(215,181,109,.1); }
+    .dice-result { margin-top:13px; padding-top:12px; border-top:1px solid rgba(255,255,255,.08); }
+    .dice-result.empty { color:var(--muted); font-size:13px; }
+    .dice-result-top { display:flex; justify-content:space-between; gap:10px; align-items:center; }
+    .dice-result-top strong { color:#f4ead3; font-size:14px; }
+    .dice-badge { display:inline-flex; padding:4px 8px; border:1px solid rgba(215,181,109,.4); border-radius:999px; color:#ffe3a3; background:rgba(215,181,109,.12); font-size:10px; font-weight:800; }
+    .dice-result-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px; margin-top:11px; }
+    .dice-result-grid div { min-width:0; }
+    .dice-result-grid span { display:block; color:var(--muted); font-size:10px; }
+    .dice-result-grid b { display:block; margin-top:3px; color:#f4f0e7; font-size:16px; overflow-wrap:anywhere; }
+    .dice-progress-row { display:flex; align-items:center; gap:10px; margin-top:11px; }
+    .dice-progress { flex:1; height:8px; overflow:hidden; border-radius:999px; background:rgba(255,255,255,.09); }
+    .dice-progress i { display:block; height:100%; border-radius:inherit; background:linear-gradient(90deg,#8e6bd1,#d7b56d); transition:width .2s ease; }
+    .dice-progress-row strong { min-width:42px; color:var(--gold); text-align:right; font:700 14px Rajdhani,sans-serif; }
+    .dice-summary { padding:17px 19px; border:1px solid rgba(154,130,216,.3); border-radius:15px; background:linear-gradient(135deg,rgba(154,130,216,.11),rgba(215,181,109,.06)); }
+    .dice-summary h3 { margin:0 0 12px; color:#f3e7c8; font-size:17px; }
+    .dice-summary-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+    .dice-summary-item { min-width:0; padding:10px 11px; border:1px solid rgba(255,255,255,.08); border-radius:10px; background:rgba(255,255,255,.035); }
+    .dice-summary-item span { display:block; color:var(--muted); font-size:11px; }
+    .dice-summary-item b { display:block; margin-top:4px; color:#f4f0e7; font-size:15px; overflow-wrap:anywhere; }
+    .dice-table-section { padding:19px; border:1px solid var(--line); border-radius:15px; background:linear-gradient(145deg,rgba(27,29,42,.8),rgba(13,15,25,.8)); }
+    .dice-stage-chips { display:flex; gap:8px; overflow-x:auto; padding:2px 0 12px; scrollbar-width:thin; }
+    .dice-stage-chip { flex:none; padding:7px 11px; border:1px solid rgba(255,255,255,.1); border-radius:999px; color:var(--muted); background:rgba(255,255,255,.035); cursor:pointer; font:700 12px Rajdhani,sans-serif; }
+    .dice-stage-chip.active,.dice-stage-chip:hover { color:#fff1cf; border-color:rgba(215,181,109,.65); background:rgba(215,181,109,.13); }
+    .dice-reference-table tr.stage-highlight td { color:#fff1cf; background:rgba(215,181,109,.14); }
+    .dice-reference-table tr.stage-highlight td:first-child { color:#f6c768; }
+    .dice-clear { border:1px solid rgba(215,181,109,.35); border-radius:9px; padding:8px 12px; color:var(--gold); background:rgba(215,181,109,.08); cursor:pointer; font-size:12px; }
+    .dice-clear:hover { border-color:rgba(215,181,109,.7); background:rgba(215,181,109,.15); }
+    .dice-note { margin:0; color:var(--muted); line-height:1.75; font-size:12px; }
+    @media (max-width:700px) { .dice-section-title { display:block; } .dice-section-title .dice-clear { margin-top:10px; } .dice-example { grid-template-columns:repeat(2,minmax(0,1fr)); } .dice-summary-grid { grid-template-columns:1fr; } }
+    @media (max-width:520px) { .dice-input-grid { grid-template-columns:1fr; } .dice-concept,.dice-table-section { padding:16px; } }
   </style>
 </head>
 <body>
@@ -493,6 +543,43 @@
     function showRuneDetail(className) { selectedRuneClass=className; selectedRuneBuild=''; $('guideHome').hidden=true; $('guideArticle').hidden=true; $('runeHome').hidden=true; $('runeDetail').hidden=false; renderRuneDetail(); }
     async function loadRuneGuide() { try { const response=await fetch(`${CONFIG.runeGuideSheetUrl}&_=${Date.now()}`,{cache:'no-store'}); if(!response.ok)throw new Error(`Rune guide CSV HTTP ${response.status}`); const rows=parseCsv(await response.text()); const headers=rows.length?Object.keys(rows[0]):[]; const missing=RUNE_REQUIRED_HEADERS.filter(header=>!headers.includes(header)); if(missing.length)throw new Error(`裝備符文 CSV 缺少欄位：${missing.join(', ')}`); runeGuideRows=rows.map((row,index)=>({...row,__rowNumber:index+2})).filter(runeVisible); console.log('符文資料:',runeGuideRows); console.log('職業:',runeClassList(runeGuideRows).map(item=>item.name)); console.log('流派:',[...new Set(runeGuideRows.map(row=>runeCell(row,'流派')).filter(Boolean))]); const unknown=[...new Set(runeGuideRows.map(row=>runeCell(row,'職業')).filter(name=>name&&!RUNE_OFFICIAL_CLASSES.has(name)))]; if(unknown.length)console.warn('[Guild Roster] 試算表含非官方職業，已排除：',unknown); runeGuideLoaded=true; renderRuneHome(); } catch(error) { console.error('[Guild Roster] 裝備符文讀取失敗：',error); runeGuideLoaded=true; runeGuideRows=[]; renderRuneHome(); } }
     function switchView(view) { const showMembers=view==='members'; $('membersView').hidden=!showMembers; $('guideView').hidden=showMembers; $('membersTab').setAttribute('aria-selected',String(showMembers)); $('guidesTab').setAttribute('aria-selected',String(!showMembers)); if(showMembers)showGuideHome(); else showGuideHome(); }
+    /* 骰子與裝備進度：固定依目前附件的 7 個階段判定，不讀取 Excel runtime。 */
+    const DICE_STAGES = [
+      {stage:1454, weapon:1454, armor:373, ring:196, necklace:219},
+      {stage:1697, weapon:1697, armor:435, ring:229, necklace:255},
+      {stage:1940, weapon:1940, armor:498, ring:262, necklace:292},
+      {stage:2232, weapon:2232, armor:572, ring:301, necklace:336},
+      {stage:2524, weapon:2524, armor:647, ring:341, necklace:380},
+      {stage:2864, weapon:2864, armor:734, ring:387, necklace:431},
+      {stage:3205, weapon:3205, armor:822, ring:432, necklace:482}
+    ];
+    const DICE_GEAR = [
+      {key:'weapon', label:'武器', hint:'武器骰子階段'},
+      {key:'helmet', label:'頭盔', hint:'防具骰子階段'},
+      {key:'clothes', label:'衣服', hint:'防具骰子階段'},
+      {key:'pants', label:'褲子', hint:'防具骰子階段'},
+      {key:'gloves', label:'手套', hint:'防具骰子階段'},
+      {key:'shoes', label:'鞋子', hint:'防具骰子階段'},
+      {key:'ring', label:'戒指', hint:'戒指骰子階段'},
+      {key:'necklace', label:'項鍊', hint:'項鍊骰子階段'}
+    ];
+    const DICE_STORAGE_KEY = 'mabinogiGearProgress';
+    let diceGearState = {};
+    function diceTypeFor(gear) { return gear==='weapon'?'weapon':gear==='ring'?'ring':gear==='necklace'?'necklace':'armor'; }
+    function diceValueForStage(stage,type) { return stage[type]; }
+    function getGearStage(type,value) { const stages=DICE_STAGES.filter(stage=>value<diceValueForStage(stage,type)); return stages[0]||null; }
+    function calculateGearProgress(type,value) { if(value===''||value===null||value===undefined)return {empty:true}; const numeric=Number(value); if(!Number.isFinite(numeric)||numeric<0)return {empty:true}; const next=getGearStage(type,numeric); if(!next)return {empty:false,highest:true,current:numeric,target:0,shortage:0,percent:100,previous:DICE_STAGES[DICE_STAGES.length-1].stage}; const previous=[...DICE_STAGES].reverse().find(stage=>numeric>=diceValueForStage(stage,type)); const target=diceValueForStage(next,type); return {empty:false,highest:false,current:numeric,target,shortage:Math.max(0,target-numeric),percent:Math.min(100,Math.max(0,numeric/target*100)),previous:previous?previous.stage:null}; }
+    function loadGearProgress() { try { const parsed=JSON.parse(localStorage.getItem(DICE_STORAGE_KEY)||'{}'); if(!parsed||typeof parsed!=='object')throw new Error('invalid storage'); diceGearState=DICE_GEAR.reduce((state,gear)=>{ const item=parsed[gear.key]; state[gear.key]={name:typeof item?.name==='string'?item.name:'',value:typeof item?.value==='number'&&Number.isFinite(item.value)&&item.value>=0?item.value:''}; return state; },{}); } catch(error) { console.warn('[Guild Roster] 骰子進度資料無法讀取，已重置：',error); diceGearState={}; DICE_GEAR.forEach(gear=>diceGearState[gear.key]={name:'',value:''}); } }
+    function saveGearProgress() { try { localStorage.setItem(DICE_STORAGE_KEY,JSON.stringify(diceGearState)); } catch(error) { console.warn('[Guild Roster] 無法儲存骰子進度：',error); } }
+    function diceEscapedInput(value) { return escapeHtml(value===''?'':String(value)); }
+    function diceResultMarkup(gear,state) { const result=calculateGearProgress(diceTypeFor(gear.key),state.value); if(result.empty)return '<div class="dice-result empty">尚未輸入</div>'; const value=result.current; const previous=result.previous?`已超過 ${result.previous} 階基準`:'尚未達到第一階段'; if(result.highest)return `<div class="dice-result"><div class="dice-result-top"><strong>目前已達最高 3205 階基準</strong><span class="dice-badge">最高階段</span></div><div class="dice-result-grid"><div><span>目前數值</span><b>${value}</b></div><div><span>目標</span><b>—</b></div><div><span>還差</span><b>0</b></div></div><div class="dice-progress-row"><div class="dice-progress"><i style="width:100%"></i></div><strong>100%</strong></div></div>`; return `<div class="dice-result"><div class="dice-result-top"><strong>下一目標：${result.target} 階</strong><span>${escapeHtml(previous)}</span></div><div class="dice-result-grid"><div><span>目前數值</span><b>${value}</b></div><div><span>目標基本性質</span><b>${result.target}</b></div><div><span>還差</span><b>${result.shortage}</b></div></div><div class="dice-progress-row"><div class="dice-progress"><i style="width:${result.percent.toFixed(1)}%"></i></div><strong>${Math.floor(result.percent)}%</strong></div></div>`; }
+    function renderDiceSummary() { const entered=DICE_GEAR.map(gear=>({gear,state:diceGearState[gear.key],result:calculateGearProgress(diceTypeFor(gear.key),diceGearState[gear.key]?.value)})).filter(item=>!item.result.empty); const summary=$('diceSummary'); if(!entered.length){summary.hidden=true;return;} const lowest=entered.reduce((a,b)=>b.result.percent<a.result.percent?b:a); const best=entered.reduce((a,b)=>b.result.percent>a.result.percent?b:a); const highest=entered.filter(item=>item.result.highest).length; summary.hidden=false; summary.innerHTML=`<h3>目前裝備進度摘要</h3><div class="dice-summary-grid"><div class="dice-summary-item"><span>已輸入</span><b>${entered.length} / ${DICE_GEAR.length} 件</b></div><div class="dice-summary-item"><span>最高完成</span><b>${best.gear.label} ${Math.floor(best.result.percent)}%</b></div><div class="dice-summary-item"><span>目前優先提升</span><b>${lowest.gear.label} · ${Math.floor(lowest.result.percent)}%</b></div><div class="dice-summary-item"><span>已達最高階</span><b>${highest} / ${entered.length} 件</b></div></div>`; }
+    function renderDiceResults() { DICE_GEAR.forEach(gear=>{ const result=$(`diceResult-${gear.key}`); if(result)result.innerHTML=diceResultMarkup(gear,diceGearState[gear.key]); }); renderDiceSummary(); }
+    function renderDiceInputs() { const grid=$('diceInputGrid'); grid.innerHTML=DICE_GEAR.map(gear=>{ const state=diceGearState[gear.key]||{name:'',value:''}; return `<article class="dice-gear-card"><div class="dice-gear-head"><h4>${gear.label}</h4><span>${gear.hint}</span></div><div class="dice-field"><label for="diceName-${gear.key}">裝備名稱／備註（選填）</label><input id="diceName-${gear.key}" data-dice-name="${gear.key}" type="text" value="${diceEscapedInput(state.name)}" placeholder="例如：冥火法杖"></div><div class="dice-field"><label for="diceValue-${gear.key}">目前基本性質</label><input id="diceValue-${gear.key}" data-dice-value="${gear.key}" type="number" min="0" inputmode="numeric" value="${state.value===''?'':diceEscapedInput(state.value)}" placeholder="輸入數值"></div><div id="diceResult-${gear.key}"></div></article>`; }).join(''); grid.querySelectorAll('[data-dice-name]').forEach(input=>input.addEventListener('input',event=>{diceGearState[event.target.dataset.diceName].name=event.target.value;saveGearProgress();})); grid.querySelectorAll('[data-dice-value]').forEach(input=>input.addEventListener('input',event=>{const value=Number(event.target.value); diceGearState[event.target.dataset.diceValue].value=event.target.value!==''&&Number.isFinite(value)&&value>=0?value:''; saveGearProgress(); renderDiceResults();})); renderDiceResults(); }
+    function renderDiceReferenceTable() { const table=$('diceReferenceTable'); const chips=$('diceStageChips'); chips.innerHTML=DICE_STAGES.map(stage=>`<button class="dice-stage-chip" type="button" data-dice-stage="${stage.stage}">${stage.stage}</button>`).join(''); table.innerHTML=`<div class="guide-table-wrap"><table class="guide-table dice-reference-table"><thead><tr><th>骰子階段</th><th>武器</th><th>防具</th><th>戒指</th><th>項鍊</th></tr></thead><tbody>${DICE_STAGES.map(stage=>`<tr data-dice-row="${stage.stage}"><td>${stage.stage}</td><td>${stage.weapon}</td><td>${stage.armor}</td><td>${stage.ring}</td><td>${stage.necklace}</td></tr>`).join('')}</tbody></table></div>`; chips.querySelectorAll('[data-dice-stage]').forEach(chip=>chip.addEventListener('click',()=>{table.querySelectorAll('tr').forEach(row=>row.classList.remove('stage-highlight')); const row=table.querySelector(`[data-dice-row="${chip.dataset.diceStage}"]`); row?.classList.add('stage-highlight'); row?.scrollIntoView({behavior:'smooth',block:'nearest'}); chips.querySelectorAll('.dice-stage-chip').forEach(item=>item.classList.toggle('active',item===chip));})); }
+    function clearGearProgress() { DICE_GEAR.forEach(gear=>diceGearState[gear.key]={name:'',value:''}); saveGearProgress(); renderDiceInputs(); }
+    function renderGuideArticle() { const article=$('guideArticle'); loadGearProgress(); const articleRows=sortGuideRows(guideRows).filter(row=>!['表格','table'].includes(guideType(row))); const blocks=articleRows.map(renderGuideArticleBlock).join(''); article.innerHTML=`<div class="guide-article-head"><div><p class="guide-kicker">DICE GUIDE / BEGINNER</p><h2>骰子與裝備進度</h2><p class="guide-intro">先理解骰子階段，再用計算器找出下一個裝備目標。</p></div><button class="guide-back" id="backToGuideHome" type="button">← 返回新手教學</button></div><div class="guide-article"><section class="dice-concept"><div class="dice-section-number">01 骰子怎麼看？</div><h3>骰子的數字代表什麼？</h3><p>骰子階段代表裝備「基本性質」可前進的階段。不同裝備部位的基本性質數值不同，不能直接把武器、防具、戒指與項鍊當成相同數值比較。</p><p>例如 2232 階段：武器 2232、防具 572、戒指 301、項鍊 336。</p><div class="dice-example"><span>武器<b>2232</b></span><span>防具<b>572</b></span><span>戒指<b>301</b></span><span>項鍊<b>336</b></span></div></section>${blocks?`<section><div class="dice-section-title"><div><div class="dice-section-number">骰子教學文章</div><h3>基本觀念與使用說明</h3></div></div><div class="guide-article">${blocks}</div></section>`:''}<section class="dice-calculator"><div class="dice-section-title"><div><div class="dice-section-number">02 個人裝備進度計算器</div><h3>個人裝備階段進度</h3><p>輸入目前裝備基本性質，系統會自動判定下一個目標骰子階段。</p></div><button class="dice-clear" id="clearDiceProgress" type="button">清除全部</button></div><div class="dice-summary" id="diceSummary" hidden></div><div class="dice-input-grid" id="diceInputGrid"></div></section><section class="dice-table-section"><div class="dice-section-title"><div><div class="dice-section-number">03 骰子階段完整對照表</div><h3>骰子階段完整對照表</h3></div></div><div class="dice-stage-chips" id="diceStageChips" aria-label="骰子階段快速定位"></div><div id="diceReferenceTable"></div><p class="dice-note">本工具以裝備「基本性質」判定階段。防具包含頭盔、衣服、褲子、手套、鞋子；不同部位的階段要求數值不同，請勿直接用骰子數字當作所有部位的目標值。</p></section></div>`; $('backToGuideHome').addEventListener('click',showGuideHome); $('clearDiceProgress').addEventListener('click',clearGearProgress); renderDiceInputs(); renderDiceReferenceTable(); }
+
     // 目前試算表欄位：公會名稱、 本尊職業、 本尊遊戲ID、 Line名稱、圖片網址、傳說套裝、
     // 分身職業、分身ID（重複 5 組）。重複欄名會在 parseCsv 中自動編成 __2、__3…，再依欄位順序配對。
     function hasLegendarySet(value) { return value === true || String(value ?? '').trim().toLowerCase() === 'true'; }
