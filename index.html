@@ -720,7 +720,7 @@
     function catalogCell(row,header){ return String(row?.[header] ?? '').trim(); }
     function normalizeCatalogClassText(value){ return String(value??'').replace(/劍術師/g,'劍術士').replace(/雙劍士/g,'雙刀客').replace(/弓箭手/g,'弓手').replace(/長弓兵/g,'長弓手').replace(/冰凍術師/g,'冰霜術士').replace(/武鬥家/g,'格鬥家'); }
     function catalogClassTokens(value){ return normalizeCatalogClassText(value).split(/[、,，\/｜|]/).map(v=>v.trim()).filter(Boolean); }
-    function catalogMatchesClass(row,className){ const tokens=catalogClassTokens(catalogCell(row,'職業限制')); if(className==='全部')return true; if(className==='全職業')return tokens.includes('全職業'); return tokens.includes('全職業')||tokens.includes(className); }
+    function catalogMatchesClass(row,className){ const tokens=catalogClassTokens(catalogCell(row,'職業限制')); if(className==='全部')return true; if(className==='全職業')return tokens.includes('全職業'); return tokens.includes(className); }
     function catalogClassOptions(rows){ const values=new Set(['全職業']); rows.forEach(row=>catalogClassTokens(catalogCell(row,'職業限制')).forEach(v=>values.add(v))); return ['全部',...[...RUNE_OFFICIAL_CLASSES].filter(name=>values.has(name)),...([...values].filter(v=>v!=='全職業'&&!RUNE_OFFICIAL_CLASSES.has(v)))]; }
     function catalogRuneRows(){ return runeCatalogRows.filter(row=>RUNE_CATALOG_PARTS.includes(catalogCell(row,'裝備部位'))&&catalogCell(row,'符文名稱')); }
     function catalogRecommendedClasses(name){ return [...new Set(loadoutRows.filter(row=>loadoutBool(loadoutCell(row,'是否顯示'))&&loadoutCell(row,'符文名稱')===name).map(row=>loadoutCell(row,'職業')).filter(Boolean))]; }
