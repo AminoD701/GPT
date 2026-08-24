@@ -993,6 +993,74 @@
     };
     $('runeGuideEntry').querySelector('h3').textContent='傳說符文圖鑑'; $('runeGuideEntry').querySelector('p').textContent='查看武器、防具、飾品與徽章完整效果'; $('loadoutEntry').querySelector('p').textContent='18職完整推薦、流派與替代符文'; $('searchInput').addEventListener('input',render); $('guildFilter').addEventListener('change',render); $('classFilter').addEventListener('change',render); $('memberGrid').addEventListener('click',e=>{const card=e.target.closest('.member-card');if(card)openMember(members[Number(card.dataset.index)]);}); $('closeModal').addEventListener('click',()=>$('memberDialog').close()); $('memberDialog').addEventListener('click',e=>{if(e.target===$('memberDialog'))$('memberDialog').close();}); $('closeLoadoutChoice').addEventListener('click',()=>$('loadoutChoiceDialog').close()); $('closeRuneInfo').addEventListener('click',()=>$('runeInfoDialog').close()); $('loadoutChoiceDialog').addEventListener('click',e=>{if(e.target===$('loadoutChoiceDialog'))$('loadoutChoiceDialog').close();}); $('runeInfoDialog').addEventListener('click',e=>{if(e.target===$('runeInfoDialog'))$('runeInfoDialog').close();}); $('membersTab').addEventListener('click',()=>switchView('members')); $('guidesTab').addEventListener('click',()=>switchView('guides')); $('diceGuideEntry').addEventListener('click',()=>showGuideArticle()); $('spiritTraceEntry').addEventListener('click',()=>showSpiritTraceTool()); $('runeGuideEntry').addEventListener('click',()=>showRuneHome()); $('loadoutEntry').addEventListener('click',()=>showLoadoutHome()); $('customRuneBuilderEntry').addEventListener('click',()=>showCustomRuneBuilder()); document.addEventListener('keydown',e=>{if(e.key==='Escape'&&$('memberDialog').open)$('memberDialog').close();}); loadMembers();
     $('closeCustomRuneChooser').addEventListener('click',()=>$('customRuneChooserDialog').close()); $('customRuneChooserDialog').addEventListener('click',e=>{if(e.target===$('customRuneChooserDialog'))$('customRuneChooserDialog').close();});
+
+    /* 自訂配裝修正：嚴格職業限制、重複排除，以及圖鑑／配裝／自訂頁共用詳情內容。 */
+    function normalizeClassName(value){ return normalizeCatalogClassText(value).replace(/弩弓射手/g,'弩手').trim(); }
+    function isRuneAllowedForClass(rune,className){
+      const limit=normalizeClassName(catalogCell(rune,'職業限制')||'全職業').replace(/職業專用$/,'').trim();
+      if(!limit||limit==='全職業')return true;
+      const tokens=limit.split(/[、,，\/｜|\s]+/).map(token=>token.replace(/職業專用$/,'').trim()).filter(Boolean);
+      if(tokens.includes(normalizeClassName(className)))return true;
+      const group=Object.entries(CUSTOM_CLASS_GROUPS).find(([,members])=>members.includes(normalizeClassName(className)));
+      if(!group)return false;
+      const aliases=(CUSTOM_CLASS_GROUP_ALIASES[group[0]]||[group[0]]).map(normalizeClassName);
+      return tokens.some(token=>aliases.includes(token));
+    }
+    function isRuneAllowedForSlot(rune,slot){ return Boolean(rune&&slot&&catalogCell(rune,'裝備部位')===slot.part); }
+    function getSelectedRuneNames(exceptSlot=''){ return new Set(CUSTOM_SLOTS.filter(slot=>slot.name!==exceptSlot).map(slot=>customRuneState.slots[slot.name]).filter(Boolean)); }
+    function getRuneRecommendations(runeName){
+      const seen=new Set();
+      return loadoutRows.filter(row=>loadoutBool(loadoutCell(row,'是否顯示'))&&loadoutCell(row,'符文名稱')===runeName).filter(row=>{
+        const key=`${loadoutCell(row,'職業')}\u0000${loadoutCell(row,'流派')}`;
+        if(seen.has(key))return false; seen.add(key); return true;
+      }).map(row=>({className:loadoutCell(row,'職業'),build:loadoutCell(row,'流派'),slot:loadoutCell(row,'顯示槽位')||loadoutCell(row,'裝備部位'),type:loadoutCell(row,'推薦類型')||'推薦'}));
+    }
+    function getAvailableRunes(slot,className=customRuneState.className){
+      const selected=getSelectedRuneNames(slot.name), rows=runeCatalogRows.filter(rune=>isRuneAllowedForSlot(rune,slot)&&isRuneAllowedForClass(rune,className)&&(!selected.has(catalogCell(rune,'符文名稱'))));
+      const recommended=new Map(getRuneRecommendationsForCurrentBuild().map(item=>[item.name,item.rank]));
+      return rows.sort((a,b)=>(recommended.get(catalogCell(a,'符文名稱'))??3)-(recommended.get(catalogCell(b,'符文名稱'))??3)||catalogCell(a,'符文名稱').localeCompare(catalogCell(b,'符文名稱'),'zh-Hant'));
+    }
+    function getRuneRecommendationsForCurrentBuild(){
+      const rows=loadoutRows.filter(row=>loadoutBool(loadoutCell(row,'是否顯示'))&&loadoutCell(row,'職業')===customRuneState.className&&(!customRuneState.build||loadoutCell(row,'流派')===customRuneState.build));
+      return rows.map(row=>({name:loadoutCell(row,'符文名稱'),rank:/主推薦|核心/.test(loadoutCell(row,'推薦類型'))?0:/替代/.test(loadoutCell(row,'推薦類型'))?1:2}));
+    }
+    customAllowedByClass=isRuneAllowedForClass;
+    customCandidates=function(slot){
+      const partRows=runeCatalogRows.filter(row=>isRuneAllowedForSlot(row,slot)), rows=getAvailableRunes(slot);
+      console.info('[Guild Roster] 自訂配裝候選：',{className:customRuneState.className,slot:slot.name,totalRunes:runeCatalogRows.length,partMatches:partRows.length,classMatches:rows.length});
+      return rows;
+    };
+    function sanitizeCustomSelections(){
+      if(!runeCatalogLoaded||!runeCatalogRows.length)return 0;
+      const seen=new Set(), removed=[];
+      CUSTOM_SLOTS.forEach(slot=>{
+        const name=customRuneState.slots[slot.name];
+        if(!name)return;
+        const row=runeCatalogRows.find(item=>catalogCell(item,'符文名稱')===name);
+        if(!row||seen.has(name)||!isRuneAllowedForSlot(row,slot)||!isRuneAllowedForClass(row,customRuneState.className)){
+          delete customRuneState.slots[slot.name]; removed.push(name); console.warn('[Guild Roster] Duplicate or invalid rune removed:',name,slot.name);
+        }else seen.add(name);
+      });
+      return removed.length;
+    }
+    function renderRuneDetailContent(runeName,context={}){
+      const rune=runeCatalogRows.find(row=>catalogCell(row,'符文名稱')===String(runeName||'').trim()), recommendations=getRuneRecommendations(catalogCell(rune,'符文名稱'));
+      if(!rune)return `<h3>${escapeHtml(runeName||'符文詳細資料')}</h3><p>找不到這顆符文的 S0 母資料。</p>`;
+      const usage=escapeHtml(catalogCell(rune,'職業限制')||'資料整理中');
+      return `<h3>${escapeHtml(catalogCell(rune,'符文名稱'))}</h3><dl><dt>裝備部位</dt><dd>${escapeHtml(catalogCell(rune,'裝備部位'))}</dd><dt>職業限制</dt><dd>${usage}</dd><dt>技能效果</dt><dd>${escapeHtml(catalogCell(rune,'技能效果')||'效果資料整理中')}</dd><dt>備註</dt><dd>${escapeHtml(catalogCell(rune,'備註')||'—')}</dd></dl><section class="rune-info-recommend"><strong>可使用職業</strong><p>${usage}</p><strong>網站推薦配裝</strong>${recommendations.length?recommendations.map(item=>`<button type="button" data-rune-loadout-class="${escapeHtml(item.className)}" data-rune-loadout-build="${escapeHtml(item.build)}">${escapeHtml(item.className)}・${escapeHtml(item.build||'通用')} · ${escapeHtml(item.type)} →</button>`).join(''):'<p>目前沒有出現在新手教學_職業配裝。</p>'}</section>`;
+    }
+    async function openRuneDetail(runeName,context={}){
+      await loadRuneCatalog(); if(!loadoutLoaded)await loadLoadout();
+      $('runeInfoTitle').textContent=String(runeName||'符文詳細資料'); $('runeInfoContent').innerHTML=renderRuneDetailContent(runeName,context);
+      $('runeInfoContent').querySelectorAll('[data-rune-loadout-class]').forEach(button=>button.addEventListener('click',()=>{selectedLoadoutClass=button.dataset.runeLoadoutClass;selectedLoadoutBuild=button.dataset.runeLoadoutBuild;$('runeInfoDialog').close();showLoadoutDetail(selectedLoadoutClass);}));
+      if($('runeInfoDialog').open)$('runeInfoDialog').close(); $('runeInfoDialog').showModal();
+    }
+    showRuneCatalogInfo=async function(name){ await openRuneDetail(name,{source:'catalog'}); };
+    showRuneInfo=async function(name,slot){ await openRuneDetail(name,{source:'loadout',slot}); };
+    const baseCustomRender=customRender;
+    customRender=function(){ const removed=sanitizeCustomSelections(); baseCustomRender(); if(removed){const head=$('customRuneBuilder')?.querySelector('.custom-builder-head'); if(head){const note=document.createElement('p');note.className='custom-note';note.textContent=`已移除 ${removed} 個不適用或重複的符文。`;head.appendChild(note);}} };
+    const baseShowCustomRuneBuilder=showCustomRuneBuilder;
+    showCustomRuneBuilder=async function(){ await baseShowCustomRuneBuilder(); sanitizeCustomSelections(); customBuilderStorageSave(); customRender(); };
   </script>
 </body>
 </html>
