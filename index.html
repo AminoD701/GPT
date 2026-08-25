@@ -484,6 +484,141 @@
     @media (max-width:440px) { .rune-catalog-grid { grid-template-columns:1fr; } }
     @media (max-width:760px) { .loadout-class-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } .loadout-detail-hero { grid-template-columns:1fr; } .loadout-detail-hero .loadout-character { order:-1; height:210px; max-width:none; } .loadout-board { grid-template-columns:1fr; } .loadout-character-stage { min-height:0; order:-1; } .loadout-character-stage .loadout-character { height:260px; max-width:230px; } .loadout-class-visual { width:min(100%,235px); } }
     @media (max-width:440px) { .loadout-class-grid { grid-template-columns:1fr; } .loadout-board { padding:13px; } .loadout-list-grid { grid-template-columns:1fr; } .loadout-dialog-body { padding-inline:13px; } .rune-info-content dl { grid-template-columns:70px minmax(0,1fr); } }
+    /* ===== Site-wide UI/UX refinement layer =====
+       Shared visual tokens and layout guardrails. Data and interaction logic remain unchanged. */
+    :root {
+      --bg-page: #090a0f;
+      --bg-panel: rgba(20,22,30,.82);
+      --bg-card: rgba(27,29,42,.84);
+      --bg-card-hover: rgba(35,35,49,.94);
+      --border-soft: rgba(255,255,255,.10);
+      --border-accent: rgba(215,181,109,.48);
+      --text-primary: #f5f5f7;
+      --text-secondary: #d8d7df;
+      --text-muted: #a8aab5;
+      --accent-gold: #d7b56d;
+      --accent-purple: #9a82d8;
+      --accent-blue: #7de0d0;
+      --radius-sm: 10px;
+      --radius-md: 14px;
+      --radius-lg: 18px;
+      --space-1: 4px;
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --space-5: 24px;
+      --shadow-soft: 0 10px 24px rgba(0,0,0,.16);
+      --shadow-panel: 0 18px 40px rgba(0,0,0,.22);
+    }
+    html,body { overflow-x:hidden; }
+    body { color:var(--text-primary); line-height:1.6; }
+    button,input,select { min-width:0; }
+    button:focus-visible,input:focus-visible,select:focus-visible,[tabindex]:focus-visible { outline:2px solid var(--accent-gold); outline-offset:2px; }
+    h1,h2,h3,h4,p { overflow-wrap:break-word; }
+    .shell { width:min(1360px,calc(100% - 48px)); }
+    header { padding-top:30px; }
+    .hero > div:first-child, .hero > .stats { min-width:0; }
+    h1 { font-size:clamp(30px,4.6vw,54px); line-height:1.12; text-wrap:balance; }
+    .subtitle { line-height:1.55; }
+    .field { min-height:50px; border-radius:var(--radius-md); }
+    .field > span { flex:0 0 auto; white-space:nowrap; }
+    input,select { min-height:48px; line-height:1.35; }
+    .toolbar { grid-template-columns:minmax(260px,1fr) minmax(170px,200px) minmax(190px,220px); align-items:stretch; }
+    .grid,.guide-home-grid,.rune-landing-grid,.rune-section-grid,.rune-class-grid,.rune-stage-list,.rune-order-list,.rune-recommend-list { min-width:0; }
+    .grid > *, .guide-home-grid > *, .rune-landing-grid > *, .rune-section-grid > *, .rune-class-grid > *, .rune-stage-list > *, .rune-order-list > *, .rune-recommend-list > * { min-width:0; }
+    .member-card,.guide-entry,.rune-card,.rune-class-card,.rune-landing-card,.guide-block,.rune-section,.rune-order,.spirit-trace-panel,.custom-builder-panel,.loadout-intro { box-shadow:var(--shadow-soft); }
+    .member-card,.guide-entry,.rune-card,.rune-class-card,.rune-landing-card { border-radius:var(--radius-lg); }
+    .site-tabs { min-width:240px; }
+    .site-tab { min-height:44px; white-space:nowrap; }
+    .guide-shell { width:min(1200px,100%); }
+    .guide-home-head,.guide-article-head,.rune-detail-head,.spirit-trace-head { min-width:0; }
+    .guide-home-head > div,.guide-article-head > div,.rune-detail-head > div,.spirit-trace-head > div { min-width:0; }
+    .guide-home-head h2,.guide-article-head h2,.rune-detail-head h2,.spirit-trace-head h2 { line-height:1.25; text-wrap:balance; }
+    .guide-home-grid { grid-template-columns:repeat(3,minmax(0,1fr)); align-items:stretch; }
+    .guide-entry { min-height:208px; display:flex; flex-direction:column; padding:20px; }
+    .guide-entry-icon { margin-bottom:18px; }
+    .guide-entry h3 { min-height:1.35em; line-height:1.35; }
+    .guide-entry p { max-width:34ch; }
+    .guide-entry-foot { margin-top:auto; padding-top:18px; }
+    .guide-group-label { grid-column:1/-1; margin:10px 0 -4px; color:var(--accent-gold); font-size:13px; font-weight:800; letter-spacing:.1em; }
+    .guide-group-label::before { content:""; display:inline-block; width:24px; height:1px; margin:0 8px 4px 0; background:var(--accent-gold); }
+    .guide-block,.rune-section,.rune-order,.spirit-trace-panel,.custom-builder-panel { border-radius:var(--radius-md); }
+    .rune-toolbar,.rune-catalog-toolbar,.custom-builder-controls { display:grid; grid-template-columns:minmax(240px,1fr) minmax(200px,260px) minmax(220px,280px); gap:12px; align-items:stretch; }
+    .rune-toolbar .field,.rune-catalog-toolbar .field { min-width:0; }
+    .rune-category-tabs { min-width:0; }
+    .rune-category-tab,.rune-build-tab,.rune-stage-chip,.rune-back,.guide-back,.spirit-trace-back,.dice-clear { min-height:42px; white-space:nowrap; }
+    .rune-catalog-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; }
+    .rune-catalog-grid > * { min-width:0; }
+    .rune-card p,.rune-effect p,.guide-body,.dice-note { max-width:72ch; }
+    .rune-card h4 { line-height:1.35; }
+    .loadout-detail-hero,.loadout-board,.custom-builder-layout { min-width:0; }
+    .loadout-board { grid-template-columns:minmax(190px,1fr) minmax(280px,360px) minmax(190px,1fr); gap:18px; align-items:stretch; }
+    .loadout-slot-column { display:grid; grid-auto-rows:1fr; gap:12px; min-width:0; }
+    .loadout-character-stage { min-width:0; }
+    .custom-builder-layout { grid-template-columns:minmax(0,1.75fr) minmax(300px,.95fr); gap:18px; align-items:start; }
+    .custom-slot-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+    .custom-slot { min-width:0; min-height:150px; display:flex; flex-direction:column; }
+    .custom-slot-effect { display:-webkit-box; -webkit-box-orient:vertical; -webkit-line-clamp:3; overflow:hidden; min-height:3.9em; }
+    dialog { max-width:min(840px,calc(100% - 32px)); max-height:85vh; }
+    .modal-top { position:sticky; top:0; z-index:2; background:rgba(16,18,28,.96); backdrop-filter:blur(14px); }
+    .modal-content { max-height:calc(85vh - 76px); }
+    .modal-top .close { min-width:44px; min-height:44px; }
+    .dice-progress-table th,.dice-progress-table td { line-height:1.35; }
+    .dice-progress-table td { overflow-wrap:anywhere; }
+    .dice-input-grid,.guide-table-wrap { max-width:100%; }
+    .guide-table { min-width:560px; }
+    .guide-error { display:grid; gap:6px; place-items:center; min-height:120px; }
+    .guide-error button { min-height:44px; padding:10px 16px; border:1px solid var(--border-accent); border-radius:var(--radius-sm); color:var(--text-primary); background:rgba(215,181,109,.10); }
+    .rune-recommend-home { max-width:1200px; }
+    .rune-recommend-card { min-width:0; }
+    @media (max-width:1199px) {
+      .shell { width:min(1120px,calc(100% - 40px)); }
+      .rune-catalog-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+      .loadout-board { grid-template-columns:minmax(175px,1fr) minmax(240px,300px) minmax(175px,1fr); gap:14px; }
+    }
+    @media (max-width:900px) {
+      .toolbar { grid-template-columns:minmax(0,1fr) minmax(170px,1fr); }
+      .toolbar .field:first-child { grid-column:1/-1; }
+      .guide-home-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+      .rune-toolbar,.rune-catalog-toolbar,.custom-builder-controls { grid-template-columns:repeat(2,minmax(0,1fr)); }
+      .rune-toolbar .field:first-child,.rune-catalog-toolbar .field:nth-child(2) { grid-column:1/-1; }
+      .custom-builder-layout { grid-template-columns:1fr; }
+      .loadout-board { grid-template-columns:1fr minmax(250px,320px) 1fr; }
+    }
+    @media (max-width:700px) {
+      .shell { width:min(100% - 24px,620px); }
+      header { padding-top:24px; }
+      .hero { gap:16px; }
+      h1 { font-size:clamp(27px,8vw,42px); }
+      .stats { gap:8px; }
+      .stat { min-width:0; flex:1; padding:12px 14px; }
+      .stat strong { font-size:24px; }
+      .site-tabs { width:100%; min-width:0; }
+      .guide-home-grid,.rune-catalog-grid { grid-template-columns:1fr; }
+      .guide-entry { min-height:180px; }
+      .rune-toolbar,.rune-catalog-toolbar,.custom-builder-controls { grid-template-columns:1fr; }
+      .rune-toolbar .field:first-child,.rune-catalog-toolbar .field:nth-child(2) { grid-column:auto; }
+      .loadout-board { grid-template-columns:1fr; }
+      .loadout-character-stage { order:-1; }
+      .loadout-slot-column { grid-template-columns:repeat(2,minmax(0,1fr)); }
+      .custom-slot-grid { grid-template-columns:1fr; }
+      .guide-home-head,.guide-article-head,.rune-detail-head,.spirit-trace-head { align-items:flex-start; }
+      dialog { max-width:100%; width:100%; margin:auto 0 0; border-radius:20px 20px 0 0; }
+      .modal-content { max-height:calc(85vh - 76px); }
+    }
+    @media (max-width:440px) {
+      .shell { width:calc(100% - 20px); }
+      body { font-size:15px; }
+      .site-tab { padding-inline:10px; font-size:12px; }
+      .guide-entry { padding:16px; }
+      .guide-entry h3 { font-size:18px; }
+      .guide-entry p { font-size:12px; }
+      .loadout-slot-column { grid-template-columns:1fr; }
+      .dice-progress-table { font-size:12px; }
+    }
+    @media (prefers-reduced-motion:reduce) {
+      *,*::before,*::after { scroll-behavior:auto!important; transition-duration:.01ms!important; animation-duration:.01ms!important; animation-iteration-count:1!important; }
+    }
   </style>
 </head>
 <body>
@@ -1052,6 +1187,16 @@
     function showRuneRecommendationHome(){ensureRuneRecommendationEntry();$('guideHome').hidden=true;$('guideArticle').hidden=true;$('spiritTraceHome').hidden=true;$('runeHome').hidden=true;$('runeDetail').hidden=true;$('loadoutHome').hidden=true;$('loadoutDetail').hidden=true;$('customRuneBuilder').hidden=true;$('runeRecommendationHome').hidden=false;loadRuneRecommendations();}
     function hideRuneRecommendationHome(){const home=$('runeRecommendationHome');if(home)home.hidden=true;}
     ensureRuneRecommendationEntry();
+    function organizeGuideHome(){
+      const grid=$('guideHome')?.querySelector('.guide-home-grid');
+      if(!grid||grid.querySelector('.guide-group-label'))return;
+      const entries=[...grid.querySelectorAll('.guide-entry')];
+      if(entries.length<3)return;
+      const addLabel=(text,before)=>{const label=document.createElement('div');label.className='guide-group-label';label.textContent=text;grid.insertBefore(label,before);};
+      addLabel('配裝與符文',entries[2]);
+      addLabel('養成工具',entries[0]);
+    }
+    organizeGuideHome();
     const showGuideHomeBeforeRuneRecommendation=showGuideHome;showGuideHome=function(){hideRuneRecommendationHome();showGuideHomeBeforeRuneRecommendation();};
     const showGuideArticleBeforeRuneRecommendation=showGuideArticle;showGuideArticle=function(){hideRuneRecommendationHome();showGuideArticleBeforeRuneRecommendation();};
     const showSpiritTraceBeforeRuneRecommendation=showSpiritTraceTool;showSpiritTraceTool=function(){hideRuneRecommendationHome();showSpiritTraceBeforeRuneRecommendation();};
