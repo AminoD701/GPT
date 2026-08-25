@@ -75,6 +75,21 @@
     .guide-entry h3 { margin:0 0 7px; font-size:20px; }
     .guide-entry p { margin:0; color:var(--muted); font-size:13px; line-height:1.7; }
     .guide-entry-foot { display:flex; justify-content:space-between; align-items:center; margin-top:22px; color:var(--gold); font-size:12px; }
+    .rune-recommend-home { max-width:1180px; margin:0 auto; padding:28px 0 64px; }
+    .rune-recommend-toolbar { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:12px; margin:20px 0; }
+    .rune-recommend-note { padding:16px 18px; border:1px solid rgba(215,181,109,.28); border-radius:14px; background:linear-gradient(120deg,rgba(42,29,54,.72),rgba(19,38,43,.72)); color:var(--muted); line-height:1.7; }
+    .rune-recommend-note strong { display:block; margin-bottom:5px; color:var(--gold); }
+    .rune-recommend-result { display:grid; gap:14px; }
+    .rune-recommend-card { padding:20px; border:1px solid var(--line); border-radius:16px; background:linear-gradient(145deg,rgba(31,34,49,.9),rgba(13,15,25,.95)); box-shadow:0 16px 32px rgba(0,0,0,.16); }
+    .rune-recommend-card h3 { margin:0 0 5px; color:var(--text); }
+    .rune-recommend-role { margin:0 0 16px; color:var(--purple); }
+    .rune-recommend-section { margin-top:15px; }
+    .rune-recommend-section h4 { margin:0 0 8px; color:var(--gold); font-size:13px; }
+    .rune-recommend-list { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; }
+    .rune-recommend-item { min-width:0; padding:10px 12px; border:1px solid rgba(255,255,255,.08); border-radius:10px; background:rgba(255,255,255,.035); color:var(--text); white-space:pre-wrap; overflow-wrap:anywhere; }
+    .rune-recommend-item.secondary { color:var(--muted); }
+    .rune-recommend-back { margin-bottom:18px; }
+    @media (max-width:700px){ .rune-recommend-home{padding:20px 0 42px}.rune-recommend-toolbar{grid-template-columns:1fr}.rune-recommend-list{grid-template-columns:1fr}.rune-recommend-card{padding:16px} }
     .guide-article-head { align-items:start; }
     .guide-back { flex:none; border:1px solid var(--line); border-radius:10px; padding:9px 13px; color:var(--muted); background:rgba(255,255,255,.035); }
     .guide-back:hover { color:var(--gold); border-color:rgba(215,181,109,.5); }
@@ -529,6 +544,9 @@
       loadoutSheetName: '新手教學_職業配裝',
       loadoutSheetGid: '870203133',
       loadoutSheetUrl: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSE-IKb2H8AZNOkljE2_5z-ekVn8h49WTtheoGOFAz1iARthjZGLWR4d2ro_FU-3B5rNrPZrPAsmEbg/pub?gid=870203133&single=true&output=csv',
+      runeRecommendationSheetGid: '2099000101',
+      runeRecommendationGvizUrl: 'https://docs.google.com/spreadsheets/d/1USPYBfsaIlIDvefmlIBEe4_cx_B4KoOhlHiMjymcfTs/gviz/tq?tqx=out:csv&gid=2099000101',
+      runeRecommendationSheetUrl: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSE-IKb2H8AZNOkljE2_5z-ekVn8h49WTtheoGOFAz1iARthjZGLWR4d2ro_FU-3B5rNrPZrPAsmEbg/pub?gid=2099000101&single=true&output=csv',
       // 傳說符文圖鑑唯一來源：S0傳說符文（依欄位標題解析，不依固定欄位位置）。
       // 若建立「新手教學_職業資料」工作表，將公開 CSV 的 GID 填在這裡；目前未設定時使用內建 SVG 職業代表圖案。
       classDataSheetGid: '',
@@ -993,6 +1011,53 @@
     };
     $('runeGuideEntry').querySelector('h3').textContent='傳說符文圖鑑'; $('runeGuideEntry').querySelector('p').textContent='查看武器、防具、飾品與徽章完整效果'; $('loadoutEntry').querySelector('p').textContent='18職完整推薦、流派與替代符文'; $('searchInput').addEventListener('input',render); $('guildFilter').addEventListener('change',render); $('classFilter').addEventListener('change',render); $('memberGrid').addEventListener('click',e=>{const card=e.target.closest('.member-card');if(card)openMember(members[Number(card.dataset.index)]);}); $('closeModal').addEventListener('click',()=>$('memberDialog').close()); $('memberDialog').addEventListener('click',e=>{if(e.target===$('memberDialog'))$('memberDialog').close();}); $('closeLoadoutChoice').addEventListener('click',()=>$('loadoutChoiceDialog').close()); $('closeRuneInfo').addEventListener('click',()=>$('runeInfoDialog').close()); $('loadoutChoiceDialog').addEventListener('click',e=>{if(e.target===$('loadoutChoiceDialog'))$('loadoutChoiceDialog').close();}); $('runeInfoDialog').addEventListener('click',e=>{if(e.target===$('runeInfoDialog'))$('runeInfoDialog').close();}); $('membersTab').addEventListener('click',()=>switchView('members')); $('guidesTab').addEventListener('click',()=>switchView('guides')); $('diceGuideEntry').addEventListener('click',()=>showGuideArticle()); $('spiritTraceEntry').addEventListener('click',()=>showSpiritTraceTool()); $('runeGuideEntry').addEventListener('click',()=>showRuneHome()); $('loadoutEntry').addEventListener('click',()=>showLoadoutHome()); $('customRuneBuilderEntry').addEventListener('click',()=>showCustomRuneBuilder()); document.addEventListener('keydown',e=>{if(e.key==='Escape'&&$('memberDialog').open)$('memberDialog').close();}); loadMembers();
     $('closeCustomRuneChooser').addEventListener('click',()=>$('customRuneChooserDialog').close()); $('customRuneChooserDialog').addEventListener('click',e=>{if(e.target===$('customRuneChooserDialog'))$('customRuneChooserDialog').close();});
+
+    /* 新手指南：推薦符文詞條。資料只來自「推薦符文詞條」公開 CSV。 */
+    const RUNE_RECOMMEND_CACHE_KEY='mabinogiRuneRecommendations_v1', RUNE_RECOMMEND_CACHE_TTL=10*60*1000;
+    let runeRecommendationRows=[], runeRecommendationLoaded=false, runeRecommendationPromise=null, runeRecommendationError='';
+    const RUNE_RECOMMEND_MAP={category:'系別',className:'職業',role:'定位',weaponAccessoryStat1:'武器/飾品 攻擊詞條①',weaponAccessoryStat2:'武器/飾品 攻擊詞條②',armorAttackStat:'防具 攻擊詞條',armorDefenseStat:'防具 防禦詞條',critTorchBrilliant:'暴擊目標｜絢爛+火炬',critBrilliantOnly:'暴擊目標｜僅絢爛',critNoBrilliant:'暴擊目標｜無絢爛',combo:'連擊強化',strongHit:'強擊強化',cooldown:'快速技能',skillPower:'技能威力',note:'其他能力/備註',status:'資料狀態'};
+    function mapRuneRecommendationRow(row){ const mapped={}; Object.entries(RUNE_RECOMMEND_MAP).forEach(([key,header])=>{mapped[key]=String(row?.[header]??'').trim();}); return mapped; }
+    function showRuneRecommendationLoading(){ const home=$('runeRecommendationHome'); if(home)home.innerHTML='<div class="guide-error">推薦詞條資料載入中…</div>'; }
+    function showRuneRecommendationError(){ const home=$('runeRecommendationHome'); if(home)home.innerHTML='<div class="guide-error">推薦詞條資料暫時無法載入，請稍後再試。<br><button type="button" id="retryRuneRecommendations">重新載入</button></div>'; $('retryRuneRecommendations')?.addEventListener('click',()=>{runeRecommendationLoaded=false;runeRecommendationError='';runeRecommendationPromise=null;loadRuneRecommendations();}); }
+    async function loadRuneRecommendations(){
+      if(runeRecommendationLoaded)return runeRecommendationRows;
+      if(runeRecommendationPromise)return runeRecommendationPromise;
+      runeRecommendationPromise=(async()=>{
+        showRuneRecommendationLoading();
+        try{
+          const cached=JSON.parse(localStorage.getItem(RUNE_RECOMMEND_CACHE_KEY)||'null');
+          if(cached?.savedAt&&Date.now()-cached.savedAt<RUNE_RECOMMEND_CACHE_TTL&&Array.isArray(cached.rows)){runeRecommendationRows=cached.rows;runeRecommendationLoaded=true;renderRuneRecommendation();return runeRecommendationRows;}
+        }catch(error){console.warn('[Guild Roster] 推薦詞條快取讀取失敗：',error);}
+        const urls=[CONFIG.runeRecommendationGvizUrl,CONFIG.runeRecommendationSheetUrl]; let lastError=null;
+        for(const url of urls){try{const response=await fetch(`${url}${url.includes('?')?'&':'?'}_=${Date.now()}`,{cache:'no-store'});if(!response.ok)throw new Error(`HTTP ${response.status}`);const csv=await response.text();const rows=parseCsv(csv),headers=rows.length?Object.keys(rows[0]).map(header=>header.trim()):[],missing=Object.values(RUNE_RECOMMEND_MAP).filter(header=>!headers.includes(header));if(missing.length)throw new Error(`推薦詞條欄位缺少：${missing.join('、')}`);runeRecommendationRows=rows.map(mapRuneRecommendationRow).filter(row=>row.className||row.category);runeRecommendationLoaded=true;runeRecommendationError='';try{localStorage.setItem(RUNE_RECOMMEND_CACHE_KEY,JSON.stringify({savedAt:Date.now(),rows:runeRecommendationRows}));}catch(error){console.warn('[Guild Roster] 推薦詞條快取儲存失敗：',error);}console.info('[Guild Roster] 推薦詞條資料載入完成：',runeRecommendationRows.length,'筆；URL：',url);renderRuneRecommendation();return runeRecommendationRows;}catch(error){lastError=error;console.warn('[Guild Roster] 推薦詞條來源失敗，嘗試下一來源：',url,error);}}
+        throw lastError||new Error('推薦詞條 CSV 來源皆失敗');
+      })().catch(error=>{runeRecommendationError=error?.message||String(error);runeRecommendationRows=[];runeRecommendationLoaded=true;console.error('[Guild Roster] 推薦符文詞條讀取失敗：',error);showRuneRecommendationError();return [];}).finally(()=>{runeRecommendationPromise=null;});
+      return runeRecommendationPromise;
+    }
+    function runeRecommendationText(value){return value?escapeHtml(value):'<span class="muted">—</span>';}
+    function renderRuneRecommendation(){
+      const home=$('runeRecommendationHome'); if(!home)return;
+      if(!runeRecommendationLoaded){showRuneRecommendationLoading();return;} if(runeRecommendationError){showRuneRecommendationError();return;}
+      const categories=[...new Set(runeRecommendationRows.map(row=>row.category).filter(Boolean))], category=$('runeRecommendationCategory')?.value||categories[0]||'', categoryRows=runeRecommendationRows.filter(row=>row.category===category), classes=[...new Set(categoryRows.map(row=>row.className).filter(Boolean))], selectedClass=$('runeRecommendationClass')?.value||classes[0]||'', row=categoryRows.find(item=>item.className===selectedClass)||categoryRows[0];
+      const option=(value,selected)=>`<option value="${escapeHtml(value)}" ${selected?'selected':''}>${escapeHtml(value)}</option>`;
+      const section=(title,items,secondary=false)=>{const valid=items.filter(Boolean);return valid.length?`<section class="rune-recommend-section"><h4>${title}</h4><div class="rune-recommend-list">${valid.map(item=>`<div class="rune-recommend-item ${secondary?'secondary':''}">${runeRecommendationText(item)}</div>`).join('')}</div></section>`:'';};
+      home.innerHTML=`<div class="guide-home-head"><div><p class="guide-kicker">BEGINNER GUIDE / RUNE STATS</p><h2>推薦符文詞條</h2><p class="guide-intro">依系別與職業查看目前推薦的裝備詞條與能力目標。</p></div><button class="rune-back rune-recommend-back" id="runeRecommendationBack" type="button">← 返回新手教學</button></div><div class="rune-recommend-note"><strong>台服版本基準</strong><span>目前推薦以台服 S0、Lv65 等級上限環境為基準。</span><br><span>推薦數值為現階段資源分配建議，不代表屬性的數學硬上限。</span></div><div class="rune-recommend-toolbar"><label class="field"><span>選擇系別</span><select id="runeRecommendationCategory">${categories.map(value=>option(value,value===category)).join('')}</select></label><label class="field"><span>選擇職業</span><select id="runeRecommendationClass">${classes.map(value=>option(value,value===selectedClass)).join('')}</select></label></div>${row?`<article class="rune-recommend-card"><h3>${escapeHtml(row.className)}</h3><p class="rune-recommend-role">${runeRecommendationText(row.role)}</p>${section('武器：2條攻擊詞', [row.weaponAccessoryStat1,row.weaponAccessoryStat2])}${section('飾品：2條攻擊詞', [row.weaponAccessoryStat1,row.weaponAccessoryStat2])}${section('防具：1條攻擊詞＋1條防禦詞', [row.armorAttackStat,row.armorDefenseStat])}${section('暴擊目標', [`絢爛＋火炬：${row.critTorchBrilliant}`,`僅絢爛：${row.critBrilliantOnly}`,`無絢爛：${row.critNoBrilliant}`])}${section('能力值推薦', [`連擊強化：${row.combo}`,`強擊強化：${row.strongHit}`,`快速技能：${row.cooldown}`,`技能威力（補位）：${row.skillPower}`])}${section('其他能力／備註',[row.note],true)}${row.status?`<p class="rune-recommend-role">資料狀態：${escapeHtml(row.status)}</p>`:''}</article>`:'<div class="guide-error">目前沒有可顯示的推薦詞條資料。</div>'}`;
+      $('runeRecommendationBack').addEventListener('click',showGuideHome); $('runeRecommendationCategory').addEventListener('change',renderRuneRecommendation); $('runeRecommendationClass').addEventListener('change',renderRuneRecommendation);
+    }
+    function ensureRuneRecommendationEntry(){
+      const grid=$('guideHome')?.querySelector('.guide-home-grid'); if(!grid||$('runeRecommendationEntry'))return;
+      const entry=document.createElement('button');entry.className='guide-entry';entry.type='button';entry.id='runeRecommendationEntry';entry.innerHTML='<span class="guide-entry-icon">◇</span><h3>推薦符文詞條</h3><p>依台服 S0 Lv65 資料查看各職業裝備詞條與能力目標</p><div class="guide-entry-foot"><span>查看推薦</span><span>→</span></div>';grid.appendChild(entry);
+      const home=document.createElement('div');home.id='runeRecommendationHome';home.className='rune-recommend-home';home.hidden=true;document.querySelector('#guideView .guide-shell').appendChild(home);entry.addEventListener('click',showRuneRecommendationHome);
+    }
+    function showRuneRecommendationHome(){ensureRuneRecommendationEntry();$('guideHome').hidden=true;$('guideArticle').hidden=true;$('spiritTraceHome').hidden=true;$('runeHome').hidden=true;$('runeDetail').hidden=true;$('loadoutHome').hidden=true;$('loadoutDetail').hidden=true;$('customRuneBuilder').hidden=true;$('runeRecommendationHome').hidden=false;loadRuneRecommendations();}
+    function hideRuneRecommendationHome(){const home=$('runeRecommendationHome');if(home)home.hidden=true;}
+    ensureRuneRecommendationEntry();
+    const showGuideHomeBeforeRuneRecommendation=showGuideHome;showGuideHome=function(){hideRuneRecommendationHome();showGuideHomeBeforeRuneRecommendation();};
+    const showGuideArticleBeforeRuneRecommendation=showGuideArticle;showGuideArticle=function(){hideRuneRecommendationHome();showGuideArticleBeforeRuneRecommendation();};
+    const showSpiritTraceBeforeRuneRecommendation=showSpiritTraceTool;showSpiritTraceTool=function(){hideRuneRecommendationHome();showSpiritTraceBeforeRuneRecommendation();};
+    const showRuneHomeBeforeRuneRecommendation=showRuneHome;showRuneHome=function(){hideRuneRecommendationHome();showRuneHomeBeforeRuneRecommendation();};
+    const showLoadoutHomeBeforeRuneRecommendation=showLoadoutHome;showLoadoutHome=function(){hideRuneRecommendationHome();showLoadoutHomeBeforeRuneRecommendation.apply(this,arguments);};
+    const showCustomHomeBeforeRuneRecommendation=showCustomRuneBuilder;showCustomRuneBuilder=function(){hideRuneRecommendationHome();return showCustomHomeBeforeRuneRecommendation.apply(this,arguments);};
 
     /* 自訂配裝修正：嚴格職業限制、重複排除，以及圖鑑／配裝／自訂頁共用詳情內容。 */
     function normalizeClassName(value){ return normalizeCatalogClassText(value).replace(/弩弓射手/g,'弩手').trim(); }
