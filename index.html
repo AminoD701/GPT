@@ -954,8 +954,10 @@
     function loadoutCell(row,header) { return String(row?.[header] ?? '').trim(); }
     function loadoutBool(value) { return value===true || ['true','1','yes','y','是','有'].includes(String(value ?? '').trim().toLowerCase()); }
     function loadoutByClass(className) { return loadoutRows.filter(row=>loadoutCell(row,'職業')===className); }
-    function loadoutBuildNames(rows) { const builds=[...new Set(rows.map(row=>loadoutCell(row,'流派')).filter(Boolean))]; return builds.length?builds:['通用']; }
-    function loadoutRowsForBuild(rows,build) { if(!build||build==='通用')return rows; return rows.filter(row=>loadoutCell(row,'流派')===build); }
+    // 流派必須以「職業＋流派」分開處理；只有真正空白的流派才歸入通用。
+    function loadoutBuildValue(row) { return loadoutCell(row,'流派') || '通用'; }
+    function loadoutBuildNames(rows) { const builds=[...new Set(rows.map(loadoutBuildValue))]; return builds.length?builds:['通用']; }
+    function loadoutRowsForBuild(rows,build) { const target=build||'通用'; return rows.filter(row=>loadoutBuildValue(row)===target); }
     function loadoutClasses() { const present=new Set(loadoutRows.map(row=>loadoutCell(row,'職業'))); return [...RUNE_OFFICIAL_CLASSES].filter(name=>present.has(name)); }
     function loadoutSlotCandidates(rows,slot) { return rows.filter(row=>loadoutCell(row,'顯示槽位')===slot).sort((a,b)=>(LOADOUT_TYPE_ORDER[loadoutCell(a,'推薦類型')]??9)-(LOADOUT_TYPE_ORDER[loadoutCell(b,'推薦類型')]??9)||Number(loadoutCell(a,'槽位序號'))-Number(loadoutCell(b,'槽位序號'))); }
     function loadoutDefault(rows,slot) { const candidates=loadoutSlotCandidates(rows,slot); const defaults=candidates.filter(row=>loadoutBool(loadoutCell(row,'是否預設'))); if(defaults.length>1)console.warn('[Guild Roster] 職業配裝同一槽位有多個預設：',selectedLoadoutClass,selectedLoadoutBuild,slot,defaults.map(row=>loadoutCell(row,'符文名稱'))); if(!defaults.length&&candidates.length)console.warn('[Guild Roster] 職業配裝缺少預設，暫用第一筆：',selectedLoadoutClass,selectedLoadoutBuild,slot); return defaults[0]||candidates[0]||null; }
@@ -969,7 +971,30 @@
     async function loadClassData(){ if(classDataLoaded)return; classDataLoaded=true; if(!CONFIG.classDataSheetGid){ console.info('[Guild Roster] 未設定新手教學_職業資料 GID，使用前端職業代表圖案卡。'); return; } const url=`${CONFIG.classDataSheetUrl.replace('__GID__',CONFIG.classDataSheetGid)}&_=${Date.now()}`; try { const response=await fetch(url,{cache:'no-store'}); if(!response.ok)throw new Error(`Class data CSV HTTP ${response.status}`); const rows=parseCsv(await response.text()),headers=rows.length?Object.keys(rows[0]):[]; if(!headers.includes('職業')&&!headers.includes('職業名稱'))throw new Error('職業資料 CSV 缺少職業欄位'); classDataRows=rows; console.info('[Guild Roster] 職業人物資料已讀取：',classDataRows.length,'筆'); if(!$('loadoutDetail').hidden)renderLoadoutDetail(); } catch(error){ console.warn('[Guild Roster] 職業人物資料讀取失敗，保留代表圖案卡：',url,error); } }
     function showLoadoutHome() { $('guideHome').hidden=true; $('guideArticle').hidden=true; $('spiritTraceHome').hidden=true; $('runeHome').hidden=true; $('runeDetail').hidden=true; $('loadoutHome').hidden=false; $('loadoutDetail').hidden=true; if(!loadoutLoaded){renderLoadoutHome();loadLoadout();}else renderLoadoutHome(); loadClassData(); }
     function showLoadoutDetail(className) { selectedLoadoutClass=className; selectedLoadoutBuild=''; $('guideHome').hidden=true; $('guideArticle').hidden=true; $('spiritTraceHome').hidden=true; $('runeHome').hidden=true; $('runeDetail').hidden=true; $('loadoutHome').hidden=true; $('loadoutDetail').hidden=false; renderLoadoutDetail(); loadClassData(); }
-    async function loadLoadout() { try { const response=await fetch(`${CONFIG.loadoutSheetUrl}&_=${Date.now()}`,{cache:'no-store'}); if(!response.ok)throw new Error(`Loadout CSV HTTP ${response.status}`); const rows=parseCsv(await response.text()); const headers=rows.length?Object.keys(rows[0]):[]; const missing=LOADOUT_REQUIRED_HEADERS.filter(header=>!headers.includes(header)); if(missing.length)throw new Error(`職業配裝 CSV 缺少欄位：${missing.join(', ')}`); loadoutRows=rows.filter(row=>loadoutBool(loadoutCell(row,'是否顯示'))&&RUNE_OFFICIAL_CLASSES.has(loadoutCell(row,'職業'))); loadoutLoaded=true; console.info('[Guild Roster] 職業完整配裝已讀取：',loadoutRows.length,'筆'); renderLoadoutHome(); } catch(error) { console.error('[Guild Roster] 職業完整配裝讀取失敗：',error); loadoutRows=[]; loadoutLoaded=true; renderLoadoutHome(); } }
+    async function loadLoadout() {
+      const url=`${CONFIG.loadoutSheetUrl}&_=${Date.now()}`;
+      try {
+        const response=await fetch(url,{cache:'no-store'});
+        if(!response.ok)throw new Error(`Loadout CSV HTTP ${response.status}`);
+        const rows=parseCsv(await response.text());
+        const headers=rows.length?Object.keys(rows[0]).map(header=>header.trim()):[];
+        const missing=LOADOUT_REQUIRED_HEADERS.filter(header=>!headers.includes(header));
+        if(missing.length)throw new Error(`職業配裝 CSV 缺少欄位：${missing.join(', ')}`);
+        loadoutRows=rows
+          .map((row,index)=>({...row,__rowNumber:index+2}))
+          .filter(row=>loadoutBool(loadoutCell(row,'是否顯示'))&&RUNE_OFFICIAL_CLASSES.has(loadoutCell(row,'職業'))&&loadoutCell(row,'符文名稱'));
+        loadoutLoaded=true;
+        const buildSummary={};
+        loadoutRows.forEach(row=>{const key=`${loadoutCell(row,'職業')} / ${loadoutBuildValue(row)}`;buildSummary[key]=(buildSummary[key]||0)+1;});
+        console.info('[Guild Roster] 職業完整配裝已讀取：',loadoutRows.length,'筆；各職業／流派：',buildSummary,'URL：',url);
+        renderLoadoutHome();
+      } catch(error) {
+        console.error('[Guild Roster] 職業完整配裝讀取失敗：',url,error);
+        loadoutRows=[];
+        loadoutLoaded=true;
+        renderLoadoutHome();
+      }
+    }
     const renderRuneDetailBase = renderRuneDetail;
     renderRuneDetail = function(){ renderRuneDetailBase(); const crumb=$('runeDetail')?.querySelector('.rune-detail-crumb'); if(crumb)crumb.innerHTML=crumb.innerHTML.replace('各職業裝備符文推薦','裝備符文攻略'); };
 
