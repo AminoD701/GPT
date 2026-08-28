@@ -602,8 +602,31 @@
     .pet-chip { min-height:40px; padding:8px 12px; border:1px solid rgba(215,181,109,.38); border-radius:999px; background:rgba(215,181,109,.08); color:var(--text-primary); cursor:pointer; }
     .pet-chip:hover { background:rgba(215,181,109,.18); }
     .pet-empty { color:var(--muted); padding:16px 0; }
+    .pet-tool-v3 .pet-tool-note { margin-top:14px; }
+    .pet-tool-v3 .pet-tool-tabs { grid-template-columns:repeat(3,minmax(0,1fr)); }
+    .pet-tool-v3 .pet-tool-tab { font-weight:700; }
+    .pet-tool-v3 .pet-tool-panel { background:linear-gradient(145deg,rgba(23,25,38,.84),rgba(11,13,22,.76)); }
+    .pet-tool-v3 .pet-skill-list { grid-template-columns:repeat(2,minmax(0,1fr)); }
+    .pet-tool-v3 .pet-skill-card { display:flex; flex-direction:column; min-height:190px; }
+    .pet-tool-v3 .pet-skill-effect { display:-webkit-box; -webkit-box-orient:vertical; -webkit-line-clamp:3; overflow:hidden; }
+    .pet-tool-v3 .pet-skill-card .custom-link { margin-top:auto; padding-top:12px; }
+    .pet-tool-v3 .pet-section-label { color:var(--gold); font-size:13px; letter-spacing:.08em; margin:20px 0 9px; }
+    .pet-tool-v3 .pet-section-label:first-child { margin-top:0; }
+    .pet-tool-v3 .pet-info-callout { padding:12px 14px; border-left:3px solid var(--gold); background:rgba(215,181,109,.07); color:var(--muted); line-height:1.6; }
+    .pet-tool-v3 .pet-change-list { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; }
+    .pet-tool-v3 .pet-change-row { display:flex; justify-content:space-between; gap:10px; padding:9px 11px; border:1px solid rgba(148,137,190,.22); border-radius:var(--radius-sm); background:rgba(9,11,18,.4); }
+    .pet-tool-v3 .pet-change-row strong { color:var(--text-primary); }
+    .pet-tool-v3 .pet-change-row span { color:#a995df; font-weight:700; white-space:nowrap; }
+    .pet-tool-v3 .pet-match { padding:14px; border:1px solid rgba(215,181,109,.28); border-radius:var(--radius-sm); background:rgba(215,181,109,.06); }
+    .pet-tool-v3 .pet-match strong { color:var(--gold); }
+    .pet-tool-v3 .pet-detail-stack { display:grid; gap:14px; }
+    .pet-tool-v3 .pet-detail-stack h4 { margin:0 0 7px; color:var(--gold); }
+    .pet-tool-v3 .pet-detail-stack p { margin:0; line-height:1.7; color:var(--muted); overflow-wrap:anywhere; }
+    .pet-tool-v3 .pet-rate.skill-rate { color:#a995df; }
+    .pet-tool-v3 .pet-rate.base-rate { color:var(--gold); }
+    .pet-tool-v3 .pet-rate.change-rate { color:#8ec9df; }
     @media (max-width:900px) { .pet-tool-controls,.pet-tool-layout { grid-template-columns:1fr; } }
-    @media (max-width:700px) { .pet-tool-tabs { display:grid; grid-template-columns:1fr 1fr; } .pet-tool-tab { padding:10px 8px; } .pet-tool-panel { padding:14px; } }
+    @media (max-width:700px) { .pet-tool-tabs,.pet-tool-v3 .pet-tool-tabs { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); } .pet-tool-tab { padding:10px 8px; font-size:13px; } .pet-tool-panel { padding:14px; } .pet-tool-v3 .pet-skill-list,.pet-tool-v3 .pet-change-list { grid-template-columns:1fr; } }
     @media (max-width:1199px) {
       .shell { width:min(1120px,calc(100% - 40px)); }
       .rune-catalog-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
@@ -1405,6 +1428,61 @@
     customRender=function(){ const removed=sanitizeCustomSelections(); baseCustomRender(); if(removed){const head=$('customRuneBuilder')?.querySelector('.custom-builder-head'); if(head){const note=document.createElement('p');note.className='custom-note';note.textContent=`已移除 ${removed} 個不適用或重複的符文。`;head.appendChild(note);}} };
     const baseShowCustomRuneBuilder=showCustomRuneBuilder;
     showCustomRuneBuilder=async function(){ await baseShowCustomRuneBuilder(); sanitizeCustomSelections(); customBuilderStorageSave(); customRender(); };
+    // 寵物查詢 V3：把「寵物」、「技能」、「標籤」分成三條清楚的閱讀路徑。
+    function petSkillSummaryV3(value){
+      const text=String(value??'').replace(/\s+/g,' ').trim();
+      const cooldown=text.match(/冷卻時間\s*[:：]?\s*([^。；;]+)/);
+      const summary=text.replace(/冷卻時間\s*[:：]?\s*[^。；;]+[。；;]?/,'').split(/[。；;]/)[0].trim()||text;
+      return {summary:summary.length>92?`${summary.slice(0,92)}…`:summary,cooldown:cooldown?cooldown[1].trim():''};
+    }
+    function petUniqueSkillsV3(rows){
+      const seen=new Set();
+      return rows.filter(row=>{const key=`${petCell(row,['技能名稱'])}|${petCell(row,['基礎效果'])}`;if(seen.has(key))return false;seen.add(key);return true;});
+    }
+    function petSkillCardV3(row){
+      const name=petCell(row,['技能名稱'])||'技能資料整理中',kind=petCell(row,['技能分類'])||'其他',tag=petCell(row,['標籤'])||'—',rate=petPercentText(petCell(row,['技能取得機率'])),info=petSkillSummaryV3(petCell(row,['基礎效果']));
+      return `<button class="pet-skill-card pet-skill-card-v3" type="button" data-pet-skill-key="${petEsc(`${name}|${petCell(row,['基礎效果'])}`)}"><div class="pet-skill-top"><span class="pet-skill-name">${petEsc(name)}</span><span class="pet-rate skill-rate">技能取得率 ${petEsc(rate)}</span></div><div class="pet-skill-meta"><span class="pet-chip pet-kind-chip">${petEsc(kind)}</span></div><p class="pet-skill-effect">${petEsc(info.summary||'官方未標示')}</p>${info.cooldown?`<small class="pet-skill-meta">冷卻時間：${petEsc(info.cooldown)}</small>`:''}<span class="custom-link">查看詳情 →</span></button>`;
+    }
+    function petSkillDetailV3(row){
+      const title=petCell(row,['技能名稱'])||'寵物技能詳細資料',kind=petCell(row,['技能分類'])||'其他',tag=petCell(row,['標籤'])||'—',effect=petCell(row,['基礎效果'])||'官方未標示',matchEffect=petCell(row,['標籤一致強化效果'])||'官方未標示額外強化內容',note=petCell(row,['備註'])||'—',info=petSkillSummaryV3(effect),changes=petChangesForOriginal(tag),currentTags=selectedPetName?petTagRows.filter(item=>petCell(item,['寵物種類'])===selectedPetName).map(item=>petCell(item,['標籤'])):[],matched=currentTags.includes(tag);
+      $('petSkillTitle').textContent=title;
+      $('petSkillContent').innerHTML=`<div class="pet-detail-stack"><header><h3>${petEsc(title)}</h3><span class="pet-chip pet-kind-chip">${petEsc(kind)}</span></header><section><h4>技能效果</h4><p>${petEsc(info.summary||effect)}</p>${info.cooldown?`<p class="pet-skill-meta">冷卻時間：${petEsc(info.cooldown)}</p>`:''}</section><section class="pet-rate-summary"><h4>技能取得率</h4><p class="pet-rate skill-rate">${petEsc(petPercentText(petCell(row,['技能取得機率'])))}</p></section><section><h4>技能標籤</h4><p>${petEsc(tag)}</p><p class="pet-skill-meta">技能標籤可以透過標籤變更取得；當技能標籤與寵物本體標籤相同時，該技能會套用標籤吻合強化。</p>${changes.length?`<div class="pet-change-list">${changes.map(change=>`<div class="pet-change-row"><strong>${petEsc(petCell(change,['技能標籤']))}</strong><span>${petEsc(petPercentText(petCell(change,['技能標籤獲得機率'])))}</span></div>`).join('')}</div>`:'<p>官方目前未列此技能標籤的變更資料。</p>'}</section><section class="pet-match"><h4>標籤吻合效果</h4>${selectedPetName?`<p>目前查看寵物：${petEsc(selectedPetName)}；本體標籤：${petEsc(currentTags.join('、')||'尚未取得')}</p>`:'<p>當寵物本體標籤與技能標籤皆為相同名稱時，才會觸發額外強化。</p>'}<p><strong>${selectedPetName&&matched?'✓ 標籤吻合':'○ 尚未確認標籤吻合'}</strong></p><p>${petEsc(selectedPetName&&matched?matchEffect:'請先確認寵物本體標籤是否與「'+tag+'」相同。')}</p></section><details><summary>官方完整說明</summary><p>${petEsc(effect)}</p><p class="pet-skill-meta">官方備註：${petEsc(note)}</p></details></div>`;
+      if($('petSkillDialog').open)$('petSkillDialog').close();$('petSkillDialog').showModal();
+    }
+    function petTagSetV3(){return [...new Set([...petTags(),...petChangeTargets(),...petChangeOriginals()].filter(Boolean))];}
+    function petSkillSearchV3(query){
+      if(!query)return '';
+      const q=query.toLowerCase(),items=[];
+      petNames().filter(value=>value.toLowerCase().includes(q)).slice(0,4).forEach(value=>items.push({type:'pet',value,label:value,kind:'寵物'}));
+      petTagSetV3().filter(value=>value.toLowerCase().includes(q)).slice(0,6).forEach(value=>items.push({type:'tag',value,label:value,kind:'標籤'}));
+      petUniqueSkillsV3(petSkillRows).filter(row=>[petCell(row,['技能名稱']),petCell(row,['基礎效果'])].join(' ').toLowerCase().includes(q)).slice(0,6).forEach(row=>items.push({type:'skill',value:`${petCell(row,['技能名稱'])}|${petCell(row,['基礎效果'])}`,label:petCell(row,['技能名稱']),kind:'技能'}));
+      return items.length?`<div class="pet-search-results"><span>搜尋結果</span>${items.map(item=>`<button type="button" data-pet-search-type="${item.type}" data-pet-search-value="${petEsc(item.value)}"><b>${petEsc(item.label)}</b><small>${item.kind}</small></button>`).join('')}</div>`:'';
+    }
+    renderPetTool=function(){
+      const home=$('petToolHome');if(!home)return;
+      if(!petDbLoaded||!petSkillTagLoaded){home.innerHTML='<div class="guide-error">正在取得官方寵物資料……</div>';return;}
+      if(petDbError){home.innerHTML='<div class="guide-error">寵物資料讀取失敗<br><button type="button" id="petRetryV3">重新載入</button></div>';$('petRetryV3')?.addEventListener('click',()=>{petDbLoaded=false;petSkillTagLoaded=false;petDbError='';loadPetDatabase().then(loadPetSkillTagData).then(renderPetTool);});return;}
+      const pets=petNames(),tags=petTagSetV3(),selectedPet=selectedPetName||pets[0]||'',selectedTag=selectedPetTag||tags[0]||'',query=$('petSearch')?.value||'',mode=['pet','skill','tag'].includes(petQueryMode)?petQueryMode:'pet';
+      if(mode==='pet'&&!selectedPetName)selectedPetName=selectedPet;
+      if(mode==='tag'&&!selectedPetTag)selectedPetTag=selectedTag;
+      const petRows=petTagRows.filter(row=>petCell(row,['寵物種類'])===selectedPet),tagPets=petRowsForTag(selectedTag),tagSkills=petUniqueSkillsV3(petSkillsForTag(selectedTag)),allSkills=petUniqueSkillsV3(petSkillRows);
+      let body='';
+      if(mode==='pet') body=`<section class="pet-tool-panel"><div class="pet-result-heading"><h3>${petEsc(selectedPet)}</h3><small>寵物本體標籤</small></div><h4 class="pet-section-label">可洗本體標籤</h4><div class="pet-tag-list">${petRows.map(row=>{const tag=petCell(row,['標籤']);return `<button class="pet-tag-item" type="button" data-pet-select-tag="${petEsc(tag)}"><span><strong>${petEsc(tag)}</strong><span class="pet-rate-bar"><i style="width:${(petPercent(petCell(row,['標籤獲得機率']))||0)*100}%"></i></span></span><span class="pet-rate base-rate">本體標籤機率 ${petEsc(petPercentText(petCell(row,['標籤獲得機率'])))}</span></button>`;}).join('')||'<p class="pet-empty">目前沒有可顯示的標籤資料。</p>'}</div></section><section class="pet-tool-panel"><div class="pet-result-heading"><h3>寵物技能</h3><small>官方技能資料</small></div><div class="pet-info-callout">目前頁面先顯示這隻寵物可洗的本體標籤。若要查技能效果，請進入「技能」頁；不要將本體標籤誤認為寵物專屬技能池。</div><button class="rune-back pet-inline-action" type="button" data-pet-go-skill="1">查看寵物技能資料 →</button></section>`;
+      if(mode==='skill') body=`<section class="pet-tool-panel pet-skill-browser"><div class="pet-result-heading"><div><h3>寵物技能</h3><small>回答：這個技能做什麼？</small></div><label class="field"><span>技能分類</span><select id="petSkillCategory"><option value="">全部</option>${[...new Set(allSkills.map(row=>petCell(row,['技能分類'])||'其他'))].sort().map(value=>`<option value="${petEsc(value)}">${petEsc(value)}</option>`).join('')}</select></label></div><div class="pet-skill-list">${allSkills.map(petSkillCardV3).join('')||'<p class="pet-empty">目前沒有可顯示的寵物技能。</p>'}</div></section>`;
+      if(mode==='tag') body=`<section class="pet-tool-panel"><div class="pet-result-heading"><h3>${petEsc(selectedTag)}</h3><small>標籤詳細資料</small></div><h4 class="pet-section-label">可取得此本體標籤的寵物</h4><div class="pet-pet-list">${tagPets.map(row=>`<div class="pet-pet-item"><strong>${petEsc(petCell(row,['寵物種類']))}</strong><span class="pet-rate base-rate">本體標籤機率 ${petEsc(petPercentText(petCell(row,['標籤獲得機率'])))}</span></div>`).join('')||'<p class="pet-empty">目前官方標籤獲得表未列此標籤。</p>'}</div><h4 class="pet-section-label">可擁有此技能標籤的技能</h4><div class="pet-skill-list">${tagSkills.map(petSkillCardV3).join('')||'<p class="pet-empty">官方目前未列此標籤的技能。</p>'}</div></section><section class="pet-tool-panel"><div class="pet-result-heading"><h3>技能標籤變更</h3><small>變更為「${petEsc(selectedTag)}」</small></div><div class="pet-change-list">${petChangesForTarget(selectedTag).map(row=>`<div class="pet-change-row"><strong>原始標籤：${petEsc(petCell(row,['原始技能標籤']))}</strong><span class="change-rate">${petEsc(petPercentText(petCell(row,['技能標籤獲得機率'])))}</span></div>`).join('')||'<p class="pet-empty">官方目前未列此標籤的變更結果。</p>'}</div><div class="pet-match"><strong>標籤吻合效果</strong><p>當寵物本體標籤與技能標籤皆為「${petEsc(selectedTag)}」時，套用該技能的標籤吻合強化。</p></div></section>`;
+      home.innerHTML=`<div class="guide-home-head"><div><p class="guide-kicker">PET DATABASE / OFFICIAL TW</p><h2>寵物標籤・技能查詢</h2><p class="guide-intro">用「寵物」、「技能」、「標籤」三種入口，快速找到需要的資料。</p></div><button class="rune-back" id="petBackGuideV3" type="button">← 返回新手教學</button></div><div class="pet-tool-note"><strong>三種資料機率分開看</strong><span>本體標籤機率、技能取得率、技能標籤變更率是不同資料，不要混用。</span></div><div class="pet-tool-controls"><div class="pet-tool-tabs"><button class="pet-tool-tab ${mode==='pet'?'active':''}" type="button" data-pet-mode="pet">寵物</button><button class="pet-tool-tab ${mode==='skill'?'active':''}" type="button" data-pet-mode="skill">技能</button><button class="pet-tool-tab ${mode==='tag'?'active':''}" type="button" data-pet-mode="tag">標籤</button></div><label class="field"><span>搜尋寵物、技能或標籤</span><input id="petSearch" type="search" value="${petEsc(query)}" placeholder="例如：浣熊、幸運兒、火焰的憤怒" autocomplete="off"></label></div>${petSkillSearchV3(query)}<div class="pet-tool-controls"><label class="field"><span>${mode==='pet'?'選擇寵物':mode==='skill'?'快速切換技能頁':'選擇標籤'}</span><select class="pet-tool-select" id="petPrimarySelect">${(mode==='pet'?pets:mode==='tag'?tags:['技能資料庫']).map(value=>`<option value="${petEsc(value)}" ${(mode==='pet'?selectedPet:mode==='tag'?selectedTag:'技能資料庫')===value?'selected':''}>${petEsc(value)}</option>`).join('')}</select></label><div></div></div><div class="pet-tool-layout pet-tool-v3">${body}</div>`;
+      const search=$('petSearch');search?.addEventListener('input',()=>{const value=search.value.trim(),exactPet=pets.find(x=>x.toLowerCase()===value.toLowerCase()),exactTag=tags.find(x=>x.toLowerCase()===value.toLowerCase());if(exactPet){petQueryMode='pet';selectedPetName=exactPet;}else if(exactTag){petQueryMode='tag';selectedPetTag=exactTag;}renderPetTool();setTimeout(()=>{$('petSearch')?.focus();},0);});
+      home.querySelectorAll('[data-pet-search-type]').forEach(button=>button.addEventListener('click',()=>{const type=button.dataset.petSearchType,value=button.dataset.petSearchValue||'';if(type==='pet'){petQueryMode='pet';selectedPetName=value;}else if(type==='tag'){petQueryMode='tag';selectedPetTag=value;}else{const [name,effect]=value.split('|'),row=petSkillRows.find(item=>petCell(item,['技能名稱'])===name&&petCell(item,['基礎效果'])===effect);if(row)petSkillDetailV3(row);return;}renderPetTool();}));
+      home.querySelectorAll('[data-pet-mode]').forEach(button=>button.addEventListener('click',()=>{petQueryMode=button.dataset.petMode;renderPetTool();}));
+      $('petPrimarySelect')?.addEventListener('change',e=>{if(mode==='pet'){selectedPetName=e.target.value;}else if(mode==='tag'){selectedPetTag=e.target.value;}renderPetTool();});
+      $('petSkillCategory')?.addEventListener('change',e=>{const category=e.target.value;home.querySelectorAll('[data-pet-skill-key]').forEach(button=>{const row=petSkillRows.find(item=>`${petCell(item,['技能名稱'])}|${petCell(item,['基礎效果'])}`===button.dataset.petSkillKey);button.hidden=Boolean(category&&petCell(row,['技能分類'])!==category);});});
+      home.querySelectorAll('[data-pet-select-tag]').forEach(button=>button.addEventListener('click',()=>{selectedPetTag=button.dataset.petSelectTag;petQueryMode='tag';renderPetTool();}));
+      home.querySelectorAll('[data-pet-go-skill]').forEach(button=>button.addEventListener('click',()=>{petQueryMode='skill';renderPetTool();}));
+      home.querySelectorAll('[data-pet-skill-key]').forEach(button=>button.addEventListener('click',()=>{const [name,effect]=button.dataset.petSkillKey.split('|'),row=petSkillRows.find(item=>petCell(item,['技能名稱'])===name&&petCell(item,['基礎效果'])===effect);if(row)petSkillDetailV3(row);}));
+      $('petBackGuideV3')?.addEventListener('click',showGuideHome);
+    };
+    petOpenSkill=petSkillDetailV3;
+    showPetTool=function(){ $('guideHome').hidden=true;$('guideArticle').hidden=true;$('spiritTraceHome').hidden=true;$('runeHome').hidden=true;$('runeDetail').hidden=true;$('loadoutHome').hidden=true;$('loadoutDetail').hidden=true;$('customRuneBuilder').hidden=true;$('petToolHome').hidden=false;if(!petDbLoaded){renderPetTool();loadPetDatabase().then(()=>loadPetSkillTagData()).then(renderPetTool);}else if(!petSkillTagLoaded){renderPetTool();loadPetSkillTagData().then(renderPetTool);}else renderPetTool(); };
   </script>
 </body>
 </html>
