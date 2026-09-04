@@ -1,6 +1,16 @@
 (() => {
   'use strict';
 
+  function hideCharacterDisplayBadges() {
+    const grid = document.querySelector('#memberGrid');
+    if (!grid) return;
+    grid.querySelectorAll('*').forEach(el => {
+      if (el.children.length === 0 && el.textContent.trim() === '角色展示') {
+        el.style.display = 'none';
+      }
+    });
+  }
+
   function ensureBottomSpace() {
     const dialog = document.querySelector('#memberDialog');
     const content = dialog?.querySelector('.modal-content');
@@ -12,13 +22,14 @@
       spacer = document.createElement('div');
       spacer.id = 'memberBottomSpacer';
       spacer.setAttribute('aria-hidden', 'true');
-      spacer.style.height = '72px';
-      spacer.style.minHeight = '72px';
-      spacer.style.flex = '0 0 72px';
-      spacer.style.width = '100%';
-      spacer.style.pointerEvents = 'none';
       roles.insertAdjacentElement('afterend', spacer);
     }
+
+    spacer.style.height = '34px';
+    spacer.style.minHeight = '34px';
+    spacer.style.flex = '0 0 34px';
+    spacer.style.width = '100%';
+    spacer.style.pointerEvents = 'none';
   }
 
   document.addEventListener('click', event => {
@@ -34,4 +45,7 @@
       setTimeout(ensureBottomSpace, 50);
     }
   });
+
+  hideCharacterDisplayBadges();
+  setTimeout(hideCharacterDisplayBadges, 100);
 })();
