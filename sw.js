@@ -1,4 +1,4 @@
-const CACHE_VERSION='mabi-pwa-v1';
+const CACHE_VERSION='mabi-pwa-v2';
 const APP_SHELL=[
   './',
   './index.html',
@@ -48,16 +48,20 @@ self.addEventListener('fetch',event=>{
   const url=new URL(request.url);
   if(url.origin!==self.location.origin) return;
 
-  if(request.mode==='navigate'){
+  const isCode=/\.(?:js|css|html)$/.test(url.pathname) || request.mode==='navigate';
+
+  if(isCode){
     event.respondWith(
-      fetch(request)
+      fetch(request,{cache:'no-store'})
         .then(response=>{
-          const copy=response.clone();
-          caches.open(CACHE_VERSION).then(cache=>cache.put('./index.html',copy));
+          if(response && response.ok){
+            const copy=response.clone();
+            caches.open(CACHE_VERSION).then(cache=>cache.put(request,copy));
+          }
           return response;
         })
         .catch(async()=>{
-          return (await caches.match(request)) || (await caches.match('./index.html'));
+          return (await caches.match(request)) || (request.mode==='navigate' ? await caches.match('./index.html') : undefined);
         })
     );
     return;
