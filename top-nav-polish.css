@@ -1,0 +1,28 @@
+.site-tabs{
+  margin:24px auto 28px !important;
+  width:fit-content !important;
+  max-width:100% !important;
+  display:flex !important;
+  justify-content:center !important;
+  align-items:center !important;
+  gap:6px !important;
+  padding:6px !important;
+  border-radius:14px !important;
+}
+.site-tab{
+  min-width:96px;
+  text-align:center;
+  padding:11px 18px !important;
+  font-weight:700;
+}
+@media (max-width:560px){
+  .site-tabs{
+    width:min(100%,320px) !important;
+    margin:20px auto 24px !important;
+  }
+  .site-tab{
+    flex:1;
+    min-width:0;
+    padding:10px 12px !important;
+  }
+}
