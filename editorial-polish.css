@@ -1,0 +1,161 @@
+:root{
+  --content-max:1180px;
+  --reading-max:760px;
+  --section-gap:36px;
+  --radius-lg:18px;
+  --radius-md:13px;
+}
+
+/* Typography hierarchy */
+body{font-size:15px;line-height:1.65;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+h1,h2,h3,h4,.main-id{line-height:1.22;text-wrap:balance}
+p,.guide-body,.rune-info p,.loadout-intro p,.pet-tool-note span{line-height:1.75}
+.subtitle,.guide-intro,.result-count,.rune-detail-crumb{line-height:1.65}
+
+header .hero{align-items:center}
+header h1{max-width:900px;font-size:clamp(34px,4.2vw,58px);line-height:1.08;margin-top:10px;margin-bottom:8px}
+header .subtitle{max-width:720px;font-size:13px}
+.eyebrow,.guide-kicker{font-size:11px;line-height:1.2}
+
+/* Overall page rhythm */
+.site-tabs{margin-bottom:30px!important}
+.guide-shell{width:min(var(--content-max),100%)!important;padding-bottom:84px!important}
+.guide-home-head,.guide-article-head{margin:6px 0 28px!important;align-items:flex-start!important}
+.guide-home-head>div,.guide-article-head>div{max-width:760px}
+.guide-home-head h2,.guide-article-head h2{font-size:clamp(28px,3.4vw,42px)!important;line-height:1.14}
+.guide-intro{margin-top:9px!important;max-width:720px;font-size:14px!important}
+
+/* Section labels and headings */
+.section-head{margin:0 0 16px!important}
+.section-head h2{font-size:19px!important;letter-spacing:.02em!important}
+.guide-home-grid+*,.rune-category-groups+*,.loadout-category-group+*{margin-top:var(--section-gap)}
+
+/* Guide landing cards: calmer and easier to scan */
+.guide-home-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:14px!important}
+.guide-entry{min-height:164px!important;padding:20px!important;border-radius:var(--radius-lg)!important;display:flex!important;flex-direction:column!important}
+.guide-entry-icon{width:38px!important;height:38px!important;margin-bottom:20px!important;border-radius:10px!important;font-size:17px!important}
+.guide-entry h3{margin-bottom:8px!important;font-size:18px!important;letter-spacing:.01em}
+.guide-entry p{font-size:12.5px!important;color:#9aa4b1!important;max-width:32em}
+.guide-entry-foot{margin-top:auto!important;padding-top:22px!important;font-size:11px!important}
+
+/* Information blocks */
+.rune-info,.loadout-intro,.pet-tool-note,.spirit-trace-fact{
+  padding:16px 18px!important;
+  border-radius:var(--radius-md)!important;
+  box-shadow:none!important;
+}
+.rune-info+ .rune-info{margin-top:10px!important}
+.rune-info strong,.loadout-intro strong,.spirit-trace-fact strong{font-size:13px;letter-spacing:.01em}
+.rune-info p,.loadout-intro p{margin-top:6px!important;margin-bottom:0!important;font-size:12.5px;color:#98a2af!important}
+
+/* Toolbars / forms */
+.toolbar,.rune-recommend-toolbar,.rune-toolbar,.rune-catalog-toolbar,.pet-tool-controls{gap:10px!important}
+.field{min-height:48px!important;border-radius:11px!important;box-shadow:none!important}
+.field span{font-size:11px!important;color:#8f99a6!important}
+input,select{font-size:13px!important}
+
+/* Member roster */
+.grid{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:16px!important;padding-bottom:72px!important}
+.member-card{border-radius:16px!important}
+.portrait{height:clamp(280px,24vw,370px)!important}
+.card-body{padding:15px 16px 16px!important;min-height:118px!important}
+.line-name{font-size:11px!important;margin-bottom:7px!important}
+.main-id{font-size:18px!important;letter-spacing:.01em}
+.card-foot{margin-top:18px!important;font-size:11px!important}
+.legendary-badge{transform:scale(.92);transform-origin:top right}
+
+/* Modal member detail */
+#memberDialog .modal-content{padding-left:22px!important;padding-right:22px!important}
+#memberDialog .modal-profile{gap:22px!important}
+#memberDialog .roles{gap:10px!important}
+#memberDialog .role-row{border-radius:12px!important;padding:14px!important;min-height:150px}
+#memberDialog .role-tag{font-size:12px!important}
+#memberDialog .role-cell small{font-size:9.5px!important}
+#memberDialog .role-cell span{font-size:12.5px!important}
+.mabi-role-task-hint{font-size:9.5px!important;padding-top:10px!important}
+
+/* Rune & loadout structure */
+.rune-category-groups,.loadout-category-group{display:grid;gap:22px}
+.rune-category-group,.loadout-category-group{padding-top:4px}
+.rune-category-head,.loadout-category-head{margin-bottom:12px!important}
+.rune-category-head h3,.loadout-category-head h3{font-size:19px!important;margin-bottom:3px!important}
+.rune-category-head p,.loadout-category-head p{font-size:12px!important;color:#919baa!important}
+.rune-class-grid,.loadout-class-grid{gap:12px!important}
+.rune-class-card,.loadout-class-card{min-height:142px!important;padding:18px!important;border-radius:14px!important}
+.rune-class-card strong,.loadout-class-card strong{font-size:17px!important}
+.rune-class-card p,.loadout-class-card p{font-size:12px!important;line-height:1.6}
+.rune-card{padding:17px!important;border-radius:13px!important}
+.rune-card h4{font-size:16px!important;margin:10px 0 7px!important}
+.rune-card p{font-size:12px!important;line-height:1.65}
+.rune-detail-hero{padding:22px!important;border-radius:16px!important}
+.rune-detail-hero h2{font-size:30px!important}
+.rune-order,.rune-section{margin-top:26px!important}
+.rune-section-head{margin-bottom:12px!important}
+
+/* Articles / dice */
+.guide-article{display:grid;gap:16px}
+.guide-block,.dice-concept,.dice-calculator,.dice-table-section{border-radius:16px!important;padding:20px!important}
+.guide-block h3,.dice-concept h3,.dice-calculator h3,.dice-table-section h3{font-size:18px!important}
+.guide-body,.dice-concept p,.dice-calculator p{font-size:13px!important;color:#a1aab7!important}
+.guide-table{font-size:12px!important}
+.guide-table th{font-size:11px!important;letter-spacing:.02em}
+
+/* Spirit trace */
+.spirit-trace-grid{gap:14px!important}
+.spirit-trace-panel{padding:20px!important;border-radius:16px!important}
+.spirit-panel-title h3{font-size:18px!important}
+.spirit-panel-title p{font-size:12px!important;color:#949eaa!important}
+.spirit-trace-field span{font-size:11px!important}
+.spirit-trace-action{min-height:46px!important;border-radius:11px!important}
+
+/* Pet pages */
+.petv4-tabs{margin:0 0 20px!important;padding:4px!important}
+.petv4-filter-panel{padding:18px!important;border-radius:15px!important}
+.petv4-section-title h3,.petv4-result-head h3{font-size:19px!important}
+.petv4-help{font-size:12px!important;line-height:1.65!important;color:#99a3af!important}
+.petv4-grid{gap:12px!important}
+.petv4-card,.petv4-tag-card,.petv4-skill-card{padding:16px!important;border-radius:14px!important}
+.petv4-card h3,.petv4-tag-card h3,.petv4-skill-card h3{font-size:16px!important}
+.petv4-skill p,.petv4-skill-card p{font-size:11.5px!important;line-height:1.65!important;color:#9ea8b5!important}
+
+/* Task journal */
+.mabi-task-dialog-top{padding:18px 22px!important}
+.mabi-task-dialog-top h2{font-size:22px!important;line-height:1.2}
+.mabi-task-dialog-content{padding:18px 22px 22px!important}
+.mabi-task-title-row h3{font-size:20px!important}
+.mabi-task-title-row p{font-size:11.5px!important}
+.mabi-task-columns{gap:10px!important}
+.mabi-task-group{padding:13px!important;border-radius:12px!important}
+.mabi-task-item{min-height:46px!important;padding:8px 9px!important}
+.mabi-task-copy strong{font-size:11.5px!important}
+.mabi-task-material{font-size:9px!important}
+
+/* Common spacing for action buttons */
+.rune-back,.guide-back,.spirit-trace-back{min-height:40px;padding:9px 13px!important;border-radius:10px!important;font-size:11.5px!important}
+
+/* Responsive */
+@media(max-width:1100px){
+  .grid{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+  .guide-home-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+}
+@media(max-width:820px){
+  header .hero,.guide-home-head,.guide-article-head{align-items:flex-start!important;flex-direction:column!important}
+  .stats{width:100%}
+  .stat{flex:1;min-width:120px}
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  .rune-class-grid,.loadout-class-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  #memberDialog .modal-content{padding-left:16px!important;padding-right:16px!important}
+}
+@media(max-width:560px){
+  body{font-size:14px}
+  .shell{width:min(100% - 20px,1360px)!important}
+  header{padding-top:22px!important}
+  header h1{font-size:32px!important}
+  .site-tabs{width:100%!important}
+  .site-tab{flex:1;padding:9px 11px!important}
+  .guide-home-grid,.grid,.rune-class-grid,.loadout-class-grid{grid-template-columns:1fr!important}
+  .guide-entry{min-height:150px!important}
+  .portrait{height:min(110vw,420px)!important}
+  .guide-home-head h2,.guide-article-head h2{font-size:28px!important}
+  .mabi-task-dialog-content{padding:14px!important}
+}
