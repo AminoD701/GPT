@@ -73,25 +73,47 @@
     const current = select.value;
     if (SPECIAL_TAGS[current]) {
       const host = home.querySelector('.petv4-skill-search');
-      if (host && !host.nextElementSibling?.matches?.('[data-pet-special-filter-note]')) {
+      if (host && !home.querySelector('[data-pet-special-filter-note]')) {
         host.insertAdjacentHTML('afterend', `<section class="pet-special-tag-note" data-pet-special-filter-note><strong>${esc(current)} 是特殊標籤</strong><p>${esc(SPECIAL_TAGS[current].note)}</p><p>${esc(SPECIAL_TAGS[current].skillRule)}</p></section>`);
       }
     }
   }
 
+  function plainTagName(card) {
+    const explicit = card.dataset.petSpecialTag;
+    if (explicit) return explicit;
+    const h3 = card.querySelector('h3');
+    if (!h3) return '';
+    const clone = h3.cloneNode(true);
+    clone.querySelectorAll('.pet-special-tag-badge').forEach(node => node.remove());
+    return clone.textContent.trim();
+  }
+
   function addSpecialTagCards(home) {
-    if (!home.querySelector('.petv4-tag-grid')) return;
     const grid = home.querySelector('.petv4-tag-grid');
+    if (!grid) return;
+
     Object.entries(SPECIAL_TAGS).forEach(([tag, info]) => {
-      if ([...grid.querySelectorAll('.petv4-tag-card h3')].some(h => h.textContent.trim() === tag)) {
-        const existing = [...grid.querySelectorAll('.petv4-tag-card')].find(card => card.querySelector('h3')?.textContent.trim() === tag);
-        existing?.classList.add('pet-special-tag-card');
-        if (existing && !existing.querySelector('.pet-special-rule')) {
+      const matches = [...grid.querySelectorAll('.petv4-tag-card')].filter(card => plainTagName(card) === tag);
+
+      // 若基礎資料本身已經有迅速／致命，沿用原卡片；若之前 enhancer 重複插入，刪除多餘副本。
+      let existing = matches[0] || null;
+      matches.slice(1).forEach(card => card.remove());
+
+      if (existing) {
+        existing.dataset.petSpecialTag = tag;
+        existing.classList.add('pet-special-tag-card');
+        const h3 = existing.querySelector('h3');
+        if (h3 && !h3.querySelector('.pet-special-tag-badge')) {
+          h3.insertAdjacentHTML('beforeend', '<span class="pet-special-tag-badge">特殊標籤</span>');
+        }
+        if (!existing.querySelector('.pet-special-rule')) {
           existing.insertAdjacentHTML('beforeend', `<div class="pet-special-rule">${esc(info.note)}<br>${esc(info.skillRule)}</div>`);
         }
         return;
       }
-      grid.insertAdjacentHTML('beforeend', `<article class="petv4-tag-card pet-special-tag-card"><h3>${esc(tag)} <span class="pet-special-tag-badge">特殊標籤</span></h3><small>初始取得方式</small><p>任何寵物的初始標籤都不會出現；需使用空白標籤牌重新洗出。</p><small>技能欄限制</small><div><span>僅第 2 條洗出的技能欄可出現</span></div><div class="pet-special-rule">第 1 條技能欄無法洗出「${esc(tag)}」標籤技能。</div></article>`);
+
+      grid.insertAdjacentHTML('beforeend', `<article class="petv4-tag-card pet-special-tag-card" data-pet-special-tag="${esc(tag)}"><h3>${esc(tag)} <span class="pet-special-tag-badge">特殊標籤</span></h3><small>初始取得方式</small><p>任何寵物的初始標籤都不會出現；需使用空白標籤牌重新洗出。</p><small>技能欄限制</small><div><span>僅第 2 條洗出的技能欄可出現</span></div><div class="pet-special-rule">第 1 條技能欄無法洗出「${esc(tag)}」標籤技能。</div></article>`);
     });
   }
 
