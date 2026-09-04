@@ -1,0 +1,16 @@
+/* Global site search */
+.site-search-wrap{width:min(760px,calc(100% - 32px));margin:14px auto 24px;position:relative;z-index:20}
+.site-search-box{display:flex;align-items:center;gap:10px;min-height:50px;padding:0 14px;border:1px solid rgba(255,255,255,.09);border-radius:14px;background:rgba(16,19,27,.86);box-shadow:0 10px 28px rgba(0,0,0,.14);transition:border-color .2s,box-shadow .2s,background .2s}
+.site-search-box:focus-within{border-color:rgba(198,167,104,.5);background:rgba(20,23,31,.96);box-shadow:0 0 0 3px rgba(198,167,104,.08),0 14px 32px rgba(0,0,0,.2)}
+.site-search-icon{flex:none;color:#c7aa6d;font-size:17px;line-height:1}
+#siteSearchInput{flex:1;min-width:0;border:0;outline:0;background:transparent;color:#eef1f5;padding:13px 0;font-size:14px}
+#siteSearchInput::placeholder{color:#727986}
+.site-search-shortcut{flex:none;padding:4px 7px;border:1px solid rgba(255,255,255,.08);border-radius:7px;color:#7d8490;background:rgba(255,255,255,.025);font:600 10px Rajdhani,'Noto Sans TC',sans-serif;letter-spacing:.05em}
+.site-search-results{position:absolute;left:0;right:0;top:calc(100% + 8px);display:grid;gap:4px;max-height:min(58vh,520px);overflow:auto;padding:7px;border:1px solid rgba(255,255,255,.1);border-radius:14px;background:rgba(13,16,23,.98);box-shadow:0 22px 54px rgba(0,0,0,.45);backdrop-filter:blur(16px)}
+.site-search-results[hidden]{display:none!important}
+.site-search-section{padding:7px 9px 4px;color:#7f8793;font:700 10px Rajdhani,'Noto Sans TC',sans-serif;letter-spacing:.12em;text-transform:uppercase}
+.site-search-result{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;width:100%;padding:11px 12px;text-align:left;border:1px solid transparent;border-radius:10px;color:#e8ebef;background:transparent}
+.site-search-result:hover,.site-search-result.is-active{border-color:rgba(198,167,104,.24);background:rgba(198,167,104,.055)}
+.site-search-result strong{display:block;font-size:13px;line-height:1.35}.site-search-result small{display:block;margin-top:3px;color:#858d99;font-size:10px;line-height:1.45}.site-search-result em{color:#bfa363;font-style:normal;font-size:12px}
+.site-search-empty{padding:22px 14px;text-align:center;color:#7e8590;font-size:12px}
+@media(max-width:620px){.site-search-wrap{width:100%;margin:10px 0 18px}.site-search-box{min-height:46px;border-radius:12px}.site-search-shortcut{display:none}.site-search-results{max-height:55vh}}
