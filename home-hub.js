@@ -131,7 +131,6 @@
   function navigate(target){
     hideHome();
     if(target==='members'){
-      call('switchView') ? null : null;
       if(typeof window.switchView==='function')window.switchView('members');
       setTabs('members');
       return;
