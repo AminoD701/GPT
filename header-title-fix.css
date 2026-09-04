@@ -4,7 +4,7 @@
   align-items:flex-start;
   gap:7px;
   margin:10px 0 6px!important;
-  max-width:min(760px,100%);
+  max-width:min(980px,100%);
   line-height:1.08!important;
   letter-spacing:0!important;
   word-break:keep-all;
@@ -13,23 +13,30 @@
 #guildName .site-title-main{
   display:block;
   color:var(--text);
-  font-size:clamp(34px,4.6vw,56px);
+  font-size:clamp(32px,4vw,52px);
   font-weight:850;
-  line-height:1.05;
+  line-height:1.08;
   white-space:nowrap;
-  letter-spacing:.005em;
+  letter-spacing:.002em;
 }
 #guildName .site-title-sub{
   display:block;
   color:#b7bec9;
-  font-size:clamp(16px,1.8vw,22px);
+  font-size:clamp(16px,1.7vw,21px);
   font-weight:650;
   line-height:1.2;
   letter-spacing:.08em;
 }
-.hero>div:first-child{min-width:0;max-width:820px}
+.hero>div:first-child{min-width:0;max-width:1040px}
+@media(max-width:900px){
+  #guildName .site-title-main{font-size:clamp(30px,5.6vw,44px);white-space:normal}
+}
 @media(max-width:760px){
   #guildName{gap:6px}
-  #guildName .site-title-main{font-size:clamp(30px,8vw,42px);white-space:normal}
-  #guildName .site-title-sub{font-size:16px;letter-spacing:.05em}
+  #guildName .site-title-main{font-size:clamp(28px,7.6vw,38px);white-space:normal;line-height:1.12}
+  #guildName .site-title-sub{font-size:15px;letter-spacing:.05em}
+}
+@media(max-width:440px){
+  #guildName .site-title-main{font-size:clamp(25px,7.2vw,32px)}
+  #guildName .site-title-sub{font-size:14px}
 }
