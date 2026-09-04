@@ -1,0 +1,157 @@
+:root{
+  --bg:#0b0e13;
+  --panel:#121722;
+  --panel-2:#171d29;
+  --line:rgba(255,255,255,.09);
+  --text:#edf1f6;
+  --muted:#96a0af;
+  --gold:#c8a56a;
+  --purple:#8d86b9;
+  --cyan:#6fb9b2;
+  --danger:#d98787;
+}
+
+html{background:#0b0e13}
+body{
+  background:
+    radial-gradient(circle at 16% -8%,rgba(112,86,145,.12),transparent 30%),
+    radial-gradient(circle at 88% 6%,rgba(52,116,120,.10),transparent 28%),
+    linear-gradient(180deg,#0b0e13 0%,#0d1118 100%)!important;
+  color:var(--text);
+}
+body:before{opacity:.045!important;background-size:64px 64px!important}
+
+.shell{width:min(1360px,calc(100% - 48px))}
+header{padding:38px 0 24px}
+h1{font-weight:800;letter-spacing:.015em}
+.subtitle,.guide-intro{color:#919aa8}
+.eyebrow,.guide-kicker{color:#c6a66b;letter-spacing:.14em}
+.eyebrow:before{background:#c6a66b;opacity:.85}
+
+.site-tabs{
+  border-color:rgba(255,255,255,.075)!important;
+  background:rgba(16,21,30,.84)!important;
+  box-shadow:0 8px 30px rgba(0,0,0,.14);
+}
+.site-tab{color:#8f98a6!important}
+.site-tab:hover,.site-tab[aria-selected="true"]{
+  color:#f2f4f8!important;
+  background:#202634!important;
+  box-shadow:none!important;
+}
+
+.stat,.field,
+.guide-entry,.rune-recommend-card,.rune-class-card,.loadout-class-card,
+.rune-card,.loadout-slot,.petv4-card,.petv4-tag-card,.petv4-skill-card,
+.spirit-trace-panel,.dice-calculator,.dice-concept,.dice-table-section,
+.member-card:not(.legendary){
+  background:linear-gradient(180deg,rgba(24,29,40,.96),rgba(16,21,30,.98))!important;
+  border-color:rgba(255,255,255,.085)!important;
+  box-shadow:0 10px 26px rgba(0,0,0,.18)!important;
+}
+
+.guide-entry,.rune-class-card,.loadout-class-card,.petv4-card,.petv4-tag-card,.petv4-skill-card,
+.rune-card,.loadout-slot,.member-card{
+  transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease,background .18s ease!important;
+}
+.guide-entry:hover,.guide-entry:focus-visible,
+.rune-class-card:hover,.rune-class-card:focus-visible,
+.loadout-class-card:hover,.loadout-class-card:focus-visible,
+.petv4-card:hover,.petv4-skill-card:hover,
+.rune-card:hover,.loadout-slot:hover,
+.member-card:not(.legendary):hover,.member-card:not(.legendary):focus-visible{
+  transform:translateY(-2px)!important;
+  border-color:rgba(200,165,106,.42)!important;
+  box-shadow:0 14px 32px rgba(0,0,0,.24)!important;
+}
+
+.guide-entry-icon,.rune-part-icon,.spirit-panel-number{
+  border-color:rgba(200,165,106,.28)!important;
+  background:rgba(200,165,106,.07)!important;
+  color:#c8a56a!important;
+}
+
+.member-card.legendary{
+  border-width:2px!important;
+  background:linear-gradient(180deg,rgba(29,27,30,.98),rgba(17,19,26,.99)) padding-box,
+             linear-gradient(135deg,#d8b46d 0%,#b78037 55%,#8d5d24 100%) border-box!important;
+  box-shadow:0 12px 28px rgba(0,0,0,.28),0 0 0 1px rgba(207,153,70,.08)!important;
+}
+.member-card.legendary:hover,.member-card.legendary:focus-visible{
+  box-shadow:0 16px 34px rgba(0,0,0,.34),0 0 0 1px rgba(222,176,92,.16)!important;
+}
+.member-card.legendary .portrait:before{
+  border-color:rgba(220,170,77,.62)!important;
+  box-shadow:inset 0 0 12px rgba(205,132,35,.10)!important;
+}
+.legendary-badge{
+  background:linear-gradient(145deg,#9e6b2b,#6f451c)!important;
+  border-color:rgba(224,188,112,.78)!important;
+  box-shadow:0 4px 12px rgba(0,0,0,.28)!important;
+}
+
+.card-body{background:rgba(15,19,27,.90)}
+.card-foot,.line-name{color:#c5a66c!important}
+
+.guide-home-grid,.grid,.rune-class-grid,.loadout-class-grid,.petv4-grid{gap:18px}
+.guide-entry{min-height:176px!important;padding:22px!important}
+.guide-entry h3{font-size:19px!important}
+.guide-entry p{line-height:1.65!important}
+.guide-entry-foot{margin-top:24px!important;color:#c8a56a!important}
+
+.rune-info,.loadout-intro,.pet-tool-note,.spirit-trace-fact,.mabi-material-box{
+  background:rgba(21,26,35,.86)!important;
+  border-color:rgba(255,255,255,.085)!important;
+}
+.rune-info strong,.loadout-intro strong,.spirit-trace-fact strong{color:#d3b374!important}
+
+.rune-category-tabs,.rune-build-tabs,.petv4-tabs,.pet-tool-tabs,.spirit-trace-tabs{
+  background:rgba(14,18,25,.72)!important;
+  border-color:rgba(255,255,255,.08)!important;
+}
+.rune-category-tab,.rune-build-tab,.petv4-tabs button,.pet-tool-tab,.spirit-trace-tab{
+  color:#8f98a6!important;
+}
+.rune-category-tab.active,.rune-build-tab.active,.petv4-tabs button.active,.pet-tool-tab.active,.spirit-trace-tab.active{
+  color:#f2f4f7!important;
+  background:#202634!important;
+  box-shadow:none!important;
+}
+
+button{font-weight:600}
+button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{
+  outline:2px solid rgba(200,165,106,.72)!important;
+  outline-offset:2px;
+}
+
+.mabi-task-dialog,
+#memberDialog{
+  background:#10141d!important;
+  border-color:rgba(200,165,106,.34)!important;
+  box-shadow:0 28px 90px rgba(0,0,0,.62)!important;
+}
+.mabi-task-dialog-top{
+  background:#141923!important;
+  border-bottom-color:rgba(255,255,255,.075)!important;
+}
+.mabi-task-group{
+  background:#171c27!important;
+  border-color:rgba(255,255,255,.08)!important;
+}
+.mabi-task-item{
+  background:#121720!important;
+  border-color:rgba(255,255,255,.065)!important;
+}
+.mabi-task-item:hover{border-color:rgba(200,165,106,.25)!important}
+
+.guide-label,.rune-badge,.loadout-tag,.petv4-tag-pill,.mabi-task-cycle{
+  letter-spacing:.02em;
+}
+
+hr,.section-divider{border-color:rgba(255,255,255,.07)!important}
+
+@media(max-width:760px){
+  .shell{width:min(100% - 24px,1360px)}
+  header{padding-top:26px}
+  .guide-entry{min-height:auto!important}
+}
