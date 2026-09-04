@@ -1,11 +1,13 @@
-const CACHE_VERSION='mabi-pwa-v2';
+const CACHE_VERSION='mabi-pwa-v3';
 const APP_SHELL=[
   './',
   './index.html',
   './site.html',
-  './manifest.webmanifest',
-  './app-icon.svg',
-  './app-icon-maskable.svg',
+  './manifest.webmanifest?v=2',
+  './apple-touch-icon.png?v=2',
+  './icon-192.png?v=2',
+  './icon-512.png?v=2',
+  './maskable-512.png?v=2',
   './professional-theme.css',
   './editorial-polish.css',
   './header-title-fix.css',
