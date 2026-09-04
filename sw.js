@@ -1,4 +1,4 @@
-const CACHE_VERSION='mabi-pwa-v3';
+const CACHE_VERSION='mabi-pwa-v4';
 const APP_SHELL=[
   './',
   './index.html',
@@ -18,6 +18,7 @@ const APP_SHELL=[
   './member-profile-layout.css',
   './task-progress-v2.css',
   './task-journal-v4.css',
+  './task-progress-v6.js?v=1',
   './pet-guide-v4.css',
   './home-hub.js',
   './guide-categories.js',
@@ -46,12 +47,10 @@ self.addEventListener('activate',event=>{
 self.addEventListener('fetch',event=>{
   const request=event.request;
   if(request.method!=='GET') return;
-
   const url=new URL(request.url);
   if(url.origin!==self.location.origin) return;
 
   const isCode=/\.(?:js|css|html)$/.test(url.pathname) || request.mode==='navigate';
-
   if(isCode){
     event.respondWith(
       fetch(request,{cache:'no-store'})
