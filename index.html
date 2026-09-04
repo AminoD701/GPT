@@ -13,8 +13,8 @@
         const response = await fetch('./site.html', { cache: 'no-store' });
         if (!response.ok) throw new Error(`site.html HTTP ${response.status}`);
         let html = await response.text();
-        html = html.replace('</head>', '<link rel="stylesheet" href="./task-progress-v2.css?v=1"></head>');
-        html = html.replace('</body>', '<script src="./task-progress-v2.js?v=1"><\/script></body>');
+        html = html.replace('</head>', '<link rel="stylesheet" href="./task-progress-v2.css?v=2"></head>');
+        html = html.replace('</body>', '<script src="./task-progress-v3.js?v=1"><\/script></body>');
         document.open();
         document.write(html);
         document.close();
