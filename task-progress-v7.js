@@ -11,6 +11,7 @@
     {id:'abyss-2',name:'深淵2－崩塌的祭壇',cycle:'weekly'},
     {id:'abyss-3',name:'深淵3－毀滅的殿堂',cycle:'weekly'},
     {id:'raid-gris',name:'團隊副本－格里斯貝恩',cycle:'weekly'},
+    {id:'raid-white-succubus',name:'團隊副本－白魅魔副本',cycle:'weekly'},
     {id:'deep-dungeon',name:'深層地下城',cycle:'daily'},
     {id:'weekday-dungeon',name:'週幾地下城',cycle:'daily'},
     {id:'part-time',name:'兼職任務',cycle:'weekly'},
@@ -24,6 +25,7 @@
     {id:'dun-board',name:'杜巴頓－佈告欄',cycle:'weekly'},
     {id:'cobh-food',name:'庫漢－食材兌換',cycle:'weekly'},
     {id:'cobh-board',name:'庫漢－佈告欄',cycle:'weekly'},
+    {id:'banker-board',name:'班克爾地區－公布欄',cycle:'weekly'},
     {id:'dugald-lumber',name:'杜加德走廊－高級木材',cycle:'daily',materials:[['炒蔬菜',2]]}
   ];
   const DAILY=TASKS.filter(t=>t.cycle==='daily');
