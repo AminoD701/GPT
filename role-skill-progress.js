@@ -8,7 +8,7 @@
   const OLD_KEY='mabi-role-skill-progress-v1';
   const PREFIX='skill-profile-v3';
   const PROFILE_TASK_ID='raid-gris';
-  const PROFILE_CYCLE_KEY='skill-profile-v3';
+  const PROFILE_CYCLE_KEY='2000-01-03';
   const V2_PREFIX='skill-profile-v2';
   const OLD_PREFIX='skill-profile-v1';
   const TRACE=(typeof SPIRIT_TRACE_EXP!=='undefined'?SPIRIT_TRACE_EXP:20000);
