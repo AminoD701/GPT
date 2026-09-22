@@ -1,4 +1,4 @@
-const CACHE_VERSION='mabi-pwa-v10';
+const CACHE_VERSION='mabi-pwa-v11';
 const APP_SHELL=[
   './',
   './index.html',
@@ -20,7 +20,7 @@ const APP_SHELL=[
   './task-journal-v4.css',
   './task-progress-v7.js?v=3',
   './role-skill-progress.css?v=3',
-  './role-skill-progress.js?v=5',
+  './role-skill-progress.js?v=6',
   './pet-guide-v4.css',
   './home-hub.js',
   './guide-categories.js',
