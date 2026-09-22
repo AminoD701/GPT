@@ -138,6 +138,20 @@
       return sum+(Number.isInteger(level)?level:0);
     },0);
   }
+  function highestProfessionSummary(profiles){
+    const highest={};
+    CLASSES.forEach(name=>highest[name]=0);
+    Object.values(profiles||{}).forEach(profile=>{
+      const p=normalizeProfile(profile||{});
+      CLASSES.forEach(name=>{
+        const level=Number(p.professions?.[name]?.level);
+        if(Number.isInteger(level)&&level>highest[name])highest[name]=level;
+      });
+    });
+    const total=CLASSES.reduce((sum,name)=>sum+highest[name],0);
+    const recorded=CLASSES.filter(name=>highest[name]>0).length;
+    return {highest,total,recorded};
+  }
   function project(level,exp,traces){
     level=Number(level);
     exp=Math.max(0,Number(exp)||0);
@@ -175,14 +189,9 @@
   function renderSummary(){
     const bar=$('#mabiSkillSummary');if(!bar)return;
     activeMember=memberKey();
-    const infos=roleInfos(),store=currentProfiles();
-    let total=0,recorded=0;
-    infos.forEach((_,i)=>{
-      const p=normalizeProfile(store[i]||{});
-      total+=roleTotal(p);
-      recorded+=CLASSES.filter(name=>Number.isInteger(Number(p.professions?.[name]?.level))).length;
-    });
-    bar.innerHTML='<div><span>六角色・19職業等級總和</span><strong>'+fmt(total)+'</strong><small>已記錄 '+recorded+' / '+(infos.length*CLASSES.length)+' 個職業</small></div><button type="button" class="mabi-skill-open">管理職業等級 <span>→</span></button>';
+    const store=currentProfiles();
+    const summary=highestProfessionSummary(store);
+    bar.innerHTML='<div><span>19職業最高等級加總</span><strong>'+fmt(summary.total)+'</strong><small>同職業跨六角色只取最高等級 · 已記錄 '+summary.recorded+' / '+CLASSES.length+' 個職業</small></div><button type="button" class="mabi-skill-open">管理職業等級 <span>→</span></button>';
   }
 
   function ensureDialog(){
@@ -206,17 +215,15 @@
     return d;
   }
   function totalsMarkup(){
-    const infos=roleInfos(),store=ensureMemberStore()[activeMember]||{};
-    let total=0,recorded=0;
+    const infos=roleInfos(),store=currentProfiles();
+    const summary=highestProfessionSummary(store);
     const perRole=infos.map((info,i)=>{
       const p=normalizeProfile(store[i]||{});
       const t=roleTotal(p);
-      total+=t;
       const count=CLASSES.filter(name=>Number.isInteger(Number(p.professions?.[name]?.level))).length;
-      recorded+=count;
       return {info,total:t,count};
     });
-    return '<div class="mabi-skill-total"><div><span>六角色職業等級總和</span><strong>'+fmt(total)+'</strong><small>19 職業 × '+infos.length+' 角色</small></div><div><span>目前已記錄</span><strong>'+recorded+'</strong><small>共 '+(infos.length*CLASSES.length)+' 個職業欄位</small></div></div><div class="mabi-role-total-strip">'+perRole.map((x,i)=>'<span data-jump-role="'+i+'"><b>'+x.info.tag+'</b> '+fmt(x.total)+'</span>').join('')+'</div>';
+    return '<div class="mabi-skill-total"><div><span>19職業最高等級加總</span><strong>'+fmt(summary.total)+'</strong><small>六個角色同職業只取最高等級，不重複相加</small></div><div><span>已涵蓋職業</span><strong>'+summary.recorded+' / '+CLASSES.length+'</strong><small>每個職業只計一次最高等級</small></div></div><div class="mabi-role-total-strip">'+perRole.map((x,i)=>'<span data-jump-role="'+i+'"><b>'+x.info.tag+'</b> '+fmt(x.total)+'</span>').join('')+'</div>';
   }
   function professionRows(profile){
     return GROUPS.map(([group,list])=>{
