@@ -207,7 +207,8 @@
     d.querySelector('#mabiSkillSaveAll').onclick=saveAll;
     d.addEventListener('input',onEdit);
     d.addEventListener('focusin',e=>{if(e.target.matches('[data-level],[data-exp],#mabiRoleTraces'))requestAnimationFrame(()=>e.target.select?.());});
-    d.addEventListener('change',onEdit);
+    d.addEventListener('change',commitEdit);
+    d.addEventListener('focusout',e=>{if(e.target.closest('#mabiRoleEditor'))commitEdit(e);});
     d.addEventListener('click',e=>{
       const tab=e.target.closest('[data-role-tab]');
       if(tab){stashEditor();activeRole=Number(tab.dataset.roleTab)||0;renderDialog();}
@@ -271,7 +272,6 @@
   }
   function wireCalculator(){
     $('#mabiCalcProfession')?.addEventListener('change',recalcLive);
-    $('#mabiRoleTraces')?.addEventListener('input',recalcLive);
   }
   function recalcLive(){
     const p=readEditor();
@@ -301,11 +301,14 @@
       const cleaned=raw.replace(/[^0-9]/g,'');
       if(cleaned!==raw)e.target.value=cleaned;
     }
-    stashEditor();
     dirty=true;
-    recalcLive();
     const s=$('#mabiSkillSaveState');
     if(s)s.textContent='尚未儲存';
+  }
+  function commitEdit(e){
+    if(e?.target&&!e.target.closest('#mabiRoleEditor'))return;
+    stashEditor();
+    recalcLive();
   }
 
   function encodeProfile(profile){
