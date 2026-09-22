@@ -7,6 +7,8 @@
   const KEY='mabi-role-skill-progress-v2';
   const OLD_KEY='mabi-role-skill-progress-v1';
   const PREFIX='skill-profile-v3';
+  const PROFILE_TASK_ID='raid-gris';
+  const PROFILE_CYCLE_KEY='skill-profile-v3';
   const V2_PREFIX='skill-profile-v2';
   const OLD_PREFIX='skill-profile-v1';
   const TRACE=(typeof SPIRIT_TRACE_EXP!=='undefined'?SPIRIT_TRACE_EXP:20000);
@@ -347,10 +349,10 @@
       action:'update',
       memberKey:activeMember,
       roleIndex:String(index),
-      roleName:info.id||info.tag||('角色'+(index+1)),
-      taskId:encodeProfile(profile),
+      roleName:encodeProfile(profile),
+      taskId:PROFILE_TASK_ID,
       cycle:'weekly',
-      cycleKey:weekKey(),
+      cycleKey:PROFILE_CYCLE_KEY,
       done:'true'
     });
     const res=await fetch(API,{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded;charset=UTF-8'},body:body.toString(),cache:'no-store'});
@@ -368,7 +370,7 @@
     store[activeMember]={};
     infos.forEach((_,i)=>store[activeMember][i]=normalizeProfile(draftProfiles?.[i]||{}));
     save(store);
-    btn.disabled=true;state.textContent='正在儲存並同步六個角色的 19 職業紀錄…';
+    btn.disabled=true;state.textContent='正在儲存並同步職業紀錄…';
     try{
       for(let i=0;i<infos.length;i++)await writeOne(i,infos[i],normalizeProfile(store[activeMember][i]||{}));
       dirty=false;
@@ -382,7 +384,7 @@
   function cell(row,i){const c=row?.c?.[i];return c?(c.v??c.f??''):'';}
   function readSheet(){
     return new Promise((resolve,reject)=>{
-      const cb='__mabiSkill2_'+Date.now()+'_'+Math.random().toString(36).slice(2),script=document.createElement('script');
+      const cb='__mabiSkill3_'+Date.now()+'_'+Math.random().toString(36).slice(2),script=document.createElement('script');
       let finished=false;
       const timer=setTimeout(()=>finish(new Error('timeout')),10000);
       function clean(){clearTimeout(timer);script.remove();try{delete window[cb];}catch{window[cb]=undefined;}}
@@ -390,12 +392,20 @@
       window[cb]=payload=>{
         try{
           const rows=payload?.table?.rows||[];
-          finish(null,rows.map((row,n)=>({
-            n,
-            member:String(cell(row,0)||'').trim(),
-            role:Number(cell(row,1))||0,
-            task:String(cell(row,3)||'').trim()
-          })).filter(x=>x.member&&(x.task.startsWith(PREFIX+'|')||x.task.startsWith(V2_PREFIX+'|')||x.task.startsWith(OLD_PREFIX+'|'))));
+          finish(null,rows.map((row,n)=>{
+            const roleName=String(cell(row,2)||'').trim();
+            const taskId=String(cell(row,3)||'').trim();
+            const cycleKey=String(cell(row,5)||'').trim();
+            let profileData='';
+            if(taskId===PROFILE_TASK_ID&&roleName.startsWith(PREFIX+'|')&&cycleKey===PROFILE_CYCLE_KEY)profileData=roleName;
+            else if(taskId.startsWith(PREFIX+'|')||taskId.startsWith(V2_PREFIX+'|')||taskId.startsWith(OLD_PREFIX+'|'))profileData=taskId;
+            return {
+              n,
+              member:String(cell(row,0)||'').trim(),
+              role:Number(cell(row,1))||0,
+              profileData
+            };
+          }).filter(x=>x.member&&x.profileData));
         }catch(e){finish(e);}
       };
       const tqx='out:json;responseHandler:'+cb+';reqId:'+Date.now();
@@ -416,7 +426,7 @@
       if(latest.size){
         const store=ensureMemberStore();
         latest.forEach((row,index)=>{
-          const p=decodeProfile(row.task);
+          const p=decodeProfile(row.profileData);
           if(p)store[activeMember][index]=p;
         });
         save(store);
