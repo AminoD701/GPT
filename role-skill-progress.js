@@ -174,6 +174,7 @@
     d.addEventListener('click',e=>{if(e.target===d)d.close();});
     d.querySelector('#mabiSkillSaveAll').onclick=saveAll;
     d.addEventListener('input',onEdit);
+    d.addEventListener('focusin',e=>{if(e.target.matches('[data-level],[data-exp],#mabiRoleTraces'))requestAnimationFrame(()=>e.target.select?.());});
     d.addEventListener('change',onEdit);
     d.addEventListener('click',e=>{
       const tab=e.target.closest('[data-role-tab]');
@@ -198,14 +199,14 @@
     return GROUPS.map(([group,list])=>{
       const rows=list.map(name=>{
         const data=profile.professions?.[name]||{level:'',exp:0};
-        return '<div class="mabi-prof-row" data-profession="'+name+'"><strong>'+name+'</strong><label><span>等級</span><input data-level type="number" min="1" max="65" inputmode="numeric" value="'+(data.level??'')+'" placeholder="—"></label><label><span>目前 EXP</span><input data-exp type="number" min="0" inputmode="numeric" value="'+(data.exp||0)+'"></label></div>';
+        return '<div class="mabi-prof-row" data-profession="'+name+'"><strong>'+name+'</strong><label><span>等級</span><input data-level type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="off" value="'+(data.level??'')+'" placeholder="直接輸入，例如 53"></label><label><span>目前 EXP</span><input data-exp type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="off" value="'+(data.exp||'')+'" placeholder="直接輸入 EXP"></label></div>';
       }).join('');
       return '<section class="mabi-prof-group"><h4>'+group+'</h4>'+rows+'</section>';
     }).join('');
   }
   function calculatorMarkup(profile){
     const selected=CLASSES.find(n=>profile.professions?.[n]?.level)||CLASSES[0];
-    return '<section class="mabi-trace-calc"><div class="mabi-trace-calc-head"><div><span>精靈痕跡試算</span><strong>這只是試算，不會自動扣除痕跡</strong></div><label><span>這隻角色持有精靈痕跡</span><input id="mabiRoleTraces" type="number" min="0" inputmode="numeric" value="'+profile.traces+'"></label></div><div class="mabi-trace-calc-body"><label><span>想餵哪個職業</span><select id="mabiCalcProfession">'+CLASSES.map(n=>'<option value="'+n+'" '+(n===selected?'selected':'')+'>'+n+'</option>').join('')+'</select></label><div id="mabiCalcResult"></div></div></section>';
+    return '<section class="mabi-trace-calc"><div class="mabi-trace-calc-head"><div><span>精靈痕跡試算</span><strong>這只是試算，不會自動扣除痕跡</strong></div><label><span>這隻角色持有精靈痕跡</span><input id="mabiRoleTraces" type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="off" value="'+(profile.traces||'')+'" placeholder="直接輸入痕跡數量"></label></div><div class="mabi-trace-calc-body"><label><span>想餵哪個職業</span><select id="mabiCalcProfession">'+CLASSES.map(n=>'<option value="'+n+'" '+(n===selected?'selected':'')+'>'+n+'</option>').join('')+'</select></label><div id="mabiCalcResult"></div></div></section>';
   }
   function renderDialog(){
     activeMember=memberKey();
@@ -267,6 +268,7 @@
   }
   function onEdit(e){
     if(!e.target.closest('#mabiRoleEditor'))return;
+    if(e.target.matches('[data-level],[data-exp],#mabiRoleTraces'))e.target.value=String(e.target.value||'').replace(/[^0-9]/g,'');
     persistEditor();
     recalcLive();
     const s=$('#mabiSkillSaveState');if(s)s.textContent='有尚未同步到其他裝置的修改';
