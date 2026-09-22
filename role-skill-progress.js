@@ -35,7 +35,8 @@
   let activeMember='';
   let activeRole=0;
   let syncing=false;
-  let editTimer=0;
+  let draftProfiles=null;
+  let dirty=false;
 
   function memberKey(){
     return [$('#modalGuild')?.textContent?.trim(),$('#modalMainId')?.textContent?.trim(),$('#modalLine')?.textContent?.trim()].join('||');
@@ -110,6 +111,24 @@
     save(store);
     return store[activeMember][index];
   }
+  function startDraft(){
+    activeMember=memberKey();
+    const saved=ensureMemberStore()[activeMember]||{};
+    draftProfiles={};
+    roleInfos().forEach((_,i)=>draftProfiles[i]=normalizeProfile(saved[i]||{}));
+    dirty=false;
+  }
+  function currentProfiles(){
+    return draftProfiles||(ensureMemberStore()[activeMember]||{});
+  }
+  function stashEditor(){
+    if(!draftProfiles||!$('#mabiRoleEditor'))return;
+    draftProfiles[activeRole]=readEditor();
+  }
+  function discardDraft(){
+    draftProfiles=null;
+    dirty=false;
+  }
   function roleTotal(profile){
     return CLASSES.reduce((sum,name)=>{
       const level=Number(profile?.professions?.[name]?.level);
@@ -153,7 +172,7 @@
   function renderSummary(){
     const bar=$('#mabiSkillSummary');if(!bar)return;
     activeMember=memberKey();
-    const infos=roleInfos(),store=ensureMemberStore()[activeMember]||{};
+    const infos=roleInfos(),store=currentProfiles();
     let total=0,recorded=0;
     infos.forEach((_,i)=>{
       const p=normalizeProfile(store[i]||{});
@@ -171,15 +190,15 @@
     d.className='mabi-skill-dialog';
     d.innerHTML='<div class="mabi-skill-head"><div><span>PROFESSION / SPIRIT TRACE</span><h2>六角色・19職業等級紀錄</h2><p id="mabiSkillSync">每隻角色可分別記錄 19 個職業等級與目前 EXP。</p></div><button class="mabi-skill-close" type="button">×</button></div><div class="mabi-skill-content"><div id="mabiSkillTotals"></div><div id="mabiRoleTabs" class="mabi-role-tabs"></div><div id="mabiRoleEditor"></div><div class="mabi-skill-actions"><span id="mabiSkillSaveState">修改後按「儲存全部」同步到其他裝置。</span><button id="mabiSkillSaveAll" type="button">儲存全部</button></div></div>';
     document.body.appendChild(d);
-    d.querySelector('.mabi-skill-close').onclick=()=>d.close();
-    d.addEventListener('click',e=>{if(e.target===d)d.close();});
+    d.querySelector('.mabi-skill-close').onclick=()=>{discardDraft();d.close();};
+    d.addEventListener('click',e=>{if(e.target===d){discardDraft();d.close();}});
     d.querySelector('#mabiSkillSaveAll').onclick=saveAll;
     d.addEventListener('input',onEdit);
     d.addEventListener('focusin',e=>{if(e.target.matches('[data-level],[data-exp],#mabiRoleTraces'))requestAnimationFrame(()=>e.target.select?.());});
     d.addEventListener('change',onEdit);
     d.addEventListener('click',e=>{
       const tab=e.target.closest('[data-role-tab]');
-      if(tab){activeRole=Number(tab.dataset.roleTab)||0;renderDialog();}
+      if(tab){stashEditor();activeRole=Number(tab.dataset.roleTab)||0;renderDialog();}
     });
     return d;
   }
@@ -211,7 +230,7 @@
   }
   function renderDialog(){
     activeMember=memberKey();
-    const d=ensureDialog(),infos=roleInfos(),store=ensureMemberStore()[activeMember]||{};
+    const d=ensureDialog(),infos=roleInfos(),store=currentProfiles();
     activeRole=Math.max(0,Math.min(infos.length-1,activeRole));
     d.querySelector('#mabiSkillTotals').innerHTML=totalsMarkup();
     d.querySelector('#mabiRoleTabs').innerHTML=infos.map((info,i)=>{
@@ -238,9 +257,7 @@
     return p;
   }
   function persistEditor(){
-    const store=ensureMemberStore();
-    store[activeMember][activeRole]=readEditor();
-    save(store);
+    stashEditor();
   }
   function wireCalculator(){
     $('#mabiCalcProfession')?.addEventListener('change',recalcLive);
@@ -274,13 +291,11 @@
       const cleaned=raw.replace(/[^0-9]/g,'');
       if(cleaned!==raw)e.target.value=cleaned;
     }
-    clearTimeout(editTimer);
-    editTimer=setTimeout(()=>{
-      persistEditor();
-      recalcLive();
-      const s=$('#mabiSkillSaveState');if(s)s.textContent='有尚未同步到其他裝置的修改';
-      renderSummary();
-    },120);
+    stashEditor();
+    dirty=true;
+    recalcLive();
+    const s=$('#mabiSkillSaveState');
+    if(s)s.textContent='尚未儲存';
   }
 
   function encodeProfile(profile){
@@ -323,16 +338,20 @@
     if(!data?.ok)throw new Error(data?.error||'save failed');
   }
   async function saveAll(){
-    persistEditor();
+    stashEditor();
     const d=$('#mabiSkillDialog'),btn=$('#mabiSkillSaveAll'),state=$('#mabiSkillSaveState');
     if(!d||!btn)return;
-    const infos=roleInfos(),store=ensureMemberStore()[activeMember]||{};
-    btn.disabled=true;state.textContent='正在同步六個角色的 19 職業紀錄…';
+    const infos=roleInfos();
+    const store=ensureMemberStore();
+    store[activeMember]={};
+    infos.forEach((_,i)=>store[activeMember][i]=normalizeProfile(draftProfiles?.[i]||{}));
+    save(store);
+    btn.disabled=true;state.textContent='正在儲存並同步六個角色的 19 職業紀錄…';
     try{
-      for(let i=0;i<infos.length;i++)await writeOne(i,infos[i],normalizeProfile(store[i]||{}));
+      for(let i=0;i<infos.length;i++)await writeOne(i,infos[i],normalizeProfile(store[activeMember][i]||{}));
+      dirty=false;
       state.textContent='已儲存並同步到共用資料';
       renderSummary();
-      setTimeout(()=>syncProfiles(true),1200);
     }catch(e){
       console.warn('[Skill Progress v2] save failed',e);
       state.textContent='共用同步失敗，這台裝置的紀錄已保留';
@@ -364,7 +383,7 @@
     });
   }
   async function syncProfiles(silent=false){
-    if(syncing||!activeMember)return;
+    if(syncing||!activeMember||dirty)return;
     syncing=true;
     const sub=$('#mabiSkillSync');
     if(sub&&!silent)sub.textContent='正在同步其他裝置的職業等級紀錄…';
@@ -380,7 +399,7 @@
         save(store);
       }
       if(sub)sub.textContent='共用進度已同步 · '+latest.size+' 個角色';
-      if($('#mabiSkillDialog')?.open)renderDialog();
+      if($('#mabiSkillDialog')?.open){startDraft();renderDialog();}
       renderSummary();
     }catch(e){
       console.warn('[Skill Progress v2] sync failed',e);
@@ -395,13 +414,13 @@
     const open=e.target.closest('.mabi-skill-open');
     if(!open)return;
     e.preventDefault();e.stopPropagation();
-    activeMember=memberKey();activeRole=0;
+    activeMember=memberKey();activeRole=0;startDraft();
     const d=ensureDialog();renderDialog();if(!d.open)d.showModal();syncProfiles(false);
   },true);
 
   const roles=$('#modalRoles');
   if(roles)new MutationObserver(()=>{if($('#memberDialog')?.open)setTimeout(decorate,0);}).observe(roles,{childList:true,subtree:true});
-  window.addEventListener('focus',()=>{if($('#memberDialog')?.open){activeMember=memberKey();syncProfiles(true);}});
-  document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible'&&$('#mabiSkillDialog')?.open)syncProfiles(true);});
-  setInterval(()=>{if(document.visibilityState==='visible'&&$('#mabiSkillDialog')?.open)syncProfiles(true);},10000);
+  window.addEventListener('focus',()=>{if($('#memberDialog')?.open&&!dirty){activeMember=memberKey();syncProfiles(true);}});
+  document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible'&&$('#mabiSkillDialog')?.open&&!dirty)syncProfiles(true);});
+  setInterval(()=>{if(document.visibilityState==='visible'&&$('#mabiSkillDialog')?.open&&!dirty)syncProfiles(true);},30000);
 })();
