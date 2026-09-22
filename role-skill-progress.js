@@ -6,7 +6,8 @@
   const SHEET_NAME='工作日誌_共用';
   const KEY='mabi-role-skill-progress-v2';
   const OLD_KEY='mabi-role-skill-progress-v1';
-  const PREFIX='skill-profile-v2';
+  const PREFIX='skill-profile-v3';
+  const V2_PREFIX='skill-profile-v2';
   const OLD_PREFIX='skill-profile-v1';
   const TRACE=(typeof SPIRIT_TRACE_EXP!=='undefined'?SPIRIT_TRACE_EXP:20000);
   const EXP=(typeof CLASS_LEVEL_EXP!=='undefined'?CLASS_LEVEL_EXP:{
@@ -299,12 +300,32 @@
   }
 
   function encodeProfile(profile){
-    return PREFIX+'|'+encodeURIComponent(JSON.stringify(normalizeProfile(profile)));
+    const p=normalizeProfile(profile);
+    const entries=[];
+    CLASSES.forEach((name,index)=>{
+      const item=p.professions?.[name];
+      if(!item||item.level==='')return;
+      entries.push(index+':'+Number(item.level)+':'+Math.max(0,Number(item.exp)||0));
+    });
+    return PREFIX+'|'+Math.max(0,Math.floor(Number(p.traces)||0))+'|'+entries.join(',');
   }
   function decodeProfile(taskId){
     const raw=String(taskId||'');
     if(raw.startsWith(PREFIX+'|')){
-      try{return normalizeProfile(JSON.parse(decodeURIComponent(raw.slice(PREFIX.length+1))));}catch{return null;}
+      const parts=raw.split('|');
+      const out=blankProfile();
+      out.traces=Math.max(0,Math.floor(Number(parts[1])||0));
+      const list=String(parts[2]||'').split(',').filter(Boolean);
+      list.forEach(entry=>{
+        const seg=entry.split(':');
+        const index=Number(seg[0]),level=Number(seg[1]),exp=Math.max(0,Number(seg[2])||0);
+        const name=CLASSES[index];
+        if(name&&Number.isInteger(level)&&level>=1&&level<=65)out.professions[name]={level,exp};
+      });
+      return normalizeProfile(out);
+    }
+    if(raw.startsWith(V2_PREFIX+'|')){
+      try{return normalizeProfile(JSON.parse(decodeURIComponent(raw.slice(V2_PREFIX.length+1))));}catch{return null;}
     }
     if(raw.startsWith(OLD_PREFIX+'|')){
       const a=raw.split('|');
@@ -334,7 +355,8 @@
     });
     const res=await fetch(API,{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded;charset=UTF-8'},body:body.toString(),cache:'no-store'});
     if(!res.ok)throw new Error('HTTP '+res.status);
-    const data=await res.json();
+    let data;
+    try{data=await res.json();}catch{throw new Error('伺服器回傳格式錯誤');}
     if(!data?.ok)throw new Error(data?.error||'save failed');
   }
   async function saveAll(){
@@ -354,7 +376,7 @@
       renderSummary();
     }catch(e){
       console.warn('[Skill Progress v2] save failed',e);
-      state.textContent='共用同步失敗，這台裝置的紀錄已保留';
+      state.textContent='共用同步失敗：'+(e?.message||'未知錯誤')+'；這台裝置的紀錄已保留';
     }finally{btn.disabled=false;}
   }
   function cell(row,i){const c=row?.c?.[i];return c?(c.v??c.f??''):'';}
@@ -373,7 +395,7 @@
             member:String(cell(row,0)||'').trim(),
             role:Number(cell(row,1))||0,
             task:String(cell(row,3)||'').trim()
-          })).filter(x=>x.member&&(x.task.startsWith(PREFIX+'|')||x.task.startsWith(OLD_PREFIX+'|'))));
+          })).filter(x=>x.member&&(x.task.startsWith(PREFIX+'|')||x.task.startsWith(V2_PREFIX+'|')||x.task.startsWith(OLD_PREFIX+'|'))));
         }catch(e){finish(e);}
       };
       const tqx='out:json;responseHandler:'+cb+';reqId:'+Date.now();
