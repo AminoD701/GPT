@@ -389,6 +389,7 @@
     if(sub&&!silent)sub.textContent='正在同步其他裝置的職業等級紀錄…';
     try{
       const rows=await readSheet(),latest=new Map();
+      if($('#mabiSkillDialog')?.open)return;
       rows.forEach(row=>{if(row.member===activeMember)latest.set(row.role,row);});
       if(latest.size){
         const store=ensureMemberStore();
@@ -399,7 +400,6 @@
         save(store);
       }
       if(sub)sub.textContent='共用進度已同步 · '+latest.size+' 個角色';
-      if($('#mabiSkillDialog')?.open){startDraft();renderDialog();}
       renderSummary();
     }catch(e){
       console.warn('[Skill Progress v2] sync failed',e);
@@ -415,12 +415,12 @@
     if(!open)return;
     e.preventDefault();e.stopPropagation();
     activeMember=memberKey();activeRole=0;startDraft();
-    const d=ensureDialog();renderDialog();if(!d.open)d.showModal();syncProfiles(false);
+    const d=ensureDialog();renderDialog();if(!d.open)d.showModal();
   },true);
 
   const roles=$('#modalRoles');
   if(roles)new MutationObserver(()=>{if($('#memberDialog')?.open)setTimeout(decorate,0);}).observe(roles,{childList:true,subtree:true});
-  window.addEventListener('focus',()=>{if($('#memberDialog')?.open&&!dirty){activeMember=memberKey();syncProfiles(true);}});
-  document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible'&&$('#mabiSkillDialog')?.open&&!dirty)syncProfiles(true);});
-  setInterval(()=>{if(document.visibilityState==='visible'&&$('#mabiSkillDialog')?.open&&!dirty)syncProfiles(true);},30000);
+  window.addEventListener('focus',()=>{if($('#memberDialog')?.open&&!$('#mabiSkillDialog')?.open&&!dirty){activeMember=memberKey();syncProfiles(true);}});
+  document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible'&&$('#memberDialog')?.open&&!$('#mabiSkillDialog')?.open&&!dirty)syncProfiles(true);});
+  setInterval(()=>{if(document.visibilityState==='visible'&&$('#memberDialog')?.open&&!$('#mabiSkillDialog')?.open&&!dirty)syncProfiles(true);},30000);
 })();
