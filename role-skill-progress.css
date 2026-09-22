@@ -10,56 +10,93 @@
 .mabi-skill-open{border:1px solid rgba(199,166,100,.35);border-radius:10px;background:rgba(199,166,100,.08);color:#e9d7a8;padding:9px 11px;font-weight:700;cursor:pointer;white-space:nowrap}
 .mabi-skill-open:hover{background:rgba(199,166,100,.14)}
 
-.mabi-skill-dialog{width:min(1040px,calc(100vw - 32px));max-width:1040px;max-height:min(90vh,900px);padding:0;border:1px solid rgba(199,166,100,.28);border-radius:18px;background:#0e1118;color:#eee;box-shadow:0 28px 80px rgba(0,0,0,.5)}
+.mabi-skill-dialog{width:min(1100px,calc(100vw - 32px));max-width:1100px;max-height:min(92vh,940px);padding:0;border:1px solid rgba(199,166,100,.28);border-radius:18px;background:#0e1118;color:#eee;box-shadow:0 28px 80px rgba(0,0,0,.5)}
 .mabi-skill-dialog::backdrop{background:rgba(3,5,9,.78);backdrop-filter:blur(4px)}
 .mabi-skill-head{display:flex;justify-content:space-between;gap:18px;padding:20px 22px 16px;border-bottom:1px solid rgba(255,255,255,.08);background:linear-gradient(180deg,rgba(199,166,100,.08),transparent)}
 .mabi-skill-head span{font-size:10px;letter-spacing:.15em;color:#b79b62}
 .mabi-skill-head h2{margin:5px 0 4px;font-size:24px}
 .mabi-skill-head p{margin:0;color:#8c8994;font-size:12px}
 .mabi-skill-close{width:38px;height:38px;border:1px solid rgba(255,255,255,.12);border-radius:10px;background:rgba(255,255,255,.04);color:#ddd;font-size:24px;cursor:pointer}
-.mabi-skill-content{max-height:calc(90vh - 96px);overflow:auto;padding:18px 22px calc(24px + env(safe-area-inset-bottom))}
-.mabi-skill-total{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-bottom:14px}
+.mabi-skill-content{max-height:calc(92vh - 96px);overflow:auto;padding:18px 22px calc(24px + env(safe-area-inset-bottom))}
+
+.mabi-skill-total{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-bottom:10px}
 .mabi-skill-total>div{padding:14px 16px;border:1px solid rgba(255,255,255,.09);border-radius:12px;background:rgba(255,255,255,.025);display:grid;gap:2px}
 .mabi-skill-total span{font-size:11px;color:#918d99}
 .mabi-skill-total strong{font:700 30px Rajdhani,system-ui,sans-serif;color:#ead08d}
 .mabi-skill-total small{font-size:10px;color:#777482}
-.mabi-skill-cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-.mabi-skill-card{padding:15px;border:1px solid rgba(255,255,255,.09);border-radius:14px;background:linear-gradient(150deg,rgba(255,255,255,.035),rgba(255,255,255,.012))}
-.mabi-skill-card-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:12px}
-.mabi-skill-card-head span{font-size:10px;color:#ae9159;letter-spacing:.08em}
-.mabi-skill-card-head h3{margin:3px 0 0;font-size:16px;overflow-wrap:anywhere}
-.mabi-skill-card-head b{font-size:12px;color:#e8cb86;white-space:nowrap}
-.mabi-skill-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
-.mabi-skill-fields label{display:grid;gap:5px}
-.mabi-skill-fields label.wide{grid-column:1/-1}
-.mabi-skill-fields label>span{font-size:10px;color:#888592}
-.mabi-skill-fields input,.mabi-skill-fields select{width:100%;box-sizing:border-box;border:1px solid rgba(255,255,255,.11);border-radius:9px;background:#11151e;color:#eee;padding:9px 10px;font:inherit;font-size:13px;outline:none}
-.mabi-skill-fields input:focus,.mabi-skill-fields select:focus{border-color:rgba(199,166,100,.55);box-shadow:0 0 0 2px rgba(199,166,100,.08)}
-.mabi-skill-calc{margin-top:10px;padding:10px 11px;border-radius:10px;background:rgba(199,166,100,.055);border:1px solid rgba(199,166,100,.16);min-height:50px}
-.mabi-skill-calc p{margin:0;color:#85818d;font-size:11px;line-height:1.55}
-.mabi-skill-calc p.error{color:#df9d91}
-.mabi-skill-calc>div{display:flex;align-items:baseline;gap:7px;flex-wrap:wrap}
-.mabi-skill-calc>div span{font-size:11px;color:#aaa5b0}
-.mabi-skill-calc>div strong{font:700 22px Rajdhani,system-ui,sans-serif;color:#efd38e}
-.mabi-skill-calc>div em{font-style:normal;font-size:10px;color:#8dc7a2}
-.mabi-skill-calc>small{display:block;margin-top:4px;color:#76727d;font-size:10px;line-height:1.5}
+.mabi-role-total-strip{display:flex;gap:6px;overflow:auto;padding:1px 0 12px}
+.mabi-role-total-strip span{white-space:nowrap;padding:6px 9px;border-radius:8px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.07);font-size:10px;color:#8d8994}
+.mabi-role-total-strip b{color:#cbb886;font-weight:700}
+
+.mabi-role-tabs{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:7px;margin-bottom:12px}
+.mabi-role-tabs button{min-width:0;padding:9px 8px;border:1px solid rgba(255,255,255,.08);border-radius:10px;background:rgba(255,255,255,.025);color:#8d8995;text-align:left;cursor:pointer}
+.mabi-role-tabs button.active{border-color:rgba(199,166,100,.42);background:rgba(199,166,100,.1);color:#ead7a5}
+.mabi-role-tabs span,.mabi-role-tabs small{display:block;font-size:9px;color:#77727e}
+.mabi-role-tabs b{display:block;margin:2px 0;font-size:11px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:inherit}
+
+.mabi-role-editor{border:1px solid rgba(255,255,255,.09);border-radius:14px;background:linear-gradient(150deg,rgba(255,255,255,.03),rgba(255,255,255,.012));padding:15px}
+.mabi-role-editor-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:12px}
+.mabi-role-editor-head span{font-size:10px;letter-spacing:.08em;color:#ae9159}
+.mabi-role-editor-head h3{margin:3px 0 0;font-size:18px}
+.mabi-role-editor-head>strong{font-size:12px;color:#e8cb86;white-space:nowrap}
+
+.mabi-trace-calc{padding:12px;border:1px solid rgba(199,166,100,.18);border-radius:12px;background:rgba(199,166,100,.05);margin-bottom:14px}
+.mabi-trace-calc-head{display:grid;grid-template-columns:1fr minmax(180px,250px);gap:14px;align-items:end}
+.mabi-trace-calc-head>div span{display:block;font-size:11px;color:#d0b36f;font-weight:700}
+.mabi-trace-calc-head>div strong{display:block;margin-top:3px;font-size:10px;color:#77737e;font-weight:500}
+.mabi-trace-calc label{display:grid;gap:5px}
+.mabi-trace-calc label>span{font-size:10px;color:#8d8994}
+.mabi-trace-calc input,.mabi-trace-calc select{width:100%;box-sizing:border-box;border:1px solid rgba(255,255,255,.11);border-radius:9px;background:#11151e;color:#eee;padding:9px 10px;font:inherit;font-size:13px;outline:none}
+.mabi-trace-calc-body{display:grid;grid-template-columns:minmax(170px,230px) 1fr;gap:10px;margin-top:10px;align-items:stretch}
+#mabiCalcResult{padding:10px 12px;border-radius:9px;background:rgba(0,0,0,.16);min-height:45px}
+#mabiCalcResult p{margin:0;color:#85818d;font-size:11px;line-height:1.55}
+#mabiCalcResult p.error{color:#df9d91}
+#mabiCalcResult>div{display:flex;align-items:baseline;gap:7px;flex-wrap:wrap}
+#mabiCalcResult>div span{font-size:11px;color:#aaa5b0}
+#mabiCalcResult>div strong{font:700 22px Rajdhani,system-ui,sans-serif;color:#efd38e}
+#mabiCalcResult>div em{font-style:normal;font-size:10px;color:#8dc7a2}
+#mabiCalcResult>small{display:block;margin-top:4px;color:#76727d;font-size:10px;line-height:1.5}
+
+.mabi-prof-groups{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.mabi-prof-group{border:1px solid rgba(255,255,255,.07);border-radius:11px;overflow:hidden;background:rgba(255,255,255,.015)}
+.mabi-prof-group h4{margin:0;padding:8px 10px;border-bottom:1px solid rgba(255,255,255,.06);background:rgba(154,130,216,.05);color:#bba7de;font-size:11px;letter-spacing:.06em}
+.mabi-prof-row{display:grid;grid-template-columns:minmax(95px,1fr) 86px minmax(120px,1fr);gap:7px;align-items:end;padding:8px 10px;border-bottom:1px solid rgba(255,255,255,.055)}
+.mabi-prof-row:last-child{border-bottom:0}
+.mabi-prof-row>strong{align-self:center;color:#ded9cd;font-size:12px}
+.mabi-prof-row label{display:grid;gap:3px}
+.mabi-prof-row label>span{font-size:9px;color:#716e79}
+.mabi-prof-row input{width:100%;box-sizing:border-box;border:1px solid rgba(255,255,255,.09);border-radius:8px;background:#10141c;color:#eee;padding:7px 8px;font:inherit;font-size:12px;outline:none}
+.mabi-prof-row input:focus{border-color:rgba(199,166,100,.5);box-shadow:0 0 0 2px rgba(199,166,100,.07)}
+
 .mabi-skill-actions{position:sticky;bottom:-18px;display:flex;justify-content:space-between;align-items:center;gap:12px;margin:16px -22px -18px;padding:13px 22px calc(13px + env(safe-area-inset-bottom));border-top:1px solid rgba(255,255,255,.08);background:rgba(14,17,24,.96);backdrop-filter:blur(12px)}
 .mabi-skill-actions span{font-size:11px;color:#85818e}
 .mabi-skill-actions button{border:1px solid rgba(199,166,100,.52);border-radius:10px;background:#c7a664;color:#17130c;padding:10px 18px;font-weight:800;cursor:pointer}
 .mabi-skill-actions button:disabled{opacity:.5;cursor:wait}
+
+@media(max-width:860px){
+  .mabi-role-tabs{display:flex;overflow:auto}
+  .mabi-role-tabs button{min-width:132px}
+  .mabi-prof-groups{grid-template-columns:1fr}
+}
 @media(max-width:760px){
   .mabi-skill-summary{align-items:stretch;flex-direction:column}
   .mabi-skill-open{width:100%}
   .mabi-skill-dialog{width:100%;max-width:none;height:100dvh;max-height:100dvh;margin:0;border:0;border-radius:0}
   .mabi-skill-head{padding:calc(16px + env(safe-area-inset-top)) 16px 13px}
-  .mabi-skill-head h2{font-size:21px}
-  .mabi-skill-content{max-height:none;height:calc(100dvh - 96px - env(safe-area-inset-top));padding:14px 14px calc(90px + env(safe-area-inset-bottom))}
-  .mabi-skill-total,.mabi-skill-cards{grid-template-columns:1fr}
-  .mabi-skill-actions{bottom:calc(-90px - env(safe-area-inset-bottom));margin:16px -14px 0;padding:12px 14px calc(12px + env(safe-area-inset-bottom))}
+  .mabi-skill-head h2{font-size:20px}
+  .mabi-skill-content{max-height:none;height:calc(100dvh - 94px - env(safe-area-inset-top));padding:14px 12px calc(90px + env(safe-area-inset-bottom))}
+  .mabi-skill-total{grid-template-columns:1fr 1fr}
+  .mabi-role-editor{padding:12px}
+  .mabi-trace-calc-head,.mabi-trace-calc-body{grid-template-columns:1fr}
+  .mabi-prof-row{grid-template-columns:minmax(92px,1fr) 76px minmax(105px,1fr);padding:8px}
+  .mabi-skill-actions{bottom:calc(-90px - env(safe-area-inset-bottom));margin:16px -12px 0;padding:12px 12px calc(12px + env(safe-area-inset-bottom))}
 }
-@media(max-width:420px){
-  .mabi-skill-fields{grid-template-columns:1fr}
-  .mabi-skill-fields label.wide{grid-column:auto}
+@media(max-width:440px){
+  .mabi-skill-total{grid-template-columns:1fr}
+  .mabi-role-editor-head{display:block}
+  .mabi-role-editor-head>strong{display:block;margin-top:6px}
+  .mabi-prof-row{grid-template-columns:1fr 68px 100px;gap:5px}
+  .mabi-prof-row>strong{font-size:11px}
   .mabi-skill-actions{align-items:stretch;flex-direction:column}
   .mabi-skill-actions button{width:100%}
 }
