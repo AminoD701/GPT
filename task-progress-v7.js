@@ -25,7 +25,7 @@
     {id:'dun-board',name:'杜巴頓－佈告欄',cycle:'weekly'},
     {id:'cobh-food',name:'庫漢－食材兌換',cycle:'weekly'},
     {id:'cobh-board',name:'庫漢－佈告欄',cycle:'weekly'},
-    {id:'banker-board',name:'班克爾地區－公布欄',cycle:'weekly'},
+    {id:'banker-board',name:'班克爾地區－佈告欄',cycle:'weekly'},
     {id:'dugald-lumber',name:'杜加德走廊－高級木材',cycle:'daily',materials:[['炒蔬菜',2]]}
   ];
   const DAILY=TASKS.filter(t=>t.cycle==='daily');
