@@ -200,14 +200,14 @@
     return GROUPS.map(([group,list])=>{
       const rows=list.map(name=>{
         const data=profile.professions?.[name]||{level:'',exp:0};
-        return '<div class="mabi-prof-row" data-profession="'+name+'"><strong>'+name+'</strong><label><span>等級</span><input data-level type="text" inputmode="numeric" pattern="[0-9]*" maxlength="2" autocomplete="off" value="'+(data.level??'')+'" placeholder="例如 53"></label><label><span>目前 EXP</span><input data-exp type="text" inputmode="numeric" pattern="[0-9]*" maxlength="15" autocomplete="off" enterkeyhint="done" value="'+(data.exp||'')+'" placeholder="例如 90440170"></label></div>';
+        return '<div class="mabi-prof-row" data-profession="'+name+'"><strong>'+name+'</strong><label><span>等級</span><input data-level type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="off" value="'+(data.level??'')+'" placeholder="輸入等級"></label><label><span>目前 EXP</span><input data-exp type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="off" enterkeyhint="done" value="'+(data.exp||'')+'" placeholder="輸入目前 EXP"></label></div>';
       }).join('');
       return '<section class="mabi-prof-group"><h4>'+group+'</h4>'+rows+'</section>';
     }).join('');
   }
   function calculatorMarkup(profile){
     const selected=CLASSES.find(n=>profile.professions?.[n]?.level)||CLASSES[0];
-    return '<section class="mabi-trace-calc"><div class="mabi-trace-calc-head"><div><span>精靈痕跡試算</span><strong>這只是試算，不會自動扣除痕跡</strong></div><label><span>這隻角色持有精靈痕跡</span><input id="mabiRoleTraces" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="12" autocomplete="off" enterkeyhint="done" value="'+(profile.traces||'')+'" placeholder="直接輸入痕跡數量"></label></div><div class="mabi-trace-calc-body"><label><span>想餵哪個職業</span><select id="mabiCalcProfession">'+CLASSES.map(n=>'<option value="'+n+'" '+(n===selected?'selected':'')+'>'+n+'</option>').join('')+'</select></label><div id="mabiCalcResult"></div></div></section>';
+    return '<section class="mabi-trace-calc"><div class="mabi-trace-calc-head"><div><span>精靈痕跡試算</span><strong>這只是試算，不會自動扣除痕跡</strong></div><label><span>這隻角色持有精靈痕跡</span><input id="mabiRoleTraces" type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="off" enterkeyhint="done" value="'+(profile.traces||'')+'" placeholder="輸入精靈痕跡"></label></div><div class="mabi-trace-calc-body"><label><span>想餵哪個職業</span><select id="mabiCalcProfession">'+CLASSES.map(n=>'<option value="'+n+'" '+(n===selected?'selected':'')+'>'+n+'</option>').join('')+'</select></label><div id="mabiCalcResult"></div></div></section>';
   }
   function renderDialog(){
     activeMember=memberKey();
