@@ -1,4 +1,4 @@
-const CACHE_VERSION='mabi-pwa-v26';
+const CACHE_VERSION='mabi-pwa-v27';
 const APP_SHELL=[
   './',
   './index.html',
@@ -28,6 +28,7 @@ const APP_SHELL=[
   './readability-pass.css?v=1',
   './visual-system-v2.css?v=1',
   './site-function-nav.css?v=1',
+  './desktop-readability.css?v=1',
   './data/black-hole.json',
   './data/market-catalog.json',
   './pet-guide-v4.css',
