@@ -29,6 +29,7 @@
   }
 
   function applyRoute(key){
+    if(key!=='live') window.hideLiveDataView?.();
     if(key==='home') return window.showSiteHome?.();
     if(key==='members') return window.switchView?.('members');
     window.switchView?.('guides');
