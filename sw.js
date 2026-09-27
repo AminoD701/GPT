@@ -1,4 +1,4 @@
-const CACHE_VERSION='mabi-pwa-v19';
+const CACHE_VERSION='mabi-pwa-v20';
 const APP_SHELL=[
   './',
   './index.html',
@@ -12,8 +12,8 @@ const APP_SHELL=[
   './editorial-polish.css',
   './header-title-fix.css',
   './top-nav-polish.css',
-  './home-hub.css',
-  './guide-categories.css',
+  './home-hub.css?v=3',
+  './guide-categories.css?v=2',
   './site-search.css',
   './member-profile-layout.css',
   './task-progress-v2.css',
@@ -29,8 +29,8 @@ const APP_SHELL=[
   './data/black-hole.json',
   './data/market-catalog.json',
   './pet-guide-v4.css',
-  './home-hub.js?v=2',
-  './guide-categories.js',
+  './home-hub.js?v=3',
+  './guide-categories.js?v=2',
   './site-search.js',
   './view-state.js',
   './header-title-fix.js',
