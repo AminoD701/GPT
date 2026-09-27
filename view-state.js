@@ -18,6 +18,11 @@
   const HASH_PAGE = Object.fromEntries(Object.entries(PAGE_HASH).map(([k,v])=>[v,k]));
   let applyingHash = false;
 
+  function hideLiveView() {
+    const live = document.getElementById('liveDataView');
+    if (live) live.hidden = true;
+  }
+
   function save(view) {
     try { localStorage.setItem(KEY, view); } catch {}
   }
@@ -55,6 +60,7 @@
 
   function restore(view) {
     save(view);
+    if (view !== 'live') hideLiveView();
     if (view === 'home') {
       window.showSiteHome?.();
       return;
@@ -166,6 +172,7 @@
 
     const view = pageFromElement(el);
     if (!view) return;
+    if (view !== 'live') hideLiveView();
     save(view);
     setHash(PAGE_HASH[view]);
   }, true);
@@ -186,5 +193,6 @@
     if (!ready) return setTimeout(restoreWhenReady,50);
     applyCurrentHash();
   };
+  window.hideLiveDataView = hideLiveView;
   setTimeout(restoreWhenReady,0);
 })();
