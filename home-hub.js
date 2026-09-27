@@ -40,7 +40,7 @@
       </section>
 
       <section class="home-hub-section">
-        <div class="home-hub-section-head"><div><h3>主要入口</h3><p>依照你現在想做的事情選擇。</p></div><p>4 個核心區域</p></div>
+        <div class="home-hub-section-head"><div><h3>主要入口</h3><p>常用內容集中在這裡。</p></div></div>
         <div class="home-hub-primary">
           <button class="home-hub-card" type="button" data-home-target="members">
             <span class="home-hub-card-icon">◇</span><small>GUILD ROSTER</small><strong>公會成員</strong><p>查看成員本尊、六角色配置與共用工作日誌。</p><span class="home-hub-card-foot"><span>開啟成員名單</span><span>→</span></span>
