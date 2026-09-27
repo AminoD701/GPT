@@ -29,75 +29,58 @@
     home.hidden=true;
     home.innerHTML=`
       <section class="home-hub-hero">
-        <div class="home-hub-kicker">MABINOGI MOBILE / DEIAN GUILD HUB</div>
-        <h2>攻略與公會資料，一個入口就夠。</h2>
-        <p>整合公會角色資料、養成工具、職業配裝、符文與寵物資料。用最短的路徑找到你現在需要的資訊。</p>
-        <div class="home-hub-status">
-          <span><i></i> Google Sheet 資料同步</span>
-          <span><i></i> 工作日誌跨裝置共用</span>
-          <span><i></i> 攻略工具持續整理</span>
-        </div>
+        <div class="home-hub-kicker">MABINOGI MOBILE</div>
+        <h2>快速找到你要的功能</h2>
+        <p>公會・攻略・配裝・寵物・行情</p>
       </section>
 
       <section class="home-hub-section">
-        <div class="home-hub-section-head"><div><h3>主要入口</h3><p>常用內容集中在這裡。</p></div></div>
+        <div class="home-hub-section-head"><h3>主要功能</h3></div>
         <div class="home-hub-primary">
           <button class="home-hub-card" type="button" data-home-target="members">
-            <span class="home-hub-card-icon">◇</span><small>GUILD ROSTER</small><strong>公會成員</strong><p>查看成員本尊、六角色配置與共用工作日誌。</p><span class="home-hub-card-foot"><span>開啟成員名單</span><span>→</span></span>
+            <span class="home-hub-card-icon">♙</span>
+            <strong>公會成員</strong>
+            <small>角色・日誌</small>
           </button>
           <button class="home-hub-card" type="button" data-home-target="guide">
-            <span class="home-hub-card-icon">✦</span><small>PLAYER GUIDE</small><strong>新手攻略</strong><p>從養成、骰子到精靈痕跡，快速找到需要的工具。</p><span class="home-hub-card-foot"><span>查看攻略工具</span><span>→</span></span>
+            <span class="home-hub-card-icon">✦</span>
+            <strong>新手攻略</strong>
+            <small>養成・工具</small>
           </button>
           <button class="home-hub-card" type="button" data-home-target="loadout">
-            <span class="home-hub-card-icon">◆</span><small>BUILD & RUNES</small><strong>配裝・符文</strong><p>職業完整配裝、傳說符文與自訂搭配集中查詢。</p><span class="home-hub-card-foot"><span>查看職業配裝</span><span>→</span></span>
+            <span class="home-hub-card-icon">◆</span>
+            <strong>配裝符文</strong>
+            <small>職業・符文</small>
           </button>
           <button class="home-hub-card" type="button" data-home-target="pets">
-            <span class="home-hub-card-icon">◎</span><small>PET DATABASE</small><strong>寵物資料</strong><p>用副屬性、固有技能、技能效果與標籤快速找寵物。</p><span class="home-hub-card-foot"><span>開啟寵物推薦</span><span>→</span></span>
+            <span class="home-hub-card-icon">◎</span>
+            <strong>寵物資料</strong>
+            <small>技能・標籤</small>
+          </button>
+          <button class="home-hub-card home-hub-card-live" type="button" data-home-target="live">
+            <span class="home-hub-card-icon">▥</span>
+            <strong>交易所</strong>
+            <small>價格・掛售</small>
+          </button>
+          <button class="home-hub-card home-hub-card-live" type="button" data-home-target="live">
+            <span class="home-hub-card-icon">◉</span>
+            <strong>黑洞時間</strong>
+            <small>即時倒數</small>
           </button>
         </div>
       </section>
 
       <section class="home-hub-section">
-        <div class="home-hub-section-head"><div><h3>快速入口</h3><p>直接前往常用工具，不必逐層尋找。</p></div></div>
+        <div class="home-hub-section-head"><h3>常用工具</h3></div>
         <div class="home-hub-quick">
-          <button type="button" data-home-target="spirit"><span><b>精靈痕跡</b><small>職業等級養成</small></span><em>→</em></button>
-          <button type="button" data-home-target="dice"><span><b>骰子與裝備進度</b><small>養成進度工具</small></span><em>→</em></button>
-          <button type="button" data-home-target="runes"><span><b>傳說符文圖鑑</b><small>完整效果查詢</small></span><em>→</em></button>
-          <button type="button" data-home-target="custom"><span><b>自訂符文配裝</b><small>自由搭配模擬</small></span><em>→</em></button>
-          <button type="button" data-home-target="live"><span><b>即時資料</b><small>交易所行情・深淵黑洞</small></span><em>→</em></button>
-        </div>
-      </section>
-
-      <section class="home-hub-bottom">
-        <div class="home-hub-panel">
-          <h3>近期功能</h3>
-          <div class="home-hub-updates">
-            <div class="home-hub-update"><span>公會工具</span><p>角色每日／每週工作日誌已改為跨裝置共用進度。</p></div>
-            <div class="home-hub-update"><span>寵物資料</span><p>支援副屬性快速推薦、技能效果查詢與特殊標籤規則。</p></div>
-            <div class="home-hub-update"><span>網站體驗</span><p>重新整理後會保留目前瀏覽位置，減少重複操作。</p></div>
-          </div>
-        </div>
-        <div class="home-hub-panel">
-          <h3>公會資料</h3>
-          <div class="home-hub-numbers">
-            <div class="home-hub-number"><strong id="homeMemberTotal">—</strong><span>公會成員</span></div>
-            <div class="home-hub-number"><strong id="homeRoleTotal">—</strong><span>已登錄角色</span></div>
-          </div>
+          <button type="button" data-home-target="spirit"><span class="quick-icon">✧</span><span><b>精靈痕跡</b><small>等級養成</small></span></button>
+          <button type="button" data-home-target="dice"><span class="quick-icon">◫</span><span><b>骰子進度</b><small>裝備養成</small></span></button>
+          <button type="button" data-home-target="runes"><span class="quick-icon">◇</span><span><b>符文圖鑑</b><small>效果查詢</small></span></button>
+          <button type="button" data-home-target="custom"><span class="quick-icon">⌘</span><span><b>自訂配裝</b><small>自由搭配</small></span></button>
         </div>
       </section>`;
 
     membersView.parentElement.insertBefore(home,membersView);
-
-    const syncNumbers=()=>{
-      const member=$('memberTotal')?.textContent?.trim();
-      const role=$('roleTotal')?.textContent?.trim();
-      if($('homeMemberTotal')&&member) $('homeMemberTotal').textContent=member;
-      if($('homeRoleTotal')&&role) $('homeRoleTotal').textContent=role;
-    };
-    syncNumbers();
-    const obs=new MutationObserver(syncNumbers);
-    if($('memberTotal')) obs.observe($('memberTotal'),{childList:true,subtree:true,characterData:true});
-    if($('roleTotal')) obs.observe($('roleTotal'),{childList:true,subtree:true,characterData:true});
 
     homeTab.addEventListener('click',()=>window.showSiteHome());
     home.addEventListener('click',e=>{
