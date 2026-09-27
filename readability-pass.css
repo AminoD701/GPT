@@ -1,0 +1,21 @@
+/* Readability pass: flatter surfaces, shorter cards, less visual noise */
+.home-hub{width:min(1120px,100%);padding-top:0}
+.home-hub-hero{padding:24px 26px;border-radius:16px;box-shadow:none;background:#121722}
+.home-hub-hero:after{display:none}
+.home-hub-hero h2{font-size:clamp(25px,3.4vw,36px)}
+.home-hub-hero>p{line-height:1.65}
+.home-hub-status{margin-top:16px}
+.home-hub-section{margin-top:22px}
+.home-hub-primary{gap:10px}
+.home-hub-card{min-height:148px;padding:17px 17px 44px;border-radius:12px;background:#121720;box-shadow:none}
+.home-hub-card:hover,.home-hub-card:focus-visible{transform:none;box-shadow:none}
+.home-hub-card-icon{width:34px;height:34px;margin-bottom:12px;border-radius:9px}
+.home-hub-card strong{font-size:17px}
+.home-hub-card p{font-size:11.5px;line-height:1.55}
+.home-hub-card-foot{left:17px;right:17px;bottom:13px}
+.home-hub-quick{gap:8px}
+.home-hub-quick button{min-height:58px;border-radius:10px;background:#11161f}
+.home-hub-bottom{display:none!important}
+.guide-entry,.rune-class-card,.loadout-class-card,.petv4-card,.petv4-tag-card,.petv4-skill-card,.rune-card,.loadout-slot,.member-card:not(.legendary){box-shadow:none!important}
+.guide-entry:hover,.guide-entry:focus-visible,.rune-class-card:hover,.loadout-class-card:hover,.petv4-card:hover,.rune-card:hover,.loadout-slot:hover,.member-card:not(.legendary):hover{transform:none!important;box-shadow:none!important}
+@media(max-width:620px){.home-hub-hero{padding:19px 16px}.home-hub-status{display:none}.home-hub-card{min-height:132px;padding:15px 15px 40px}.home-hub-card-icon{margin-bottom:9px}}
