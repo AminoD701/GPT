@@ -1,4 +1,4 @@
-const CACHE_VERSION='mabi-pwa-v25';
+const CACHE_VERSION='mabi-pwa-v26';
 const APP_SHELL=[
   './',
   './index.html',
@@ -14,7 +14,7 @@ const APP_SHELL=[
   './top-nav-polish.css',
   './home-hub.css?v=5',
   './guide-categories.css?v=3',
-  './site-search.css',
+  './site-search.css?v=2',
   './member-profile-layout.css',
   './task-progress-v2.css',
   './task-journal-v4.css',
@@ -23,8 +23,8 @@ const APP_SHELL=[
   './role-skill-progress.js?v=12',
   './live-data.css?v=3',
   './live-data.js?v=3',
-  './global-black-hole.css?v=3',
-  './global-black-hole.js?v=3',
+  './global-black-hole.css?v=4',
+  './global-black-hole.js?v=4',
   './readability-pass.css?v=1',
   './visual-system-v2.css?v=1',
   './site-function-nav.css?v=1',
@@ -37,7 +37,7 @@ const APP_SHELL=[
   './view-state.js?v=4',
   './header-title-fix.js',
   './tab-title-fix.js',
-  './site-function-nav.js?v=1',
+  './site-function-nav.js?v=2',
   './pwa-init.js?v=3'
 ];
 
