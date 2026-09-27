@@ -6,7 +6,8 @@
     {key:'members',label:'公會',icon:'♙',hash:'#members'},
     {key:'guide',label:'攻略',icon:'✦',hash:'#guide'},
     {key:'builds',label:'配裝',icon:'◆',hash:'#builds'},
-    {key:'pets',label:'寵物',icon:'◎',hash:'#pets'}
+    {key:'pets',label:'寵物',icon:'◎',hash:'#pets'},
+    {key:'live',label:'即時',icon:'◉',hash:'#live'}
   ];
 
   function ensure(){
@@ -32,7 +33,7 @@
     if(key==='home') return window.showSiteHome?.();
     if(key==='members') return window.switchView?.('members');
     window.switchView?.('guides');
-    const map={guide:'showGuideHome',builds:'showLoadoutHome',pets:'showPetTool'};
+    const map={guide:'showGuideHome',builds:'showLoadoutHome',pets:'showPetTool',live:'showLiveData'};
     window[map[key]]?.();
   }
 
@@ -43,6 +44,7 @@
     if(h.startsWith('#builds')) return 'builds';
     if(h.startsWith('#runes/custom')) return 'builds';
     if(h.startsWith('#runes')) return 'builds';
+    if(h.startsWith('#live')) return 'live';
     if(h.startsWith('#guide')) return 'guide';
     return 'home';
   }
