@@ -1,0 +1,45 @@
+name: Update MMD-TW live data
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '*/15 * * * *'
+  push:
+    paths:
+      - 'scripts/fetch-mmd-live-data.mjs'
+      - '.github/workflows/update-mmd-live-data.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-mmd-live-data
+  cancel-in-progress: true
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Fetch MMD-TW data
+        run: node scripts/fetch-mmd-live-data.mjs
+
+      - name: Commit changed data
+        run: |
+          if git diff --quiet -- data/black-hole.json data/market-catalog.json; then
+            echo "No data changes"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/black-hole.json data/market-catalog.json
+          git commit -m "Update MMD-TW live data"
+          git pull --rebase origin "$GITHUB_REF_NAME"
+          git push origin HEAD:"$GITHUB_REF_NAME"
