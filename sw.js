@@ -1,4 +1,4 @@
-const CACHE_VERSION='mabi-pwa-v22';
+const CACHE_VERSION='mabi-pwa-v23';
 const APP_SHELL=[
   './',
   './index.html',
@@ -33,16 +33,16 @@ const APP_SHELL=[
   './home-hub.js?v=4',
   './guide-categories.js?v=3',
   './site-search.js',
-  './view-state.js',
+  './view-state.js?v=4',
   './header-title-fix.js',
-  './tab-title-fix.js'
+  './tab-title-fix.js',
+  './pwa-init.js?v=3'
 ];
 
 self.addEventListener('install',event=>{
   event.waitUntil(
     caches.open(CACHE_VERSION)
       .then(cache=>Promise.allSettled(APP_SHELL.map(url=>cache.add(url))))
-      .then(()=>self.skipWaiting())
   );
 });
 
