@@ -4,16 +4,10 @@
 .live-data-hero h2{margin:6px 0 8px;font-size:30px}
 .live-data-hero p{margin:0;color:#96a0af;max-width:700px;line-height:1.7}
 .live-data-hero a{color:#d6bd84;text-decoration:none;font-size:12px;border:1px solid rgba(200,165,106,.24);padding:9px 12px;border-radius:9px;white-space:nowrap}
-.live-blackhole,.live-market{padding:20px;margin-bottom:18px;border:1px solid rgba(255,255,255,.08);border-radius:16px;background:linear-gradient(180deg,rgba(24,29,40,.96),rgba(16,21,30,.98))}
+.live-market{padding:20px;margin-bottom:18px;border:1px solid rgba(255,255,255,.08);border-radius:16px;background:linear-gradient(180deg,rgba(24,29,40,.96),rgba(16,21,30,.98))}
 .live-section-title{display:flex;justify-content:space-between;align-items:end;gap:16px;margin-bottom:14px}
 .live-section-title h3{margin:3px 0 0;font-size:20px}
 .live-section-title small{color:#777f8c}
-.live-blackhole-grid{display:grid;grid-template-columns:1.5fr repeat(3,1fr);gap:10px}
-.live-countdown-card,.live-time-card{padding:16px;border:1px solid rgba(255,255,255,.075);border-radius:12px;background:rgba(10,14,20,.45)}
-.live-countdown-card span,.live-time-card span{display:block;font-size:10px;color:#8f98a6}
-.live-countdown-card strong{display:block;margin:6px 0 4px;font:700 30px Rajdhani,system-ui,sans-serif;color:#edd18b}
-.live-countdown-card small,.live-time-card small{font-size:10px;color:#777f8c}
-.live-time-card strong{display:block;margin-top:8px;font-size:15px;color:#eceff4}
 .live-market-controls{display:grid;grid-template-columns:1fr 190px;gap:10px;margin-bottom:10px}
 .live-market-controls input,.live-market-controls select{width:100%;box-sizing:border-box;border:1px solid rgba(255,255,255,.09);border-radius:10px;background:#10151e;color:#edf1f6;padding:11px 12px;outline:none}
 .live-market-meta{margin-bottom:12px;color:#777f8c;font-size:11px}
@@ -32,13 +26,18 @@
 .market-variants span{font-size:9px;color:#9da5b1;padding:4px 6px;border:1px solid rgba(255,255,255,.06);border-radius:6px}
 .market-variants b{color:#d8bd7f}
 .live-empty{grid-column:1/-1;padding:30px;text-align:center;color:#777f8c;border:1px dashed rgba(255,255,255,.08);border-radius:12px}
-@media(max-width:900px){.live-blackhole-grid{grid-template-columns:1fr 1fr}.live-market-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:900px){.live-market-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:760px){
   .live-data-view{padding-bottom:90px}
   .live-data-hero{display:block;padding:20px 16px}.live-data-hero h2{font-size:24px}.live-data-hero a{display:inline-block;margin-top:14px}
-  .live-blackhole,.live-market{padding:14px;border-radius:13px}
-  .live-blackhole-grid{grid-template-columns:1fr 1fr}
-  .live-countdown-card{grid-column:1/-1}
+  .live-market{padding:14px;border-radius:13px}
+    .live-countdown-card{grid-column:1/-1}
   .live-market-controls{grid-template-columns:1fr}
   .live-market-grid{grid-template-columns:1fr}
 }
+
+.live-data-hero{padding:20px 22px;border-radius:14px;background:#121722}
+.live-market{border-radius:14px;background:#121720}
+.live-market-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.market-item-card{border-radius:10px;background:#10151d}
+@media(max-width:760px){.live-market-grid{grid-template-columns:1fr}}
