@@ -49,8 +49,10 @@
     nav.setAttribute('aria-label','網站主要功能');
     nav.innerHTML=ROUTES.map(r=>`<button type="button" data-route="${r.key}" data-hash="${r.hash}" class="sfn-${r.tone}"><span class="sfn-icon">${r.icon}</span><span class="sfn-copy"><b>${r.label}</b><small>${r.sub}</small></span></button>`).join('');
 
+    const utility=document.querySelector('.top-utility-row');
     const black=document.getElementById('globalBlackHoleBar');
-    if(black)black.insertAdjacentElement('afterend',nav);
+    if(utility)utility.insertAdjacentElement('beforebegin',nav);
+    else if(black)black.insertAdjacentElement('beforebegin',nav);
     else header.insertAdjacentElement('afterend',nav);
 
     const context=document.createElement('section');
