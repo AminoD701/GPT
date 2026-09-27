@@ -53,24 +53,10 @@
       <section class="live-data-hero">
         <div>
           <span class="live-data-kicker">LIVE DATA / MMD-TW</span>
-          <h2>即時資料</h2>
-          <p>整合深淵黑洞時間與交易所行情。資料由排程定時同步，不直接從瀏覽器跨站呼叫來源 API。</p>
+          <h2>交易所行情</h2>
+          <p>搜尋商品目前最低價與掛售數量。深淵黑洞倒數固定顯示在網站上方。</p>
         </div>
         <a href="https://mmd-tw.com/" target="_blank" rel="noopener">資料來源：MMD-TW ↗</a>
-      </section>
-
-      <section class="live-blackhole" id="liveBlackHole">
-        <div class="live-section-title"><div><span>BLACK HOLE</span><h3>深淵黑洞</h3></div><small id="blackHoleUpdated">讀取中…</small></div>
-        <div class="live-blackhole-grid">
-          <div class="live-countdown-card">
-            <span id="blackHoleState">讀取資料中</span>
-            <strong id="blackHoleCountdown">--:--:--</strong>
-            <small id="blackHoleTarget">—</small>
-          </div>
-          <div class="live-time-card"><span>本輪開啟</span><strong id="blackHoleOpen">—</strong></div>
-          <div class="live-time-card"><span>本輪結束</span><strong id="blackHoleClose">—</strong></div>
-          <div class="live-time-card"><span>下一輪預估</span><strong id="blackHoleNext">—</strong><small id="blackHolePrediction"></small></div>
-        </div>
       </section>
 
       <section class="live-market">
@@ -157,36 +143,6 @@
     }).join(''):'<div class="live-empty">沒有符合的商品。</div>';
   }
 
-  async function loadBlackHole(){
-    try{
-      const res=await fetch('./data/black-hole.json?ts='+Date.now(),{cache:'no-store'});
-      if(!res.ok)throw new Error('HTTP '+res.status);
-      const data=await res.json();
-      $('blackHoleOpen').textContent=twTime(data.opensAt,true);
-      $('blackHoleClose').textContent=twTime(data.closesAt,true);
-      $('blackHoleNext').textContent=twTime(data.nextOpensAt,true);
-      $('blackHolePrediction').textContent=data.nextIsPrediction?'預測時間':'';
-      $('blackHoleUpdated').textContent='資料更新 '+ageText(data.updatedAt||data.fetchedAt);
-
-      const tick=()=>{
-        const now=Date.now();
-        const open=new Date(data.opensAt).getTime();
-        const close=new Date(data.closesAt).getTime();
-        let target=data.opensAt,state='距離開啟';
-        if(now>=open&&now<close){target=data.closesAt;state='黑洞開啟中 · 距離結束';}
-        else if(now>=close){target=data.nextOpensAt;state=data.nextIsPrediction?'距離下一輪預估':'距離下一輪';}
-        $('blackHoleState').textContent=state;
-        $('blackHoleCountdown').textContent=remainText(target);
-        $('blackHoleTarget').textContent='目標時間 '+twTime(target,true);
-      };
-      clearInterval(countdownTimer);tick();countdownTimer=setInterval(tick,1000);
-    }catch(e){
-      console.warn('[Live Data] black-hole load failed',e);
-      $('blackHoleState').textContent='黑洞資料暫時無法讀取';
-      $('blackHoleUpdated').textContent='同步資料尚未產生';
-    }
-  }
-
   async function loadMarket(){
     try{
       const res=await fetch('./data/market-catalog.json?ts='+Date.now(),{cache:'no-store'});
@@ -208,7 +164,6 @@
     if(!ensure())return;
     hideOtherViews();
     window.scrollTo({top:0,behavior:'auto'});
-    loadBlackHole();
     loadMarket();
   };
 
