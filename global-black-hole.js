@@ -16,7 +16,7 @@
     const shell=document.querySelector('.shell'),header=shell?.querySelector('header'); if(!shell||!header)return false;
     const bar=document.createElement('button');
     bar.id='globalBlackHoleBar'; bar.type='button'; bar.className='global-black-hole'; bar.setAttribute('aria-label','查看深淵黑洞與交易所');
-    bar.innerHTML='<span class="gbh-mark">◉</span><span class="gbh-label">深淵黑洞</span><span class="gbh-state" id="gbhState">讀取中</span><strong class="gbh-countdown" id="gbhCountdown">--:--:--</strong><span class="gbh-time" id="gbhTime">—</span><span class="gbh-arrow">查看行情 →</span>';
+    bar.innerHTML='<span class="gbh-mark"><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="6"/><path d="M24 5c11 0 19 8 19 19s-8 19-19 19c-9 0-16-5-19-13h6c2 5 7 8 13 8 8 0 14-6 14-14S32 10 24 10c-6 0-11 3-13 8l6 1-9 7-4-11 5 2C12 9 17 5 24 5Z"/></svg></span><span class="gbh-label">深淵黑洞</span><span class="gbh-state" id="gbhState">讀取中</span><strong class="gbh-countdown" id="gbhCountdown">--:--:--</strong><span class="gbh-time" id="gbhTime">—</span><span class="gbh-arrow">查看行情 →</span>';
     header.insertAdjacentElement('afterend',bar);
     bar.addEventListener('click',()=>{location.hash='#live';});
     return true;
