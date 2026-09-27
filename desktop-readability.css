@@ -1,0 +1,134 @@
+/* Desktop readability scale
+   Keeps mobile density intact while making desktop text easier to scan. */
+@media (min-width:761px){
+  body{font-size:16.5px!important;line-height:1.68!important}
+
+  /* Header */
+  header .subtitle{font-size:15px!important}
+  .eyebrow,.guide-kicker{font-size:12.5px!important}
+  .stat strong{font-size:31px!important}
+  .stat span{font-size:13.5px!important}
+
+  /* Main visual navigation */
+  .site-function-nav button{height:66px!important;padding:9px 11px!important;gap:11px!important}
+  .sfn-icon{width:39px!important;height:39px!important;flex-basis:39px!important}
+  .sfn-icon svg{width:24px!important;height:24px!important}
+  .sfn-copy b{font-size:13.5px!important}
+  .sfn-copy small{font-size:10px!important;margin-top:3px!important}
+
+  /* Search + black-hole clock */
+  #siteSearchInput{font-size:15px!important}
+  .site-search-shortcut{font-size:11px!important}
+  .site-search-result strong{font-size:14.5px!important}
+  .site-search-result small{font-size:11.5px!important}
+  .site-search-section{font-size:11px!important}
+  .gbh-label{font-size:11px!important}
+  .gbh-copy strong{font-size:25px!important}
+  .gbh-state{font-size:10.5px!important}
+  .gbh-detail span{font-size:9.5px!important}
+  .gbh-detail b{font-size:11.5px!important}
+
+  /* Context banner */
+  .section-context-copy b{font-size:17px!important}
+  .section-context-copy small{font-size:12px!important}
+  .section-context-icon{width:48px!important;height:48px!important;flex-basis:48px!important}
+  .section-context-icon svg{width:28px!important;height:28px!important}
+
+  /* Home */
+  .home-hub-kicker{font-size:10.5px!important}
+  .home-hub-hero h2{font-size:34px!important}
+  .home-hub-hero p{font-size:13px!important}
+  .home-hub-section-head h3{font-size:16px!important}
+  .home-hub-section-head span{font-size:9.5px!important}
+  .home-hub-card strong{font-size:18px!important}
+  .home-hub-card small{font-size:12px!important}
+  .home-hub-quick b{font-size:14px!important}
+  .home-hub-quick small{font-size:11px!important}
+
+  /* Guild roster */
+  .section-head h2{font-size:21px!important}
+  .result-count{font-size:14px!important}
+  .line-name{font-size:12.5px!important}
+  .main-id{font-size:21px!important}
+  .card-foot{font-size:12.5px!important}
+  .class-pill{font-size:12px!important}
+  .toolbar input,.toolbar select{font-size:14.5px!important}
+
+  /* Guide landing */
+  .guide-home-head h2,.guide-article-head h2{font-size:clamp(32px,3.5vw,46px)!important}
+  .guide-intro{font-size:15.5px!important}
+  .guide-category-head h3{font-size:16px!important}
+  .guide-category-grid .guide-entry h3{font-size:16px!important}
+  .guide-entry p{font-size:14px!important}
+  .guide-entry-foot{font-size:12.5px!important}
+
+  /* General forms and tool panels */
+  input,select,textarea{font-size:14.5px!important}
+  .field span{font-size:12px!important}
+  .rune-info strong,.loadout-intro strong,.spirit-trace-fact strong{font-size:14.5px!important}
+  .rune-info p,.loadout-intro p{font-size:14px!important}
+
+  /* Rune / build */
+  .rune-category-head h3,.loadout-category-head h3{font-size:21px!important}
+  .rune-category-head p,.loadout-category-head p{font-size:13.5px!important}
+  .rune-class-card strong,.loadout-class-card strong{font-size:19px!important}
+  .rune-class-card p,.loadout-class-card p{font-size:13.5px!important}
+  .rune-card h4{font-size:18px!important}
+  .rune-card p{font-size:13.5px!important}
+  .rune-category-tab,.rune-build-tab,.loadout-build-tab{font-size:13.5px!important}
+  .loadout-slot-label{font-size:12.5px!important}
+  .loadout-slot-name{font-size:15.5px!important}
+  .loadout-slot-meta{font-size:11.5px!important}
+
+  /* Articles / spirit tools */
+  .guide-block h3,.dice-concept h3,.dice-calculator h3,.dice-table-section h3{font-size:20px!important}
+  .guide-body,.dice-concept p,.dice-calculator p{font-size:14.5px!important}
+  .guide-table{font-size:13.5px!important}
+  .guide-table th{font-size:12.5px!important}
+  .spirit-panel-title h3{font-size:20px!important}
+  .spirit-panel-title p{font-size:13.5px!important}
+  .spirit-trace-field span{font-size:12.5px!important}
+
+  /* Pets */
+  .petv4-section-title h3,.petv4-result-head h3{font-size:21px!important}
+  .petv4-help{font-size:13.5px!important}
+  .petv4-card h3,.petv4-tag-card h3,.petv4-skill-card h3{font-size:18px!important}
+  .petv4-skill p,.petv4-skill-card p{font-size:13px!important}
+
+  /* Market */
+  .market-hero-copy span{font-size:10.5px!important}
+  .market-hero-copy h2{font-size:32px!important}
+  .market-hero-copy p{font-size:13.5px!important}
+  .market-sync small,.market-sync a{font-size:11px!important}
+  .market-main-tab>span:last-child{font-size:13.5px!important}
+  .market-sub-tabs button{font-size:12.5px!important}
+  .market-child-tabs button{font-size:11.5px!important}
+  .market-result-head>span{font-size:13.5px!important}
+  .market-result-head small{font-size:11.5px!important}
+  .market-item-name{font-size:15px!important}
+  .market-item-category{font-size:11px!important}
+  .market-price span,.market-stock span{font-size:10px!important}
+  .market-price strong{font-size:19px!important}
+  .market-stock strong{font-size:14px!important}
+  .market-variant-row span{font-size:10px!important}
+
+  /* Dialogs / task journal */
+  .mabi-task-dialog-top h2{font-size:24px!important}
+  .mabi-task-title-row h3{font-size:21px!important}
+  .mabi-task-title-row p{font-size:13px!important}
+  .mabi-task-copy strong{font-size:13px!important}
+  .mabi-task-material{font-size:10.5px!important}
+  #memberDialog .role-tag{font-size:13px!important}
+  #memberDialog .role-cell small{font-size:11px!important}
+  #memberDialog .role-cell span{font-size:14px!important}
+}
+
+/* Very wide monitors get one extra step of breathing room. */
+@media (min-width:1440px){
+  body{font-size:17px!important}
+  .sfn-copy b{font-size:14px!important}
+  .sfn-copy small{font-size:10.5px!important}
+  .main-id{font-size:22px!important}
+  .home-hub-card strong{font-size:19px!important}
+  .market-item-name{font-size:15.5px!important}
+}
