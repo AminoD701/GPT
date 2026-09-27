@@ -1,0 +1,45 @@
+/* Site-wide visual icon language */
+:root{
+  --accent-gold:#f0c36c;
+  --accent-blue:#72c8ff;
+  --accent-violet:#b79cff;
+  --accent-mint:#68d6ae;
+  --accent-coral:#ff977d;
+  --accent-rose:#e887b0;
+}
+
+.guide-entry-icon,.rune-part-icon,.spirit-panel-number,.petv4-card-icon,.petv4-skill-icon{
+  border-radius:12px!important;
+  box-shadow:inset 0 1px rgba(255,255,255,.04)!important;
+}
+
+#diceGuideEntry .guide-entry-icon{--vi:#72c8ff;background:rgba(114,200,255,.10)!important;border-color:rgba(114,200,255,.24)!important;color:#72c8ff!important}
+#spiritTraceEntry .guide-entry-icon{--vi:#ffd06d;background:rgba(255,208,109,.10)!important;border-color:rgba(255,208,109,.24)!important;color:#ffd06d!important}
+#loadoutEntry .guide-entry-icon,#runeRecommendationEntry .guide-entry-icon{--vi:#8ec5ff;background:rgba(142,197,255,.10)!important;border-color:rgba(142,197,255,.24)!important;color:#8ec5ff!important}
+#runeGuideEntry .guide-entry-icon,#customRuneBuilderEntry .guide-entry-icon{--vi:#b79cff;background:rgba(183,156,255,.10)!important;border-color:rgba(183,156,255,.24)!important;color:#b79cff!important}
+#petToolEntry .guide-entry-icon{--vi:#68d6ae;background:rgba(104,214,174,.10)!important;border-color:rgba(104,214,174,.24)!important;color:#68d6ae!important}
+
+.rune-category-tabs,.rune-build-tabs,.petv4-tabs,.pet-tool-tabs,.spirit-trace-tabs{
+  border-radius:14px!important;
+}
+
+.rune-card:nth-child(6n+1),.loadout-slot:nth-child(6n+1){--card-accent:#72c8ff}
+.rune-card:nth-child(6n+2),.loadout-slot:nth-child(6n+2){--card-accent:#b79cff}
+.rune-card:nth-child(6n+3),.loadout-slot:nth-child(6n+3){--card-accent:#68d6ae}
+.rune-card:nth-child(6n+4),.loadout-slot:nth-child(6n+4){--card-accent:#ffd06d}
+.rune-card:nth-child(6n+5),.loadout-slot:nth-child(6n+5){--card-accent:#ff977d}
+.rune-card:nth-child(6n),.loadout-slot:nth-child(6n){--card-accent:#e887b0}
+.rune-card,.loadout-slot{position:relative;overflow:hidden}
+.rune-card:before,.loadout-slot:before{content:"";position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--card-accent,rgba(255,255,255,.12));opacity:.7}
+
+.petv4-card:nth-child(4n+1){--pet-accent:#68d6ae}.petv4-card:nth-child(4n+2){--pet-accent:#72c8ff}.petv4-card:nth-child(4n+3){--pet-accent:#ffd06d}.petv4-card:nth-child(4n){--pet-accent:#b79cff}
+.petv4-card{position:relative;overflow:hidden}
+.petv4-card:after{content:"";position:absolute;width:90px;height:90px;right:-42px;bottom:-42px;border-radius:50%;background:radial-gradient(circle,color-mix(in srgb,var(--pet-accent) 12%,transparent),transparent 70%);pointer-events:none}
+
+.stat,.field,.spirit-trace-panel,.dice-calculator,.dice-concept,.dice-table-section{
+  border-radius:14px!important;
+}
+
+@media(max-width:760px){
+  .guide-entry-icon,.rune-part-icon,.spirit-panel-number,.petv4-card-icon,.petv4-skill-icon{border-radius:10px!important}
+}
