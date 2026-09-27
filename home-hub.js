@@ -75,10 +75,6 @@
             <span class="home-hub-card-icon">${icon('market')}</span>
             <span class="home-hub-card-copy"><strong>交易所</strong><small>價格・掛售</small></span>
           </button>
-          <button class="home-hub-card tone-rose" type="button" data-home-target="live">
-            <span class="home-hub-card-icon">${icon('blackhole')}</span>
-            <span class="home-hub-card-copy"><strong>黑洞時間</strong><small>即時倒數</small></span>
-          </button>
         </div>
       </section>
 
