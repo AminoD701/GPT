@@ -6,8 +6,7 @@
     {key:'members',label:'公會',icon:'♙',hash:'#members'},
     {key:'guide',label:'攻略',icon:'✦',hash:'#guide'},
     {key:'builds',label:'配裝',icon:'◆',hash:'#builds'},
-    {key:'pets',label:'寵物',icon:'◎',hash:'#pets'},
-    {key:'live',label:'即時',icon:'◉',hash:'#live'}
+    {key:'pets',label:'寵物',icon:'◎',hash:'#pets'}
   ];
 
   function ensure(){
