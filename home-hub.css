@@ -62,3 +62,10 @@ radial-gradient(circle at 100% 100%,rgba(201,156,255,.08),transparent 30%),
   .home-hub-card strong{font-size:14px}
   .home-hub-quick{grid-template-columns:1fr 1fr}
 }
+
+/* Five primary destinations: keep the final market card centered on wide screens. */
+@media(min-width:901px){
+  .home-hub-primary .home-hub-card:last-child:nth-child(5){
+    grid-column:2;
+  }
+}
