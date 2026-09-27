@@ -3,34 +3,26 @@
 
   if (!('serviceWorker' in navigator)) return;
 
-  let refreshing = false;
-
   window.addEventListener('load', async () => {
     try {
       const registration = await navigator.serviceWorker.register('./sw.js', { scope: './' });
 
-      if (registration.waiting) {
-        registration.waiting.postMessage({ type: 'SKIP_WAITING' });
-      }
+      // Check for updates quietly. A new worker may activate in the background,
+      // but the current page is never forcibly reloaded.
+      registration.update().catch(() => {});
 
       registration.addEventListener('updatefound', () => {
         const worker = registration.installing;
         if (!worker) return;
         worker.addEventListener('statechange', () => {
           if (worker.state === 'installed' && navigator.serviceWorker.controller) {
-            worker.postMessage({ type: 'SKIP_WAITING' });
+            console.info('[PWA] 新版本已準備完成，會在下次自然開啟頁面時使用。');
           }
         });
       });
     } catch (error) {
       console.warn('[PWA] Service worker 註冊失敗：', error);
     }
-  });
-
-  navigator.serviceWorker.addEventListener('controllerchange', () => {
-    if (refreshing) return;
-    refreshing = true;
-    location.reload();
   });
 
   const isStandalone = () =>
