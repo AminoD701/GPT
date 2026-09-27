@@ -31,8 +31,16 @@
   function ensure(){
     if($('globalBlackHoleBar'))return true;
     const shell=document.querySelector('.shell');
-    const header=shell?.querySelector('header');
-    if(!shell||!header)return false;
+    const search=document.querySelector('.site-search-wrap');
+    if(!shell||!search)return false;
+
+    let row=document.querySelector('.top-utility-row');
+    if(!row){
+      row=document.createElement('div');
+      row.className='top-utility-row';
+      search.insertAdjacentElement('beforebegin',row);
+      row.appendChild(search);
+    }
 
     const widget=document.createElement('button');
     widget.id='globalBlackHoleBar';
@@ -50,24 +58,21 @@
         </svg>
         <span class="gbh-pulse"></span>
       </span>
-      <span class="gbh-mini">
-        <b>黑洞</b>
+      <span class="gbh-copy">
+        <span class="gbh-label">深淵黑洞</span>
         <strong id="gbhCountdown">--:--:--</strong>
+        <span id="gbhState" class="gbh-state">讀取中</span>
       </span>
       <span class="gbh-detail">
-        <b id="gbhState">讀取中</b>
-        <span id="gbhTime">—</span>
+        <span>目標時間</span>
+        <b id="gbhTime">—</b>
       </span>`;
 
-    // Desktop: floats in the left gutter. Narrow layouts keep it in normal flow
-    // so it never blocks navigation or page content.
-    header.insertAdjacentElement('afterend',widget);
+    row.insertBefore(widget,search);
 
     widget.addEventListener('click',()=>{
-      const expanded=widget.getAttribute('aria-expanded')==='true';
-      widget.setAttribute('aria-expanded',String(!expanded));
+      widget.setAttribute('aria-expanded',String(widget.getAttribute('aria-expanded')!=='true'));
     });
-
     return true;
   }
 
@@ -78,22 +83,23 @@
     const close=new Date(data.closesAt).getTime();
     let target=data.opensAt;
     let state='距離開啟';
+    const widget=$('globalBlackHoleBar');
 
     if(now>=open&&now<close){
       target=data.closesAt;
       state='開啟中 · 距離結束';
-      $('globalBlackHoleBar')?.classList.add('is-open');
+      widget?.classList.add('is-open');
     }else{
-      $('globalBlackHoleBar')?.classList.remove('is-open');
+      widget?.classList.remove('is-open');
       if(now>=close){
         target=data.nextOpensAt;
         state=data.nextIsPrediction?'距離下輪預估':'距離下一輪';
       }
     }
 
-    if($('gbhState'))$('gbhState').textContent=state;
-    if($('gbhCountdown'))$('gbhCountdown').textContent=remain(target);
-    if($('gbhTime'))$('gbhTime').textContent=twTime(target)+(data.nextIsPrediction&&now>=close?' 預估':'');
+    $('gbhState').textContent=state;
+    $('gbhCountdown').textContent=remain(target);
+    $('gbhTime').textContent=twTime(target)+(data.nextIsPrediction&&now>=close?' 預估':'');
   }
 
   async function load(){
@@ -113,7 +119,7 @@
   }
 
   const init=()=>{
-    if(!ensure())return setTimeout(init,60);
+    if(!ensure())return setTimeout(init,80);
     load();
     setInterval(load,5*60*1000);
   };
