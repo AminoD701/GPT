@@ -64,6 +64,7 @@
           <button type="button" data-home-target="dice"><span><b>骰子與裝備進度</b><small>養成進度工具</small></span><em>→</em></button>
           <button type="button" data-home-target="runes"><span><b>傳說符文圖鑑</b><small>完整效果查詢</small></span><em>→</em></button>
           <button type="button" data-home-target="custom"><span><b>自訂符文配裝</b><small>自由搭配模擬</small></span><em>→</em></button>
+          <button type="button" data-home-target="live"><span><b>即時資料</b><small>交易所行情・深淵黑洞</small></span><em>→</em></button>
         </div>
       </section>
 
@@ -137,7 +138,7 @@
     }
     if(typeof window.switchView==='function')window.switchView('guides');
     setTabs('guides');
-    const map={guide:'showGuideHome',dice:'showGuideArticle',spirit:'showSpiritTraceTool',runes:'showRuneHome',loadout:'showLoadoutHome',custom:'showCustomRuneBuilder',pets:'showPetTool'};
+    const map={guide:'showGuideHome',dice:'showGuideArticle',spirit:'showSpiritTraceTool',runes:'showRuneHome',loadout:'showLoadoutHome',custom:'showCustomRuneBuilder',pets:'showPetTool',live:'showLiveData'};
     if(map[target]) call(map[target]);
   }
 
