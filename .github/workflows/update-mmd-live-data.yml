@@ -1,5 +1,7 @@
 name: Update MMD-TW live data
 
+# Sources: market catalog + black-hole only; world broadcasts intentionally excluded
+
 on:
   workflow_dispatch:
   schedule:
