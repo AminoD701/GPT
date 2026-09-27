@@ -1,98 +1,135 @@
-/* Persistent black-hole alarm clock */
+/* Large black-hole alarm clock + search utility row */
+.top-utility-row{
+  width:min(1180px,100%);
+  margin:14px auto 18px;
+  display:grid;
+  grid-template-columns:250px minmax(0,1fr);
+  gap:14px;
+  align-items:center;
+}
+.top-utility-row .site-search-wrap{
+  width:100%!important;
+  margin:0!important;
+}
+
 .global-black-hole{
   --clock-accent:#e887b0;
-  min-height:68px;
-  padding:8px 10px;
-  display:flex;
+  min-width:0;
+  min-height:88px;
+  padding:11px 13px;
+  display:grid;
+  grid-template-columns:64px minmax(0,1fr);
   align-items:center;
-  gap:9px;
-  border:1px solid rgba(232,135,176,.22);
-  border-radius:18px;
+  gap:12px;
+  border:1px solid rgba(232,135,176,.25);
+  border-radius:20px;
   background:
-    radial-gradient(circle at 20% 25%,rgba(232,135,176,.12),transparent 42%),
-    rgba(13,17,24,.94);
+    radial-gradient(circle at 18% 20%,rgba(232,135,176,.17),transparent 38%),
+    radial-gradient(circle at 90% 90%,rgba(126,142,255,.09),transparent 42%),
+    rgba(13,17,24,.95);
   color:#edf1f6;
   text-align:left;
   cursor:pointer;
-  box-shadow:0 12px 34px rgba(0,0,0,.24);
+  box-shadow:0 14px 32px rgba(0,0,0,.24),inset 0 1px rgba(255,255,255,.04);
   backdrop-filter:blur(16px);
+  transition:transform .16s,border-color .16s,box-shadow .16s;
 }
-.global-black-hole:hover{border-color:rgba(232,135,176,.42)}
-.global-black-hole.is-open{--clock-accent:#ff9b7f;border-color:rgba(255,155,127,.42)}
+.global-black-hole:hover{
+  transform:translateY(-1px);
+  border-color:rgba(232,135,176,.45);
+  box-shadow:0 17px 36px rgba(0,0,0,.28),inset 0 1px rgba(255,255,255,.05);
+}
+.global-black-hole.is-open{
+  --clock-accent:#ff9878;
+  border-color:rgba(255,152,120,.5);
+}
 
 .gbh-clock{
   position:relative;
-  width:50px;
-  height:50px;
-  flex:0 0 50px;
+  width:64px;
+  height:64px;
   display:grid;
   place-items:center;
-  border-radius:16px;
-  background:linear-gradient(145deg,color-mix(in srgb,var(--clock-accent) 18%,transparent),rgba(114,200,255,.06));
-  border:1px solid color-mix(in srgb,var(--clock-accent) 27%,transparent);
+  border-radius:18px;
+  background:linear-gradient(145deg,color-mix(in srgb,var(--clock-accent) 19%,transparent),rgba(120,140,255,.06));
+  border:1px solid color-mix(in srgb,var(--clock-accent) 30%,transparent);
+  box-shadow:inset 0 1px rgba(255,255,255,.05);
 }
-.gbh-clock svg{width:34px;height:34px;fill:var(--clock-accent)}
-.gbh-pulse{position:absolute;right:5px;top:5px;width:7px;height:7px;border-radius:50%;background:var(--clock-accent);box-shadow:0 0 0 4px color-mix(in srgb,var(--clock-accent) 12%,transparent)}
+.gbh-clock svg{
+  width:39px;
+  height:39px;
+  fill:var(--clock-accent);
+  filter:drop-shadow(0 0 8px color-mix(in srgb,var(--clock-accent) 24%,transparent));
+}
+.gbh-pulse{
+  position:absolute;
+  right:7px;
+  top:7px;
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:var(--clock-accent);
+  box-shadow:0 0 0 4px color-mix(in srgb,var(--clock-accent) 14%,transparent);
+}
 
-.gbh-mini{display:grid;gap:1px;min-width:78px}
-.gbh-mini b{color:#aab3bf;font-size:9px;letter-spacing:.08em}
-.gbh-mini strong{font:700 15px Rajdhani,system-ui,sans-serif;color:#f2bfd5;white-space:nowrap;letter-spacing:.02em}
-.is-open .gbh-mini strong{color:#ffb29d}
+.gbh-copy{min-width:0;display:grid;gap:1px}
+.gbh-label{color:#a8b1bd;font-size:9px;font-weight:800;letter-spacing:.09em}
+.gbh-copy strong{
+  font:700 23px/1 Rajdhani,system-ui,sans-serif;
+  color:#f3c2d6;
+  letter-spacing:.02em;
+  white-space:nowrap;
+}
+.is-open .gbh-copy strong{color:#ffb29e}
+.gbh-state{margin-top:3px;color:#8994a2;font-size:9px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
-.gbh-detail{display:none;min-width:108px;padding-left:9px;border-left:1px solid rgba(255,255,255,.07)}
-.gbh-detail b,.gbh-detail span{display:block;white-space:nowrap}
-.gbh-detail b{color:#dce1e7;font-size:10px}
-.gbh-detail span{margin-top:3px;color:#7f8a98;font-size:9px}
+.gbh-detail{
+  display:none;
+  grid-column:1/-1;
+  margin-top:2px;
+  padding-top:8px;
+  border-top:1px solid rgba(255,255,255,.07);
+}
+.gbh-detail span{display:block;color:#737e8c;font-size:8px}
+.gbh-detail b{display:block;margin-top:2px;color:#dce2e8;font-size:10px}
 .global-black-hole[aria-expanded="true"] .gbh-detail{display:block}
 
-/* Wide desktop: float in the unused left gutter, never over the page shell. */
-@media(min-width:1540px){
-  .global-black-hole{
-    position:fixed;
-    z-index:120;
-    top:18px;
-    left:max(14px,calc((100vw - 1360px)/2 - 156px));
-    width:auto;
-    margin:0;
+@media(min-width:1280px){
+  .top-utility-row{
+    grid-template-columns:260px minmax(0,760px);
+    justify-content:start;
   }
 }
 
-/* Normal desktop/tablet: keep it in document flow above navigation. */
-@media(min-width:761px) and (max-width:1539px){
-  .global-black-hole{
-    width:max-content;
-    max-width:100%;
-    margin:0 0 12px;
+@media(max-width:900px){
+  .top-utility-row{
+    grid-template-columns:220px minmax(0,1fr);
+    gap:10px;
   }
+  .global-black-hole{min-height:78px;grid-template-columns:54px minmax(0,1fr);padding:9px 10px}
+  .gbh-clock{width:54px;height:54px;border-radius:15px}
+  .gbh-clock svg{width:33px;height:33px}
+  .gbh-copy strong{font-size:19px}
 }
 
-/* Mobile: compact alarm badge; it stays above content and does not cover bottom navigation. */
 @media(max-width:760px){
-  .global-black-hole{
-    width:max-content;
-    max-width:100%;
-    min-height:56px;
-    margin:0 0 10px;
-    padding:6px 8px;
-    border-radius:15px;
+  .top-utility-row{
+    width:100%;
+    grid-template-columns:1fr;
+    gap:9px;
+    margin:10px 0 14px;
   }
-  .gbh-clock{width:42px;height:42px;flex-basis:42px;border-radius:13px}
-  .gbh-clock svg{width:28px;height:28px}
-  .gbh-mini{min-width:70px}
-  .gbh-mini strong{font-size:14px}
-  .gbh-detail{min-width:96px}
+  .global-black-hole{
+    width:100%;
+    min-height:72px;
+    grid-template-columns:52px minmax(0,1fr);
+    border-radius:16px;
+  }
+  .gbh-clock{width:52px;height:52px}
+  .gbh-copy strong{font-size:18px}
+  .top-utility-row .site-search-wrap{order:2}
 }
 
-@media(max-width:430px){
-  .global-black-hole[aria-expanded="true"] .gbh-detail{
-    position:absolute;
-    left:8px;
-    top:62px;
-    z-index:121;
-    padding:9px 10px;
-    border:1px solid rgba(255,255,255,.08);
-    border-radius:10px;
-    background:#111720;
-    box-shadow:0 10px 24px rgba(0,0,0,.3);
-  }
+@media(max-width:420px){
+  .gbh-copy strong{font-size:17px}
 }
