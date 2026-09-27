@@ -1,20 +1,20 @@
-/* Compact guide category navigation */
+/* Color-coded guide navigation */
 .guide-home-grid.guide-home-categorized{display:grid!important;grid-template-columns:1fr!important;gap:18px!important}
-.guide-category{min-width:0}
-.guide-category-head{display:flex;align-items:center;margin:0 0 8px;padding:0 2px}
-.guide-category-head>div{display:flex;align-items:center;gap:8px}
-.guide-category-icon{display:grid;place-items:center;width:26px;height:26px;border-radius:7px;background:rgba(200,165,106,.06);color:#c8a56a;font-size:13px}
+.guide-category{--accent:#78b7ff;min-width:0}
+.guide-category-growth{--accent:#ffd06d}.guide-category-build{--accent:#72c8ff}.guide-category-rune{--accent:#b79cff}.guide-category-pet{--accent:#68d6ae}.guide-category-other{--accent:#ff9b7f}
+.guide-category-head{display:flex;align-items:center;margin:0 0 9px;padding:0 2px}
+.guide-category-head>div{display:flex;align-items:center;gap:9px}
+.guide-category-icon{display:grid;place-items:center;width:34px;height:34px;border-radius:10px;background:color-mix(in srgb,var(--accent) 12%,transparent);border:1px solid color-mix(in srgb,var(--accent) 20%,transparent)}
+.guide-category-icon svg{width:20px;height:20px;fill:var(--accent)}
 .guide-category-head h3{margin:0;color:#eef1f5;font-size:14px;line-height:1.2}
 .guide-category-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
-.guide-category-grid .guide-entry{min-height:92px!important;padding:13px!important;border-radius:10px!important}
-.guide-category-grid .guide-entry-icon{width:32px!important;height:32px!important;margin-bottom:10px!important;border-radius:8px!important;font-size:15px!important}
-.guide-category-grid .guide-entry h3{margin:0!important;font-size:14px!important;line-height:1.35!important}
+.guide-category-grid .guide-entry{position:relative;overflow:hidden;min-height:96px!important;padding:13px!important;border-radius:12px!important}
+.guide-category-grid .guide-entry:after{content:"";position:absolute;width:90px;height:90px;right:-35px;bottom:-38px;border-radius:50%;background:radial-gradient(circle,color-mix(in srgb,var(--accent) 14%,transparent),transparent 70%);pointer-events:none}
+.guide-category-grid .guide-entry-icon{width:36px!important;height:36px!important;margin-bottom:9px!important;border-radius:10px!important;font-size:15px!important;background:color-mix(in srgb,var(--accent) 9%,transparent)!important;border-color:color-mix(in srgb,var(--accent) 22%,transparent)!important;color:var(--accent)!important}
+.guide-category-grid .guide-entry h3{position:relative;z-index:1;margin:0!important;font-size:14px!important;line-height:1.35!important}
+.guide-category-grid .guide-entry[data-visual-tone="growth"]{--accent:#ffd06d}.guide-category-grid .guide-entry[data-visual-tone="build"]{--accent:#72c8ff}.guide-category-grid .guide-entry[data-visual-tone="rune"]{--accent:#b79cff}.guide-category-grid .guide-entry[data-visual-tone="pet"]{--accent:#68d6ae}.guide-category-grid .guide-entry[data-visual-tone="other"]{--accent:#ff9b7f}
 @media(min-width:1180px){.guide-shell{width:min(1080px,100%)!important}}
 @media(max-width:700px){
   .guide-home-grid.guide-home-categorized{gap:15px!important}
   .guide-category-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .guide-category-grid .guide-entry{min-height:86px!important;padding:12px!important}
-}
-@media(max-width:420px){
-  .guide-category-grid{grid-template-columns:1fr 1fr}
 }
