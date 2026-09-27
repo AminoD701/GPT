@@ -12,6 +12,7 @@
     loadout:'#builds',
     custom:'#runes/custom',
     pets:'#pets',
+    live:'#live',
     'rune-recommend':'#runes/recommend'
   };
   const HASH_PAGE = Object.fromEntries(Object.entries(PAGE_HASH).map(([k,v])=>[v,k]));
@@ -73,6 +74,7 @@
       loadout:'showLoadoutHome',
       custom:'showCustomRuneBuilder',
       pets:'showPetTool',
+      live:'showLiveData',
       'rune-recommend':'showRuneRecommendationHome'
     };
     const fn = window[calls[view]];
@@ -125,7 +127,7 @@
     if (el.closest('#guidesTab')) return 'guide';
 
     const homeTarget = el.closest('[data-home-target]')?.dataset.homeTarget;
-    const homeMap = {members:'members',guide:'guide',dice:'dice',spirit:'spirit',runes:'runes',loadout:'loadout',custom:'custom',pets:'pets'};
+    const homeMap = {members:'members',guide:'guide',dice:'dice',spirit:'spirit',runes:'runes',loadout:'loadout',custom:'custom',pets:'pets',live:'live'};
     if (homeTarget && homeMap[homeTarget]) return homeMap[homeTarget];
 
     if (el.closest('#diceGuideEntry')) return 'dice';
