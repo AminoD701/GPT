@@ -1,9 +1,9 @@
 {
   "source": "packet_20806",
-  "fetchedAt": "2026-09-30T08:35:12.228Z",
-  "opensAt": "2026-09-30T09:44:35.000Z",
-  "closesAt": "2026-09-30T09:59:35.000Z",
-  "nextOpensAt": "2026-10-01T21:59:35.000Z",
-  "updatedAt": "2026-09-30T08:10:28.015Z",
+  "fetchedAt": "2026-09-30T15:20:54.673Z",
+  "opensAt": "2026-10-01T21:59:35.000Z",
+  "closesAt": "2026-10-01T22:14:35.000Z",
+  "nextOpensAt": "2026-10-03T10:14:35.000Z",
+  "updatedAt": "2026-09-30T15:10:22.733Z",
   "nextIsPrediction": true
 }
