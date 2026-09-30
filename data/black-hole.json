@@ -1,5 +1,9 @@
 {
-  "source": "mmd-tw.com/api/black-hole",
-  "fetchedAt": "2026-09-30T02:09:53.831Z",
-  "state": "maintenance"
+  "source": "packet_20806",
+  "fetchedAt": "2026-09-30T08:35:12.228Z",
+  "opensAt": "2026-09-30T09:44:35.000Z",
+  "closesAt": "2026-09-30T09:59:35.000Z",
+  "nextOpensAt": "2026-10-01T21:59:35.000Z",
+  "updatedAt": "2026-09-30T08:10:28.015Z",
+  "nextIsPrediction": true
 }
