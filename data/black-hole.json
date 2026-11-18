@@ -1,9 +1,4 @@
 {
-  "source": "packet_20914",
-  "fetchedAt": "2026-11-18T01:01:28.504Z",
-  "opensAt": "2026-11-18T23:05:37.000Z",
-  "closesAt": "2026-11-18T23:20:37.000Z",
-  "nextOpensAt": "2026-11-20T11:20:37.000Z",
-  "updatedAt": "2026-11-17T21:34:20.713Z",
-  "nextIsPrediction": true
+  "source": "mmd-tw.com/api/black-hole",
+  "fetchedAt": "2026-11-18T08:33:22.127Z"
 }
