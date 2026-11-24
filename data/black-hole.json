@@ -1,9 +1,5 @@
 {
-  "source": "prediction",
-  "fetchedAt": "2026-11-24T09:40:09.673Z",
-  "opensAt": "2026-11-25T19:31:46.000Z",
-  "closesAt": "2026-11-25T19:46:46.000Z",
-  "nextOpensAt": "2026-11-27T07:46:46.000Z",
-  "updatedAt": "2026-11-24T01:34:55.512Z",
-  "nextIsPrediction": true
+  "source": "mmd-tw.com/api/black-hole",
+  "fetchedAt": "2026-11-24T20:21:07.282Z",
+  "state": "maintenance"
 }
